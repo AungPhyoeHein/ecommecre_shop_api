@@ -7,13 +7,17 @@ const app = express();
 require('dotenv/config.js')
 
 
-const {errorHandler} = require('./middleware');
-const {authRouter, productRouter} = require('./routers');
+const {errorHandler,tokenRefreshHandler} = require('./middleware');
+const {authRouter, productRouter, userRouter} = require('./routers');
+const { notFoundController } = require('./controllers');
+const autJwt = require('./middleware/jwt');
 
  app.use(bodyParser.json());
  app.use(morgan('tiny'));
 app.use(cors());
-// app.options('*',cors())
+app.use(autJwt());
+app.use(tokenRefreshHandler);
+
 
 mongoose.connect(process.env.DB_URL).then(()=>{
    console.log('[+] Database Connected.')
@@ -26,11 +30,14 @@ mongoose.connect(process.env.DB_URL).then(()=>{
  const port = process.env.PORT;
 
 
-app.use('/api/v1/auth',authRouter);
-app.use('/api/v1/products',productRouter)
+app.use(`${process.env.API_URL}/auth`,authRouter);
+app.use(`${process.env.API_URL}/user`,userRouter)
+// app.use(`${process.env.API_URL}/products`,productRouter)
 
+//not Found page
+app.use(notFoundController);
  //Error Handler
- app.use(errorHandler);
+app.use(errorHandler);
 
  app.listen(port,hostname,()=> {
     console.log(`Server running at http://${hostname}:${port}`)
