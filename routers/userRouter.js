@@ -4,7 +4,7 @@ const userRouter = express.Router();
 
 userRouter.get('/',userController.getUsers);
 userRouter.get('/:id',userController.getUserById);
-userRouter.put('/:id',userController.updateUser);
+userRouter.patch('/:id',userController.updateUser);
 
 
 module.exports = userRouter;

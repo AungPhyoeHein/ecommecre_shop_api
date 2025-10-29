@@ -4,15 +4,15 @@ const userSchema = mongoose.Schema(
     {
         name : {
             type: String,
-            require: true,
+            required: true,
             trim:true
         },
         email: {
             type: String,
-            require: true,
+            required: true,
             trim: true,
         },
-        password: {type: String,require:true,trim: true,select: false},
+        password: {type: String,required:true,trim: true,select: false},
         street: String,
         apartment: String,
         city: String,
@@ -22,6 +22,10 @@ const userSchema = mongoose.Schema(
         isAdmin: {type:Boolean,default: false},
         resetPasswordOtp: {type:Number,select: false},
         resetPasswordOtpExpires:{type: Date,select: false},
+        cart: [{
+            type:mongoose.Schema.ObjectId,
+            ref: 'CartProduct'
+        }],
         wishlist: [
             {
                 productId: {type:mongoose.Schema.Types.ObjectId,ref: 'Product',required:true},
@@ -32,7 +36,7 @@ const userSchema = mongoose.Schema(
         ]
     },
     {
-        timestamps: true // Add this
+        timestamps: true
     }
 );
 

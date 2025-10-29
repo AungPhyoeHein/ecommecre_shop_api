@@ -15,7 +15,7 @@ const getUsers = async (req,res,next) =>{
 
 const getUserById = async (req,res,next)=> {
    try {
-        const user = await User.findById(req.params.id).select('-password -resetPasswordOtp -resetPasswordOtpExpires');
+        const user = await User.findById(req.params.id);
         if(!user){
             res.code = 404;
             throw new Error("User not Found");
@@ -29,7 +29,17 @@ const getUserById = async (req,res,next)=> {
 
 const updateUser = async (req,res,next) =>{
     try {
-        
+        const {name,phone} = req.body;
+        const user = await User.findByIdAndUpdate(
+            req.params.id,
+            {name,phone},
+            {new: true}
+        );
+        if(!user){
+            res.code = 404;
+            throw new Error("User not Found");
+        }
+        return res.json(user);
     } catch (err) {
         next(err);
     }

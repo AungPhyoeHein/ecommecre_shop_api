@@ -1,363 +1,312 @@
-Message : [object Object]
-URL Path: /api/v1/auth/signup
-Stack : Error: [object Object]
-    at signUp (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:17:15)
-    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
-    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-validator/lib/middlewares/check.js:16:13)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Time: 2025-10-03T08:02:31.666Z
+        Message: Cast to ObjectId failed for value "true" (type boolean) at path "cart" because of "BSONError"
+        URL Path: /api/v1/admin/users/68d4a8ef3443a51f9ceaec69
+        Method: DELETE
+        Stack: CastError: Cast to ObjectId failed for value "true" (type boolean) at path "cart" because of "BSONError"
+    at SchemaObjectId.cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schema/objectId.js:251:11)
+    at SchemaType.applySetters (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1258:12)
+    at SchemaType.castForQuery (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1694:17)
+    at SchemaArray._castForQuery (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schema/array.js:555:29)
+    at SchemaArray.castForQuery (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schema/array.js:587:17)
+    at castUpdateVal (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/helpers/query/castUpdate.js:635:17)
+    at walkUpdatePath (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/helpers/query/castUpdate.js:433:24)
+    at walkUpdatePath (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/helpers/query/castUpdate.js:378:20)
+    at castUpdate (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/helpers/query/castUpdate.js:144:7)
+    at model.Query._castUpdate (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:4874:10)
 
-
-
-Message : undefined
-URL Path: /api/v1/auth/signup
-Stack : Error: [object Object]
-    at signUp (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:17:15)
-    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
-    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-validator/lib/middlewares/check.js:16:13)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-
-
-Message : undefined
-URL Path: /api/v1/auth/signup
-Stack : Error: [object Object]
-    at signUp (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:17:15)
-    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
-    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-validator/lib/middlewares/check.js:16:13)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-
-
-Message : o
-URL Path: /api/v1/auth/signup
-Stack : Error: [object Object]
-    at signUp (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:17:15)
-    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
-    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-validator/lib/middlewares/check.js:16:13)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-
-
-Message : [object Object]
-URL Path: /api/v1/auth/signup
-Stack : Error: [object Object]
-    at signUp (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:17:15)
-    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
-    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-validator/lib/middlewares/check.js:16:13)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-
-
-Message : [object Object],[object Object]
-URL Path: /api/v1/auth/signup
-Stack : Error: [object Object],[object Object]
-    at signUp (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:21:15)
-    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
-    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-validator/lib/middlewares/check.js:16:13)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-
-
-Message : [object Object]
-URL Path: /api/v1/auth/signup
-Stack : Error: [object Object]
-    at signUp (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:21:15)
-    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
-    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-validator/lib/middlewares/check.js:16:13)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-
-
-Message : [object Object]
-URL Path: /api/v1/auth/signup
-Stack : Error: [object Object]
-    at signUp (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:21:15)
+Time: 2025-10-03T08:10:23.543Z
+        Message: validationResult is not defined
+        URL Path: /api/v1/admin/categories
+        Method: POST
+        Stack: ReferenceError: validationResult is not defined
+    at addCategory (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/categoryController.js:6:20)
     at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
     at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
     at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-validator/lib/middlewares/check.js:16:13)
 
+Time: 2025-10-03T08:11:16.237Z
+        Message: Cannot read properties of undefined (reading 'image')
+        URL Path: /api/v1/admin/categories
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'image')
+    at addCategory (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/categoryController.js:32:32)
 
+Time: 2025-10-03T08:11:31.764Z
+        Message: Cannot read properties of undefined (reading 'image')
+        URL Path: /api/v1/admin/categories
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'image')
+    at addCategory (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/categoryController.js:32:32)
 
-Message : {"errors":[{"field":"name","message":"Name is required."},{"field":"email","message":"Invalid email."},{"field":"email","message":"Email is required."},{"field":"password","message":"Password must contain at least one upercase,one lowercase and one symbol."},{"field":"password","message":"Password must be at last 8 characters."},{"field":"password","message":"Password is required"},{"field":"phone","message":"Please enter a valid phone number"}]}
-URL Path: /api/v1/auth/signup
-Stack : Error: {"errors":[{"field":"name","message":"Name is required."},{"field":"email","message":"Invalid email."},{"field":"email","message":"Email is required."},{"field":"password","message":"Password must contain at least one upercase,one lowercase and one symbol."},{"field":"password","message":"Password must be at last 8 characters."},{"field":"password","message":"Password is required"},{"field":"phone","message":"Please enter a valid phone number"}]}
-    at signUp (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:23:15)
-    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
-    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-validator/lib/middlewares/check.js:16:13)
+Time: 2025-10-03T08:12:31.965Z
+        Message: Cannot read properties of undefined (reading 'image')
+        URL Path: /api/v1/admin/categories
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'image')
+    at addCategory (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/categoryController.js:32:32)
 
+Time: 2025-10-03T08:15:46.316Z
+        Message: Cannot read properties of undefined (reading 'image')
+        URL Path: /api/v1/admin/categories
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'image')
+    at addCategory (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/categoryController.js:32:32)
 
+Time: 2025-10-03T08:17:42.111Z
+        Message: Cannot read properties of undefined (reading 'image')
+        URL Path: /api/v1/admin/categories
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'image')
+    at addCategory (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/categoryController.js:32:32)
 
-Message : {"errors":[{"field":"password","message":"Password must contain at least one upercase,one lowercase and one symbol."},{"field":"phone","message":"Please enter a valid phone number"}]}
-URL Path: /api/v1/auth/signup
-Stack : Error: {"errors":[{"field":"password","message":"Password must contain at least one upercase,one lowercase and one symbol."},{"field":"phone","message":"Please enter a valid phone number"}]}
-    at signUp (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:23:15)
-    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
-    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-validator/lib/middlewares/check.js:16:13)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Time: 2025-10-03T08:18:06.200Z
+        Message: Cannot read properties of undefined (reading 'image')
+        URL Path: /api/v1/admin/categories
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'image')
+    at addCategory (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/categoryController.js:32:32)
 
+Time: 2025-10-03T08:20:00.487Z
+        Message: Cannot read properties of undefined (reading 'image')
+        URL Path: /api/v1/admin/categories
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'image')
+    at addCategory (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/categoryController.js:32:32)
 
+Time: 2025-10-03T08:23:48.985Z
+        Message: Cannot read properties of undefined (reading 'image')
+        URL Path: /api/v1/admin/categories
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'image')
+    at addCategory (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/categoryController.js:32:32)
 
-Message : {"errors":[{"field":"password","message":"Password must contain at least one upercase,one lowercase and one symbol."},{"field":"phone","message":"Please enter a valid phone number"}]}
-URL Path: /api/v1/auth/signup
-Stack : Error: {"errors":[{"field":"password","message":"Password must contain at least one upercase,one lowercase and one symbol."},{"field":"phone","message":"Please enter a valid phone number"}]}
-    at signUp (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:23:15)
-    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
-    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-validator/lib/middlewares/check.js:16:13)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Time: 2025-10-03T08:25:08.277Z
+        Message: Cannot read properties of undefined (reading 'image')
+        URL Path: /api/v1/admin/categories
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'image')
+    at addCategory (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/categoryController.js:32:32)
 
+Time: 2025-10-03T08:28:12.658Z
+        Message: Cannot read properties of undefined (reading 'image')
+        URL Path: /api/v1/admin/categories
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'image')
+    at addCategory (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/categoryController.js:32:32)
 
+Time: 2025-10-03T08:39:02.336Z
+        Message: Cannot read properties of undefined (reading 'image')
+        URL Path: /api/v1/admin/categories
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'image')
+    at addCategory (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/categoryController.js:36:32)
 
-Message : res.statue is not a function
-URL Path: /api/v1/auth/signup
-Stack : TypeError: res.statue is not a function
-    at signUp (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:23:20)
-    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
-    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-validator/lib/middlewares/check.js:16:13)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Time: 2025-10-03T08:40:06.045Z
+        Message: Cannot read properties of undefined (reading 'image')
+        URL Path: /api/v1/admin/categories
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'image')
+    at addCategory (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/categoryController.js:36:32)
 
-
-
-Message : Expected ',' or '}' after property value in JSON at position 83 (line 5 column 3)
-URL Path: /api/v1/auth/signup
-Stack : SyntaxError: Expected ',' or '}' after property value in JSON at position 83 (line 5 column 3)
-    at JSON.parse (<anonymous>)
-    at parse (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/body-parser/lib/types/json.js:77:19)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/body-parser/lib/read.js:123:18
-    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
-    at invokeCallback (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:238:16)
-    at done (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:227:7)
-    at IncomingMessage.onEnd (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:287:7)
-    at IncomingMessage.emit (node:events:519:28)
-    at endReadableNT (node:internal/streams/readable:1698:12)
-    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
-
-
-
-Message : Expected ',' or '}' after property value in JSON at position 83 (line 5 column 3)
-URL Path: /api/v1/auth/signup
-Stack : SyntaxError: Expected ',' or '}' after property value in JSON at position 83 (line 5 column 3)
-    at JSON.parse (<anonymous>)
-    at parse (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/body-parser/lib/types/json.js:77:19)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/body-parser/lib/read.js:123:18
-    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
-    at invokeCallback (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:238:16)
-    at done (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:227:7)
-    at IncomingMessage.onEnd (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:287:7)
-    at IncomingMessage.emit (node:events:519:28)
-    at endReadableNT (node:internal/streams/readable:1698:12)
-    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
-
-
-
-Message : Expected ',' or '}' after property value in JSON at position 83 (line 5 column 3)
-URL Path: /api/v1/auth/signup
-Stack : SyntaxError: Expected ',' or '}' after property value in JSON at position 83 (line 5 column 3)
-    at JSON.parse (<anonymous>)
-    at parse (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/body-parser/lib/types/json.js:77:19)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/body-parser/lib/read.js:123:18
-    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
-    at invokeCallback (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:238:16)
-    at done (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:227:7)
-    at IncomingMessage.onEnd (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:287:7)
-    at IncomingMessage.emit (node:events:519:28)
-    at endReadableNT (node:internal/streams/readable:1698:12)
-    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
-
-
-
-Message : Expected ',' or '}' after property value in JSON at position 83 (line 5 column 3)
-URL Path: /api/v1/auth/signup
-Stack : SyntaxError: Expected ',' or '}' after property value in JSON at position 83 (line 5 column 3)
-    at JSON.parse (<anonymous>)
-    at parse (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/body-parser/lib/types/json.js:77:19)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/body-parser/lib/read.js:123:18
-    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
-    at invokeCallback (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:238:16)
-    at done (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:227:7)
-    at IncomingMessage.onEnd (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:287:7)
-    at IncomingMessage.emit (node:events:519:28)
-    at endReadableNT (node:internal/streams/readable:1698:12)
-    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
-
-
-
-Message : Expected ',' or '}' after property value in JSON at position 83 (line 5 column 3)
-URL Path: /api/v1/auth/signup
-Stack : SyntaxError: Expected ',' or '}' after property value in JSON at position 83 (line 5 column 3)
-    at JSON.parse (<anonymous>)
-    at parse (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/body-parser/lib/types/json.js:77:19)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/body-parser/lib/read.js:123:18
-    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
-    at invokeCallback (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:238:16)
-    at done (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:227:7)
-    at IncomingMessage.onEnd (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:287:7)
-    at IncomingMessage.emit (node:events:519:28)
-    at endReadableNT (node:internal/streams/readable:1698:12)
-    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
-
-
-
-Message : User validation failed: phone: Path `phone` is required.
-URL Path: /api/v1/auth/signup
-Stack : ValidationError: User validation failed: phone: Path `phone` is required.
+Time: 2025-10-03T08:51:15.749Z
+        Message: Category validation failed: name: Path `name` is required.
+        URL Path: /api/v1/admin/categories
+        Method: POST
+        Stack: ValidationError: Category validation failed: name: Path `name` is required.
     at Document.invalidate (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/document.js:3358:32)
     at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/document.js:3119:17
     at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1416:9
     at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
 
-
-
-Message : User validation failed: phone: Path `phone` is required.
-URL Path: /api/v1/auth/signup
-Stack : ValidationError: User validation failed: phone: Path `phone` is required.
-    at Document.invalidate (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/document.js:3358:32)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/document.js:3119:17
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1416:9
-    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
-
-
-
-Message : next is not defined
-URL Path: /api/v1/auth/login
-Stack : ReferenceError: next is not defined
-    at login (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:71:5)
+Time: 2025-10-03T09:09:03.865Z
+        Message: res.code is not a function
+        URL Path: /api/v1/admin/categories/68df8e4d10dc31847d1639f7
+        Method: DELETE
+        Stack: TypeError: res.code is not a function
+    at deleteCategory (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/categoryController.js:78:20)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-
-
-Message : next is not defined
-URL Path: /api/v1/auth/login
-Stack : ReferenceError: next is not defined
-    at login (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:72:5)
+Time: 2025-10-11T03:40:36.982Z
+        Message: Could not count orders!
+        URL Path: /api/v1/admin/orders/count
+        Method: GET
+        Stack: Error: Could not count orders!
+    at getOrdersCount (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/orderController.js:26:19)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-
-
-Message : next is not defined
-URL Path: /api/v1/auth/login
-Stack : ReferenceError: next is not defined
-    at login (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:72:5)
+Time: 2025-10-11T03:41:41.281Z
+        Message: Could not count orders!
+        URL Path: /api/v1/admin/orders/count
+        Method: GET
+        Stack: Error: Could not count orders!
+    at getOrdersCount (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/orderController.js:26:19)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-
-
-Message : User not found.Check you email and try again
-URL Path: /api/v1/auth/login
-Stack : Error: User not found.Check you email and try again
-    at login (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:52:13)
+Time: 2025-10-11T03:42:26.094Z
+        Message: Could not count orders!
+        URL Path: /api/v1/admin/orders/count
+        Method: GET
+        Stack: Error: Could not count orders!
+    at getOrdersCount (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/orderController.js:27:19)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-
-
-Message : Cannot read properties of undefined (reading 'statusCode')
-URL Path: /api/v1/auth/forgot-password
-Stack : TypeError: Cannot read properties of undefined (reading 'statusCode')
-    at forgotPassword (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:125:17)
+Time: 2025-10-11T08:16:53.199Z
+        Message: Could not count orders!
+        URL Path: /api/v1/admin/orders/count
+        Method: GET
+        Stack: Error: Could not count orders!
+    at getOrdersCount (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/orderController.js:26:19)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-
-
-Message : Cannot read properties of undefined (reading 'statusCode')
-URL Path: /api/v1/auth/forgot-password
-Stack : TypeError: Cannot read properties of undefined (reading 'statusCode')
-    at forgotPassword (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:125:17)
+Time: 2025-10-11T08:17:12.798Z
+        Message: Could not count orders!
+        URL Path: /api/v1/admin/orders/count
+        Method: GET
+        Stack: Error: Could not count orders!
+    at getOrdersCount (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/orderController.js:26:19)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-
-
-Message : Cannot read properties of undefined (reading 'statusCode')
-URL Path: /api/v1/auth/forgot-password
-Stack : TypeError: Cannot read properties of undefined (reading 'statusCode')
-    at forgotPassword (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:125:17)
+Time: 2025-10-11T08:17:17.425Z
+        Message: Could not count orders!
+        URL Path: /api/v1/admin/orders/count
+        Method: GET
+        Stack: Error: Could not count orders!
+    at getOrdersCount (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/orderController.js:26:19)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-
-
-Message : Cannot read properties of undefined (reading 'statusCode')
-URL Path: /api/v1/auth/forgot-password
-Stack : TypeError: Cannot read properties of undefined (reading 'statusCode')
-    at forgotPassword (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:125:17)
+Time: 2025-10-11T08:19:16.445Z
+        Message: Could not count orders!
+        URL Path: /api/v1/admin/orders/count
+        Method: GET
+        Stack: Error: Could not count orders!
+    at getOrdersCount (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/orderController.js:27:19)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
+Time: 2025-10-11T09:32:16.564Z
+        Message: Cannot read properties of undefined (reading 'status')
+        URL Path: /api/v1/admin/orders/hjvgouhnubhvgj
+        Method: PATCH
+        Stack: TypeError: Cannot read properties of undefined (reading 'status')
+    at changeOrderStatus (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/orderController.js:37:36)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:117:3)
+    at handle (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:295:15
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:600:14)
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:610:14)
+    at processParams (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:664:3)
 
+Time: 2025-10-11T09:34:08.845Z
+        Message: Cannot read properties of undefined (reading 'status')
+        URL Path: /api/v1/admin/orders/hjvgouhnubhvgj
+        Method: PATCH
+        Stack: TypeError: Cannot read properties of undefined (reading 'status')
+    at changeOrderStatus (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/orderController.js:37:36)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:117:3)
+    at handle (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:295:15
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:600:14)
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:610:14)
+    at processParams (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:664:3)
 
-Message : Cannot read properties of undefined (reading 'statusCode')
-URL Path: /api/v1/auth/forgot-password
-Stack : TypeError: Cannot read properties of undefined (reading 'statusCode')
-    at forgotPassword (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:125:17)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Time: 2025-10-11T09:34:24.807Z
+        Message: Cannot read properties of undefined (reading 'status')
+        URL Path: /api/v1/admin/orders/hjvgouhnubhvgj
+        Method: PATCH
+        Stack: TypeError: Cannot read properties of undefined (reading 'status')
+    at changeOrderStatus (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/orderController.js:37:36)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:117:3)
+    at handle (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:295:15
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:600:14)
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:610:14)
+    at processParams (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:664:3)
 
+Time: 2025-10-11T09:37:13.854Z
+        Message: Cannot read properties of undefined (reading 'status')
+        URL Path: /api/v1/admin/orders/hjvgouhnubhvgj
+        Method: PATCH
+        Stack: TypeError: Cannot read properties of undefined (reading 'status')
+    at changeOrderStatus (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/orderController.js:37:36)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:117:3)
+    at handle (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:295:15
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:600:14)
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:610:14)
+    at processParams (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:664:3)
 
+Time: 2025-10-13T08:52:28.757Z
+        Message: Category is not defined
+        URL Path: /api/v1/admin/products
+        Method: POST
+        Stack: ReferenceError: Category is not defined
+    at addProduct (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/productController.js:39:26)
 
-Message : Cannot read properties of undefined (reading 'statusCode')
-URL Path: /api/v1/auth/forgot-password
-Stack : TypeError: Cannot read properties of undefined (reading 'statusCode')
-    at forgotPassword (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:125:17)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Time: 2025-10-13T08:59:21.544Z
+        Message: Cannot read properties of undefined (reading 'category')
+        URL Path: /api/v1/admin/products
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'category')
+    at addProduct (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/productController.js:39:59)
 
+Time: 2025-10-13T09:01:35.884Z
+        Message: Cannot read properties of undefined (reading 'category')
+        URL Path: /api/v1/admin/products
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'category')
+    at addProduct (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/productController.js:39:59)
 
+Time: 2025-10-13T09:36:42.393Z
+        Message: Cannot read properties of undefined (reading 'category')
+        URL Path: /api/v1/admin/products
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'category')
+    at addProduct (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/productController.js:40:59)
 
-Message : Cannot read properties of undefined (reading 'statusCode')
-URL Path: /api/v1/auth/forgot-password
-Stack : TypeError: Cannot read properties of undefined (reading 'statusCode')
-    at forgotPassword (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:125:17)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-
-
-Message : Cannot read properties of undefined (reading 'statusCode')
-URL Path: /api/v1/auth/forgot-password
-Stack : TypeError: Cannot read properties of undefined (reading 'statusCode')
-    at forgotPassword (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:125:17)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-
-
-Message : Cannot read properties of undefined (reading 'statusCode')
-URL Path: /api/v1/auth/forgot-password
-Stack : TypeError: Cannot read properties of undefined (reading 'statusCode')
-    at forgotPassword (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:125:17)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-
-
-Message : next is not defined
-URL Path: /api/v1/auth/reset-password
-Stack : ReferenceError: next is not defined
-    at resetPassword (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:176:5)
+Time: 2025-10-13T09:39:04.910Z
+        Message: validationResult is not defined
+        URL Path: /api/v1/admin/products
+        Method: POST
+        Stack: ReferenceError: validationResult is not defined
+    at addProduct (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/productController.js:19:22)
     at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
     at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
     at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-validator/lib/middlewares/check.js:16:13)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-
-
-Message : Cannot destructure property 'email' of 'req.body' as it is undefined.
-URL Path: /api/v1/auth/reset-password
-Stack : TypeError: Cannot destructure property 'email' of 'req.body' as it is undefined.
-    at resetPassword (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:158:12)
+Time: 2025-10-27T10:11:36.870Z
+        Message: Cannot destructure property 'deletedImageUrls' of 'req.body' as it is undefined.
+        URL Path: /api/v1/admin/products/akjshdkshkdjfsfsf/images
+        Method: DELETE
+        Stack: TypeError: Cannot destructure property 'deletedImageUrls' of 'req.body' as it is undefined.
+    at deleteProductImages (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/productController.js:174:16)
     at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
     at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-validator/lib/middlewares/check.js:16:13)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at Route.dispatch (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:117:3)
+    at handle (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:295:15
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:600:14)
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:610:14)
+    at processParams (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:664:3)
 
-
-
-Message : Cannot destructure property 'email' of 'req.body' as it is undefined.
-URL Path: /api/v1/auth/reset-password
-Stack : TypeError: Cannot destructure property 'email' of 'req.body' as it is undefined.
-    at resetPassword (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:158:12)
+Time: 2025-10-29T08:08:08.960Z
+        Message: Invalid select: select only takes 1 argument
+        URL Path: /api/v1/admin/products
+        Method: GET
+        Stack: Error: Invalid select: select only takes 1 argument
+    at model.Query.select (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:1116:11)
+    at getProducts (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/productController.js:235:47)
     at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
     at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
     at Route.dispatch (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:117:3)
@@ -366,532 +315,4 @@ Stack : TypeError: Cannot destructure property 'email' of 'req.body' as it is un
     at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:295:15
     at processParams (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:582:12)
     at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:291:5)
-    at Function.handle (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:186:3)
-
-
-
-Message : Cannot destructure property 'email' of 'req.body' as it is undefined.
-URL Path: /api/v1/auth/reset-password
-Stack : TypeError: Cannot destructure property 'email' of 'req.body' as it is undefined.
-    at resetPassword (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:158:12)
-    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
-    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
-    at Route.dispatch (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:117:3)
-    at handle (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:435:11)
-    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:295:15
-    at processParams (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:582:12)
-    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:291:5)
-    at Function.handle (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:186:3)
-
-
-
-Message : User not found.Check you email and try again
-URL Path: /api/v1/auth/login
-Stack : Error: User not found.Check you email and try again
-    at login (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:53:13)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-
-
-Message : Expected double-quoted property name in JSON at position 45 (line 3 column 1)
-URL Path: /api/v1/auth/forgot-password
-Stack : SyntaxError: Expected double-quoted property name in JSON at position 45 (line 3 column 1)
-    at JSON.parse (<anonymous>)
-    at parse (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/body-parser/lib/types/json.js:77:19)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/body-parser/lib/read.js:123:18
-    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
-    at invokeCallback (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:238:16)
-    at done (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:227:7)
-    at IncomingMessage.onEnd (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:287:7)
-    at IncomingMessage.emit (node:events:519:28)
-    at endReadableNT (node:internal/streams/readable:1698:12)
-    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
-
-
-
-Message : Expected double-quoted property name in JSON at position 45 (line 3 column 1)
-URL Path: /api/v1/auth/reset-password
-Stack : SyntaxError: Expected double-quoted property name in JSON at position 45 (line 3 column 1)
-    at JSON.parse (<anonymous>)
-    at parse (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/body-parser/lib/types/json.js:77:19)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/body-parser/lib/read.js:123:18
-    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
-    at invokeCallback (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:238:16)
-    at done (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:227:7)
-    at IncomingMessage.onEnd (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:287:7)
-    at IncomingMessage.emit (node:events:519:28)
-    at endReadableNT (node:internal/streams/readable:1698:12)
-    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
-
-
-
-Message : Expected double-quoted property name in JSON at position 45 (line 3 column 1)
-URL Path: /api/v1/auth/login
-Stack : SyntaxError: Expected double-quoted property name in JSON at position 45 (line 3 column 1)
-    at JSON.parse (<anonymous>)
-    at parse (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/body-parser/lib/types/json.js:77:19)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/body-parser/lib/read.js:123:18
-    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
-    at invokeCallback (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:238:16)
-    at done (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:227:7)
-    at IncomingMessage.onEnd (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:287:7)
-    at IncomingMessage.emit (node:events:519:28)
-    at endReadableNT (node:internal/streams/readable:1698:12)
-    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
-
-
-
-Message : res is not defined
-URL Path: /api/v1/auth/login
-Stack : ReferenceError: res is not defined
-    at checkError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:16:9)
-    at login (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:53:3)
-    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
-    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-validator/lib/middlewares/check.js:16:13)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-
-
-Message : Illegal arguments: undefined, string
-URL Path: /api/v1/auth/login
-Stack : Error: Illegal arguments: undefined, string
-    at _async (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/bcryptjs/umd/index.js:305:15)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/bcryptjs/umd/index.js:335:11
-    at new Promise (<anonymous>)
-    at Object.compare (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/bcryptjs/umd/index.js:334:16)
-    at comparePassword (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/utils/comparePassword.js:4:19)
-    at login (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:61:27)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-
-
-Message : Expected double-quoted property name in JSON at position 45 (line 3 column 1)
-URL Path: /api/v1/auth/verify-otp
-Stack : SyntaxError: Expected double-quoted property name in JSON at position 45 (line 3 column 1)
-    at JSON.parse (<anonymous>)
-    at parse (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/body-parser/lib/types/json.js:77:19)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/body-parser/lib/read.js:123:18
-    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
-    at invokeCallback (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:238:16)
-    at done (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:227:7)
-    at IncomingMessage.onEnd (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:287:7)
-    at IncomingMessage.emit (node:events:519:28)
-    at endReadableNT (node:internal/streams/readable:1698:12)
-    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
-
-
-
-Message : No authorization token was found
-URL Path: /api/v1/auth/reset-password
-Stack : UnauthorizedError: No authorization token was found
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:115:39
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:4:12)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:67:16)
-    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
-    at trimPrefix (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:342:13)
-
-
-
-Message : No authorization token was found
-URL Path: /api/v1/auth/reset-password
-Stack : UnauthorizedError: No authorization token was found
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:115:39
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:4:12)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:67:16)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-unless/dist/index.js:52:13
-    at Generator.next (<anonymous>)
-
-
-
-Message : No authorization token was found
-URL Path: /api/v1/auth/reset-password
-Stack : UnauthorizedError: No authorization token was found
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:115:39
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:4:12)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:67:16)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-unless/dist/index.js:52:13
-    at Generator.next (<anonymous>)
-
-
-
-Message : No authorization token was found
-URL Path: /api/v1/auth/reset-password
-Stack : UnauthorizedError: No authorization token was found
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:115:39
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:4:12)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:67:16)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-unless/dist/index.js:52:13
-    at Generator.next (<anonymous>)
-
-
-
-Message : No authorization token was found
-URL Path: /api/v1/auth/login
-Stack : UnauthorizedError: No authorization token was found
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:115:39
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:4:12)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:67:16)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-unless/dist/index.js:52:13
-    at Generator.next (<anonymous>)
-
-
-
-Message : No authorization token was found
-URL Path: /api/v1/auth/login
-Stack : UnauthorizedError: No authorization token was found
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:115:39
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:4:12)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:67:16)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-unless/dist/index.js:52:13
-    at Generator.next (<anonymous>)
-
-
-
-Message : No authorization token was found
-URL Path: /api/v1/auth/login
-Stack : UnauthorizedError: No authorization token was found
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:115:39
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:4:12)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:67:16)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-unless/dist/index.js:52:13
-    at Generator.next (<anonymous>)
-
-
-
-Message : No authorization token was found
-URL Path: /api/v1/auth/login
-Stack : UnauthorizedError: No authorization token was found
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:115:39
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:4:12)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:67:16)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-unless/dist/index.js:52:13
-    at Generator.next (<anonymous>)
-
-
-
-Message : No authorization token was found
-URL Path: /api/v1/auth/login
-Stack : UnauthorizedError: No authorization token was found
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:115:39
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:4:12)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:67:16)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-unless/dist/index.js:52:13
-    at Generator.next (<anonymous>)
-
-
-
-Message : No authorization token was found
-URL Path: /api/v1/auth/login
-Stack : UnauthorizedError: No authorization token was found
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:115:39
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:4:12)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:67:16)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-unless/dist/index.js:52:13
-    at Generator.next (<anonymous>)
-
-
-
-Message : No authorization token was found
-URL Path: /api/v1/auth/login
-Stack : UnauthorizedError: No authorization token was found
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:115:39
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:4:12)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:67:16)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-unless/dist/index.js:52:13
-    at Generator.next (<anonymous>)
-
-
-
-Message : No authorization token was found
-URL Path: /api/v1/auth/login
-Stack : UnauthorizedError: No authorization token was found
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:115:39
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:4:12)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:67:16)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-unless/dist/index.js:52:13
-    at Generator.next (<anonymous>)
-
-
-
-Message : No authorization token was found
-URL Path: /api/v1/auth/login
-Stack : UnauthorizedError: No authorization token was found
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:115:39
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:4:12)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:67:16)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-unless/dist/index.js:52:13
-    at Generator.next (<anonymous>)
-
-
-
-Message : No authorization token was found
-URL Path: /api/v1/auth/login
-Stack : UnauthorizedError: No authorization token was found
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:115:39
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:4:12)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:67:16)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-unless/dist/index.js:52:13
-    at Generator.next (<anonymous>)
-
-
-
-Message : No authorization token was found
-URL Path: /api/v1/auth/login
-Stack : UnauthorizedError: No authorization token was found
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:115:39
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:4:12)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:67:16)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-unless/dist/index.js:52:13
-    at Generator.next (<anonymous>)
-
-
-
-Message : No authorization token was found
-URL Path: /api/v1/auth/login
-Stack : UnauthorizedError: No authorization token was found
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:115:39
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:4:12)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:67:16)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-unless/dist/index.js:52:13
-    at Generator.next (<anonymous>)
-
-
-
-Message : No authorization token was found
-URL Path: /api/v1/auth/login
-Stack : UnauthorizedError: No authorization token was found
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:115:39
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:4:12)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:67:16)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-unless/dist/index.js:52:13
-    at Generator.next (<anonymous>)
-
-
-
-Message : No authorization token was found
-URL Path: /api/v1/auth/login
-Stack : UnauthorizedError: No authorization token was found
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:115:39
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:4:12)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:67:16)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-unless/dist/index.js:52:13
-    at Generator.next (<anonymous>)
-
-
-
-Message : No authorization token was found
-URL Path: /api/v1/auth/login
-Stack : UnauthorizedError: No authorization token was found
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:115:39
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:4:12)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:67:16)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-unless/dist/index.js:52:13
-    at Generator.next (<anonymous>)
-
-
-
-Message : No authorization token was found
-URL Path: /api/v1/auth/login
-Stack : UnauthorizedError: No authorization token was found
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:115:39
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:4:12)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:67:16)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-unless/dist/index.js:52:13
-    at Generator.next (<anonymous>)
-
-
-
-Message : No authorization token was found
-URL Path: /api/v1/auth/login
-Stack : UnauthorizedError: No authorization token was found
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:115:39
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:4:12)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:67:16)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-unless/dist/index.js:52:13
-    at Generator.next (<anonymous>)
-
-
-
-Message : No authorization token was found
-URL Path: /api/v1/auth/signup
-Stack : UnauthorizedError: No authorization token was found
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:115:39
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:4:12)
-    at middleware (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:67:16)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-unless/dist/index.js:52:13
-    at Generator.next (<anonymous>)
-
-
-
-Time: 2025-09-27T02:22:14.346Z
-Message: jwt expired
-URL Path: /user
-Method: POST
-Stack: UnauthorizedError: jwt expired
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:140:38
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at fulfilled (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:5:58)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-Time: 2025-09-27T02:44:56.894Z
-Message: jwt expired
-URL Path: /user
-Method: POST
-Stack: UnauthorizedError: jwt expired
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:140:38
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at fulfilled (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:5:58)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-Time: 2025-09-27T02:58:14.827Z
-Message: jwt expired
-URL Path: /user
-Method: POST
-Stack: UnauthorizedError: jwt expired
-    at new UnauthorizedError (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/errors/UnauthorizedError.js:22:28)
-    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:140:38
-    at step (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:33:23)
-    at Object.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:14:53)
-    at fulfilled (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/express-jwt/dist/index.js:5:58)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-Time: 2025-10-01T07:16:21.925Z
-        Message: print is not defined
-        URL Path: /api/v1/auth/verify-otp
-        Method: POST
-        Stack: ReferenceError: print is not defined
-    at verifyResetOTP (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:178:3)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-Time: 2025-10-01T07:23:39.332Z
-        Message: bbbbb is not defined
-        URL Path: /api/v1/auth/verify-otp
-        Method: POST
-        Stack: ReferenceError: bbbbb is not defined
-    at verifyResetOTP (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:186:23)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-Time: 2025-10-01T07:26:02.290Z
-        Message: bbbbb is not defined
-        URL Path: /api/v1/auth/verify-otp
-        Method: POST
-        Stack: ReferenceError: bbbbb is not defined
-    at verifyResetOTP (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:186:23)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 

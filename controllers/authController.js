@@ -6,16 +6,6 @@ const generateToken = require('../utils/generateToken');
 const Token = require('../models/token');
 const sendMail = require('../helpers/email_send');
 
-const checkError = (req)=>{
-  const errors = validationResult(req);
-    if(!errors.isEmpty()){
-        const errorMessage = errors.array().map((error)=>({
-            field: error.path,
-            message: error.msg,
-        }));
-        return res.status(400).json({errors: errorMessage});
-    }
-}
 
 const signUp = async (req, res, next) => {
   const errors = validationResult(req);
@@ -67,7 +57,7 @@ const login = async function (req,res,next) {
     }
   try {
     const {email,password} = req.body;
-    const user = await User.findOne({email});
+    const user = await User.findOne({email}).select('+password');
     if(!user){
       throw new Error("User not found.Check you email and try again");      
     }
