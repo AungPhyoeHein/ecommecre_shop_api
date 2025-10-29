@@ -13,8 +13,8 @@ const sendMail = async(email,subject,body)=> {
 
     const mailOptions ={
          from: {
-                    name: "ECOMMERCE SHOP APP",  // Display name
-                    address: process.env.EMAIL   // Sender email
+                    name: "ECOMMERCE SHOP APP",
+                    address: process.env.EMAIL 
                 },
         to: email,
         subject: subject,
