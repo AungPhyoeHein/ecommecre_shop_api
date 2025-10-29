@@ -316,3 +316,49 @@ Time: 2025-10-29T08:08:08.960Z
     at processParams (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:582:12)
     at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:291:5)
 
+Time: 2025-10-29T10:31:12.125Z
+        Message: Cast to ObjectId failed for value "djfiosjdoifjdsaf" (type string) at path "_id" for model "Category"
+        URL Path: /api/v1/categories/djfiosjdoifjdsaf
+        Method: GET
+        Stack: CastError: Cast to ObjectId failed for value "djfiosjdoifjdsaf" (type string) at path "_id" for model "Category"
+    at SchemaObjectId.cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schema/objectId.js:251:11)
+    at SchemaType.applySetters (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1258:12)
+    at SchemaType.castForQuery (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1694:17)
+    at cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/cast.js:390:32)
+    at Query.cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:5060:12)
+    at Query._castConditions (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:2374:10)
+    at model.Query._findOne (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:2697:8)
+    at model.Query.exec (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:4627:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getCategoryById (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/categoryController.js:18:26)
+
+Time: 2025-10-29T10:38:17.902Z
+        Message: Product validation failed: countInStock: Path `countInStock` is required., price: Path `price` is required., description: Path `description` is required.
+        URL Path: /api/v1/admin/products
+        Method: POST
+        Stack: ValidationError: Product validation failed: countInStock: Path `countInStock` is required., price: Path `price` is required., description: Path `description` is required.
+    at Document.invalidate (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/document.js:3358:32)
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/document.js:3119:17
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1416:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+
+Time: 2025-10-29T10:39:12.722Z
+        Message: Product validation failed: price: Path `price` is required., description: Path `description` is required.
+        URL Path: /api/v1/admin/products
+        Method: POST
+        Stack: ValidationError: Product validation failed: price: Path `price` is required., description: Path `description` is required.
+    at Document.invalidate (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/document.js:3358:32)
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/document.js:3119:17
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1416:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+
+Time: 2025-10-29T10:39:23.542Z
+        Message: Product validation failed: description: Path `description` is required.
+        URL Path: /api/v1/admin/products
+        Method: POST
+        Stack: ValidationError: Product validation failed: description: Path `description` is required.
+    at Document.invalidate (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/document.js:3358:32)
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/document.js:3119:17
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1416:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+

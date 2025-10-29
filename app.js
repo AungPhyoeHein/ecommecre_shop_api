@@ -9,7 +9,7 @@ require('dotenv/config.js')
 
 
 const {errorHandler,tokenRefreshHandler} = require('./middleware');
-const {authRouter, productRouter, userRouter, adminRouter} = require('./routers');
+const {authRouter, productRouter, userRouter, adminRouter, categoryRouter} = require('./routers');
 const { notFoundController } = require('./controllers');
 const autJwt = require('./middleware/jwt');
 
@@ -29,15 +29,15 @@ mongoose.connect(process.env.DB_URL).then(()=>{
    console.log(err)
 });
 
-
- const hostname = process.env.HOST;
- const port = process.env.PORT;
+const hostname = process.env.HOST;
+const port = process.env.PORT;
 const baseUrl = process.env.API_URL;
 
 
 app.use(`${baseUrl}/auth`,authRouter);
 app.use(`${baseUrl}/admin`,adminRouter);
 app.use(`${baseUrl}/users`,userRouter);
+app.use(`${baseUrl}/categories`,categoryRouter);
 app.use('/public/uploads', express.static(path.join(__dirname, 'public/uploads')));
 // app.use(`${baseUrl}/public`,express.static(__dirname,'/public'));
 // app.use(`${baseUrl}/products`,productRouter)/

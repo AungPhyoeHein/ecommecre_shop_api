@@ -17,7 +17,7 @@ adminRouter.delete('/categories/:id',categoryController.deleteCategory);
 //PORDUCTS
 adminRouter.get('/products/count',productController.getProductCount);
 adminRouter.get('/products',productController.getProducts)
-adminRouter.post('/products',createProductValidator,productController.addProduct);
+adminRouter.post('/products',productController.addProduct);
 adminRouter.patch('/products/:id',productController.editProduct);
 adminRouter.delete('/products/:id/images',productController.deleteProductImages);
 adminRouter.delete('/products/:id',productController.deleteProduct);

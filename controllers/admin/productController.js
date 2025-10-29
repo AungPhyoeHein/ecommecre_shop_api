@@ -172,8 +172,6 @@ const deleteProductImages = async (req,res,next) =>{
     try {
         const productId = req.params.id;
         const {deletedImageUrls} = req.body;
-
-        console.log(productId,deletedImageUrls)
         if(!mongoose.isValidObjectId(productId) || !Array.isArray(deletedImageUrls)) {
             res.code = 400;
             throw new Error("Invalid requrest data");
@@ -204,7 +202,7 @@ const deleteProduct = async (req,res,next) =>{
         const productId = req.params.id;
         if(!mongoose.isValidObjectId(productId)){
             res.code = 400;
-            throw new Error("Invalid requrest data");
+            throw new Error("Invalid request data");
         }
 
         const product = Product.findById(req.params.id);
