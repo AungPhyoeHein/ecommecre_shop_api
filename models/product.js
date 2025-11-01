@@ -46,7 +46,7 @@ const productSchema = mongoose.Schema({
         timestamps: true
     })
 
-    productSchema.pre('save', async function (next) {
+productSchema.pre('save', async function (next) {
     if (this.reviews.length > 0) {
         await this.populate('reviews');
         const totalRating = this.reviews.reduce(

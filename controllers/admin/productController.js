@@ -227,7 +227,6 @@ const deleteProduct = async (req,res,next) =>{
 const getProducts = async function(req,res,next) {
     try {
         const page = req.query.page || 1;
-        const detailed = req.query.detailed;
         const pageSize = 10;
 
         const products = await Product.find().select('-reviews -ratings').skip((page -1) * pageSize).limit(pageSize);
