@@ -5,6 +5,7 @@ const comparePassword = require('../utils/comparePassword');
 const generateToken = require('../utils/generateToken');
 const Token = require('../models/token');
 const sendMail = require('../helpers/email_send');
+const jwt = require('jsonwebtoken');
 
 
 const signUp = async (req, res, next) => {
@@ -59,6 +60,7 @@ const login = async function (req,res,next) {
     const {email,password} = req.body;
     const user = await User.findOne({email}).select('+password');
     if(!user){
+      res.code = 400;
       throw new Error("User not found.Check you email and try again");      
     }
     const isMatch = await comparePassword(password,user.password);
@@ -98,8 +100,15 @@ const verifyToken = async (req,res,next)=>{
       res.code = 400;
       throw new Error('Login required');
     }
+
     const tokenData = jwt.decode(token.refreshToken);
-  
+        const isValid = jwt.verify(token.refreshToken, process.env.REFRESH_TOKEN_SECRET);
+
+    if(!isValid){
+      res.code = 400;
+      throw new Error("Invalid Token");
+    }
+    
     const user = await User.findById(tokenData._id);
 
     if(!user){
@@ -107,12 +116,9 @@ const verifyToken = async (req,res,next)=>{
       throw new Error("User not found");
     }
 
-    const isValid = jwt.verify(token.refreshToken, process.env.REFRESH_TOKEN_SECRET)
 
-    if(!isValid){
-      throw new Error("Invalid Token");
     return res.json(true)
-    }
+
   } catch (err) {
     next(err);
   }

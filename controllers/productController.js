@@ -8,38 +8,40 @@ const getProducts = async (req, res, next) => {
     let query = {};
 
     if (req.query.criteria) {
-      query["category"] = req.query.category;
+      if(req.query.category){
+        query["category"] = req.query.category;
+      }
 
       switch (req.query.criteria) {
         case "newArrivals": {
-          const towWeeksAgo = new Date();
-          towWeeksAgo.setDate(towWeeksAgo.getDate() - 14);
-          query["dateAdded"] = { $gte: towWeeksAgo };
+          const twoWeeksAgo = new Date();
+          twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+          query["dateAdded"] = { $gte: twoWeeksAgo };
           break;
         }
         case "popular": {
-          query["rating"] = { $gte: 4.5 };
+          query["rating"] = { $gte: 4.0 };
           break;
         }
         default:
           break;
       }
+      console.log(query);
       products = await Product.find(query)
         .select("-images -reviews -size")
-        .skip(page - 1 * pageSize)
+        .skip((page - 1) * pageSize)
         .limit(pageSize);
+      
     } else if (req.query.category) {
       products = await Product.find({ category: req.query.category })
         .select("-images -reviews -size")
-        .skip(page - 1 * pageSize)
+        .skip((page - 1) * pageSize)
         .limit(pageSize);
     } else {
-      if (req.query.category) {
-        products = await Product.find({})
-          .select("-images -reviews -size")
-          .skip(page - 1 * pageSize)
-          .limit(pageSize);
-      }
+      products = await Product.find({})
+        .select("-images -reviews -size")
+        .skip((page - 1) * pageSize)
+        .limit(pageSize);
     }
 
     if (!products) {
@@ -55,7 +57,13 @@ const getProducts = async (req, res, next) => {
 const getProductById = async (req, res, next) => {
   try {
     const productId = req.params.id;
-    const product = await Product.findById(productId);
+    const product = await Product.findById(productId)
+      .populate("category")
+      .populate({
+        path: "reviews",
+        options: { limit: 2, sort: { createdAt: -1 } },
+        populate: { path: "user", select: "name image" },
+      });
 
     if (!product) {
       res.code = 404;
@@ -77,34 +85,24 @@ const searchProducts = async (req, res, next) => {
     let query = {};
 
     if (req.query.category) {
-      let query = { category: req.query.category };
+      query = { category: req.query.category };
       if (req.query.genderAgeCategory) {
         query["genderAgeCategory"] = req.query.genderAgeCategory.toLowerCase();
       }
-      if (searchKey) {
-        query = {
-          ...query,
-          $text: {
-            $search: searchKey,
-            $language: "none",
-            $caseSensitive: false,
-          },
-        };
-      }
     } else if (req.query.genderAgeCategory) {
-      let query = {
-        genderAgeCategory: req.query.genderAgeCategory.toLowerCase,
+      query = {
+        genderAgeCategory: req.query.genderAgeCategory.toLowerCase(),
       };
-      if (searchKey) {
-        query = {
-          ...query,
-          $text: {
-            $search: searchKey,
-            $language: "none",
-            $caseSensitive: false,
-          },
-        };
-      }
+    }
+    if (searchKey) {
+      query = {
+        ...query,
+        $text: {
+          $search: searchKey,
+          $language: "none",
+          $caseSensitive: false,
+        },
+      };
     }
     const products = await Product.find(query)
       .sort({ rating: -1 })

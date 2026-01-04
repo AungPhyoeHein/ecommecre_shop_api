@@ -30,6 +30,10 @@ const getUserById = async (req,res,next)=> {
 const updateUser = async (req,res,next) =>{
     try {
         const {name,phone} = req.body;
+        if(req.params.id != req.user.toString()){
+            res.code = 403;
+            throw new Error("You cannot change other user data")
+        };
         const user = await User.findByIdAndUpdate(
             req.params.id,
             {name,phone},

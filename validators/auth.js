@@ -24,10 +24,6 @@ const loginValidator = [
     .notEmpty()
     .withMessage("Email is required."),
   body("password")
-    .isStrongPassword()
-    .withMessage('Password must contain at least one upercase,one lowercase and one symbol.')
-    .isLength({ min: 8 })
-    .withMessage("Password must be at last 8 characters.")
     .notEmpty()
     .withMessage("Password is required"),
 

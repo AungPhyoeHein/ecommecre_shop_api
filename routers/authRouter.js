@@ -8,6 +8,7 @@ route.post('/login', loginValidator,authController.login);
 route.post('/forgot-password',forgotPasswordValidator,authController.forgotPassword);
 route.post('/verify-otp',verifyResetOTPValidator,authController.verifyResetOTP);
 route.post('/reset-password',resetPasswordValidator,authController.resetPassword);
+route.post('/verify-token',authController.verifyToken);
 
 
 

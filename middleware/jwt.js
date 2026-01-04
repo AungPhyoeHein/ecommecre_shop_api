@@ -8,7 +8,9 @@ function autJwt() {
             `${API}/auth/register`,
             `${API}/auth/forgot-password`,
             `${API}/auth/verify-otp`,
-            `${API}/auth/reset-password`]})
+            `${API}/auth/reset-password`,
+            { url: /\/public\/uploads\/(.*)/, methods: ['GET'] }
+        ]})
 }
 
 async function isRevoked(req,jwt) {
@@ -22,6 +24,9 @@ async function isRevoked(req,jwt) {
 
     const adminRouteRegex = /^\/api\/v1\/admin\//i;
     const adminFault = !jwt.payload.isAdmin && adminRouteRegex.test(req.originalUrl);
+    if(!adminFault && token){
+        req.user = token.userId;
+    }
     return adminFault || !token;
 }
 

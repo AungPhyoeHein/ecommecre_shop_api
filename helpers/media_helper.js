@@ -5,7 +5,8 @@ const path = require('path');
 const ALLOWED_EXTENSION = {
     'image/png' : 'png',
     'image/jpg': 'jpg',
-    'image/jpeg' : 'jpeg'
+    'image/jpeg' : 'jpeg',
+    'image/webp' : 'webp'
 }
 
 const stroage = multer.diskStorage({

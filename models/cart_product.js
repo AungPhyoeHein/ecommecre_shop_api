@@ -6,7 +6,7 @@ const cartProductSchema = mongoose.Schema({
     selectedSize: String,
     selectedColor: String,
     productName: {type:String,required: true},
-    prodcutImage: {type:String,required: true},
+    productImage: {type:String,required: true},
     productPrice: {type:String,required: true},
     reservationExpiry: {
         type: Date,

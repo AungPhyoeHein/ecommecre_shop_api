@@ -1,0 +1,586 @@
+Time: 2025-11-09T08:36:56.338Z
+        Message: commentReview is not defined
+        URL Path: /api/v1/products/6901ef152e99e8301c0f64b9/reviews/691051483349f4ad13ff2b83
+        Method: PATCH
+        Stack: ReferenceError: commentReview is not defined
+    at editProductReview (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/reviewController.js:144:22)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-09T08:37:28.298Z
+        Message: commentReview is not defined
+        URL Path: /api/v1/products/6901ef152e99e8301c0f64b9/reviews/691051483349f4ad13ff2b83
+        Method: PATCH
+        Stack: ReferenceError: commentReview is not defined
+    at editProductReview (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/reviewController.js:144:22)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-10T08:57:12.360Z
+        Message: Invalid User!
+        URL Path: /api/v1/products/6901ef152e99e8301c0f64b9/reviews
+        Method: POST
+        Stack: Error: Invalid User!
+    at leaveReview (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/reviewController.js:10:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-10T09:13:57.714Z
+        Message: this.path.indexOf is not a function
+        URL Path: /api/v1/products/6901ef152e99e8301c0f64b9/reviews
+        Method: POST
+        Stack: TypeError: this.path.indexOf is not a function
+    at SchemaType.splitPath (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:207:34)
+    at SchemaObjectId.SchemaType (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:55:8)
+    at new SchemaObjectId (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schema/objectId.js:37:14)
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/reviewController.js:17:74
+    at Proxy.some (<anonymous>)
+    at leaveReview (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/reviewController.js:17:38)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-10T09:17:23.765Z
+        Message: Cast to ObjectId failed for value "hkjhkh" (type string) at path "_id" for model "Product"
+        URL Path: /api/v1/products/hkjhkh/reviews
+        Method: POST
+        Stack: CastError: Cast to ObjectId failed for value "hkjhkh" (type string) at path "_id" for model "Product"
+    at SchemaObjectId.cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schema/objectId.js:251:11)
+    at SchemaType.applySetters (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1258:12)
+    at SchemaType.castForQuery (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1694:17)
+    at cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/cast.js:390:32)
+    at Query.cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:5060:12)
+    at Query._castConditions (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:2374:10)
+    at model.Query._findOne (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:2697:8)
+    at model.Query.exec (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:4627:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async leaveReview (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/reviewController.js:12:19)
+
+Time: 2025-11-10T09:20:21.124Z
+        Message: Cast to ObjectId failed for value "yuyu" (type string) at path "_id" for model "Product"
+        URL Path: /api/v1/products/yuyu/reviews/691051483349f4ad13ff2b83
+        Method: PATCH
+        Stack: CastError: Cast to ObjectId failed for value "yuyu" (type string) at path "_id" for model "Product"
+    at SchemaObjectId.cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schema/objectId.js:251:11)
+    at SchemaType.applySetters (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1258:12)
+    at SchemaType.castForQuery (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1694:17)
+    at cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/cast.js:390:32)
+    at Query.cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:5060:12)
+    at Query._castConditions (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:2374:10)
+    at model.Query._findOne (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:2697:8)
+    at model.Query.exec (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:4627:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async editProductReview (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/reviewController.js:122:21)
+
+Time: 2025-11-10T09:22:54.988Z
+        Message: Cast to ObjectId failed for value "ytuyuty" (type string) at path "_id" for model "Product"
+        URL Path: /api/v1/products/ytuyuty/reviews/691051483349f4ad13ff2b83
+        Method: PATCH
+        Stack: CastError: Cast to ObjectId failed for value "ytuyuty" (type string) at path "_id" for model "Product"
+    at SchemaObjectId.cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schema/objectId.js:251:11)
+    at SchemaType.applySetters (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1258:12)
+    at SchemaType.castForQuery (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1694:17)
+    at cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/cast.js:390:32)
+    at Query.cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:5060:12)
+    at Query._castConditions (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:2374:10)
+    at model.Query._findOne (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:2697:8)
+    at model.Query.exec (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:4627:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async editProductReview (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/reviewController.js:126:21)
+
+Time: 2025-11-10T10:19:42.969Z
+        Message: Cannot read properties of undefined (reading 'some')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/wishlist/6901ef152e99e8301c0f64b9
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'some')
+    at addToWishList (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/wishListController.js:62:53)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-10T12:51:59.001Z
+        Message: Cannot read properties of undefined (reading 'productId')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/wishlist/6901ef152e99e8301c0f64b9
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'productId')
+    at addToWishList (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/wishListController.js:51:43)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-10T13:00:59.628Z
+        Message: Cannot read properties of undefined (reading 'productId')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/wishlist/6901ef152e99e8301c0f64b9
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'productId')
+    at addToWishList (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/wishListController.js:51:44)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-10T13:31:31.804Z
+        Message: Cannot read properties of undefined (reading 'findIndex')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/wishlist
+        Method: DELETE
+        Stack: TypeError: Cannot read properties of undefined (reading 'findIndex')
+    at removeFromWishList (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/wishListController.js:100:33)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:117:3)
+    at handle (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:295:15
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:600:14)
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:610:14)
+    at processParams (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:664:3)
+
+Time: 2025-11-10T13:33:59.424Z
+        Message: Cannot read properties of undefined (reading 'findIndex')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/wishlist
+        Method: DELETE
+        Stack: TypeError: Cannot read properties of undefined (reading 'findIndex')
+    at removeFromWishList (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/wishListController.js:100:33)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:117:3)
+    at handle (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:295:15
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:600:14)
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:610:14)
+    at processParams (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:664:3)
+
+Time: 2025-11-10T13:34:24.347Z
+        Message: Cannot read properties of undefined (reading 'findIndex')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/wishlist
+        Method: DELETE
+        Stack: TypeError: Cannot read properties of undefined (reading 'findIndex')
+    at removeFromWishList (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/wishListController.js:100:33)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:117:3)
+    at handle (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:295:15
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:600:14)
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:610:14)
+    at processParams (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:664:3)
+
+Time: 2025-11-11T13:42:48.535Z
+        Message: cartProduct is not defined
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/cart
+        Method: GET
+        Stack: ReferenceError: cartProduct is not defined
+    at getUserCart (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/cartController.js:13:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-11T13:43:45.220Z
+        Message: cartProduct is not defined
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/cart
+        Method: GET
+        Stack: ReferenceError: cartProduct is not defined
+    at getUserCart (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/cartController.js:13:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-11T13:45:36.545Z
+        Message: Cannot read properties of undefined (reading 'count')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/cart/count
+        Method: GET
+        Stack: TypeError: Cannot read properties of undefined (reading 'count')
+    at getUserCartCount (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/cartController.js:51:57)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:117:3)
+    at handle (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:295:15
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:600:14)
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:610:14)
+    at processParams (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:664:3)
+
+Time: 2025-11-11T13:45:59.325Z
+        Message: Cannot read properties of undefined (reading 'length')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/cart/count
+        Method: GET
+        Stack: TypeError: Cannot read properties of undefined (reading 'length')
+    at getUserCartCount (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/cartController.js:51:57)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:117:3)
+    at handle (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:295:15
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:600:14)
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:610:14)
+    at processParams (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:664:3)
+
+Time: 2025-11-11T13:47:25.981Z
+        Message: Cannot read properties of undefined (reading 'length')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/cart/count
+        Method: GET
+        Stack: TypeError: Cannot read properties of undefined (reading 'length')
+    at getUserCartCount (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/cartController.js:51:57)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:117:3)
+    at handle (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:295:15
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:600:14)
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:610:14)
+    at processParams (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:664:3)
+
+Time: 2025-11-11T13:49:17.152Z
+        Message: Cannot read properties of undefined (reading 'length')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/cart/count
+        Method: GET
+        Stack: TypeError: Cannot read properties of undefined (reading 'length')
+    at getUserCartCount (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/cartController.js:51:57)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:117:3)
+    at handle (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:295:15
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:600:14)
+    at param (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:610:14)
+    at processParams (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:664:3)
+
+Time: 2025-11-13T07:47:48.353Z
+        Message: Cast to ObjectId failed for value "d" (type string) at path "_id" for model "Product"
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/cart
+        Method: POST
+        Stack: CastError: Cast to ObjectId failed for value "d" (type string) at path "_id" for model "Product"
+    at SchemaObjectId.cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schema/objectId.js:251:11)
+    at SchemaType.applySetters (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1258:12)
+    at SchemaType.castForQuery (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1694:17)
+    at cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/cast.js:390:32)
+    at Query.cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:5060:12)
+    at Query._castConditions (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:2374:10)
+    at model.Query._findOne (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:2697:8)
+    at model.Query.exec (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:4627:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async addToCart (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/cartController.js:116:21)
+
+Time: 2025-11-13T07:51:44.781Z
+        Message: Model.find() no longer accepts a callback
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/cart
+        Method: POST
+        Stack: MongooseError: Model.find() no longer accepts a callback
+    at Function.find (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/model.js:2084:11)
+    at addToCart (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/cartController.js:127:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-13T07:53:42.925Z
+        Message: CartProduct validation failed: prodcutImage: Path `prodcutImage` is required.
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/cart
+        Method: POST
+        Stack: ValidationError: CartProduct validation failed: prodcutImage: Path `prodcutImage` is required.
+    at Document.invalidate (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/document.js:3358:32)
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/document.js:3119:17
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1416:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+
+Time: 2025-11-13T07:54:48.779Z
+        Message: Cannot read properties of undefined (reading 'push')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/cart
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'push')
+    at addToCart (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/cartController.js:176:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-13T07:55:22.465Z
+        Message: Cannot read properties of undefined (reading 'push')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/cart
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'push')
+    at addToCart (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/cartController.js:176:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-13T07:55:56.240Z
+        Message: Cannot read properties of undefined (reading 'push')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/cart
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'push')
+    at addToCart (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/cartController.js:176:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-13T07:56:24.244Z
+        Message: Cannot read properties of undefined (reading 'push')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/cart
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'push')
+    at addToCart (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/cartController.js:176:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-13T07:56:45.881Z
+        Message: user.save is not a function
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/cart
+        Method: POST
+        Stack: TypeError: user.save is not a function
+    at addToCart (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/cartController.js:176:16)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-13T07:57:26.885Z
+        Message: Cannot read properties of undefined (reading 'push')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/cart
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'push')
+    at addToCart (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/cartController.js:175:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-13T07:58:12.799Z
+        Message: Cannot read properties of undefined (reading 'push')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/cart
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'push')
+    at addToCart (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/cartController.js:175:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-13T08:02:35.699Z
+        Message: Cannot read properties of undefined (reading 'push')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/cart
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'push')
+    at addToCart (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/cartController.js:175:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-14T09:55:47.927Z
+        Message: mongoose is not defined
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/cart
+        Method: POST
+        Stack: ReferenceError: mongoose is not defined
+    at authorizePostRequests (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/middleware/authorization.js:54:7)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:342:13)
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:297:9
+    at processParams (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:582:12)
+    at Immediate.next [as _onImmediate] (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:291:5)
+    at process.processImmediate (node:internal/timers:485:21)
+
+Time: 2025-11-15T04:39:48.509Z
+        Message: Cannot read properties of undefined (reading 'user')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/wishlist
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'user')
+    at authorizePostRequests (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/middleware/authorization.js:32:18)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:342:13)
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:297:9
+    at processParams (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:582:12)
+    at Immediate.next [as _onImmediate] (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:291:5)
+    at process.processImmediate (node:internal/timers:485:21)
+
+Time: 2025-11-15T04:45:14.315Z
+        Message: Cannot read properties of undefined (reading 'productId')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/wishlist
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'productId')
+    at addToWishList (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/wishListController.js:51:44)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-15T04:46:21.075Z
+        Message: Cannot read properties of undefined (reading 'productId')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/wishlist
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'productId')
+    at addToWishList (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/wishListController.js:51:44)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-15T04:49:19.144Z
+        Message: Cannot read properties of undefined (reading 'productId')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/wishlist
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'productId')
+    at addToWishList (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/wishListController.js:53:44)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-15T04:49:56.373Z
+        Message: Cannot read properties of undefined (reading 'productId')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/wishlist
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'productId')
+    at addToWishList (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/wishListController.js:52:44)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-15T04:50:40.991Z
+        Message: Cannot read properties of undefined (reading 'productId')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/wishlist
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'productId')
+    at addToWishList (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/wishListController.js:53:44)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-15T04:51:01.380Z
+        Message: Cannot read properties of undefined (reading 'productId')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/wishlist
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'productId')
+    at addToWishList (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/wishListController.js:53:44)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-11-15T04:57:33.423Z
+        Message: Cannot read properties of undefined (reading 'productId')
+        URL Path: /api/v1/users/68d4cd6de05f670905adab36/wishlist
+        Method: POST
+        Stack: TypeError: Cannot read properties of undefined (reading 'productId')
+    at addToWishList (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/wishListController.js:51:44)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-12-07T08:53:32.571Z
+        Message: Expected double-quoted property name in JSON at position 39 (line 3 column 1)
+        URL Path: /api/v1/auth/login
+        Method: POST
+        Stack: SyntaxError: Expected double-quoted property name in JSON at position 39 (line 3 column 1)
+    at JSON.parse (<anonymous>)
+    at parse (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/body-parser/lib/types/json.js:77:19)
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/body-parser/lib/read.js:123:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+    at invokeCallback (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:238:16)
+    at done (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:519:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+
+Time: 2025-12-07T08:53:47.432Z
+        Message: Expected double-quoted property name in JSON at position 39 (line 3 column 1)
+        URL Path: /api/v1/auth/login
+        Method: POST
+        Stack: SyntaxError: Expected double-quoted property name in JSON at position 39 (line 3 column 1)
+    at JSON.parse (<anonymous>)
+    at parse (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/body-parser/lib/types/json.js:77:19)
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/body-parser/lib/read.js:123:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+    at invokeCallback (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:238:16)
+    at done (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:519:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+
+Time: 2025-12-27T08:59:47.459Z
+        Message: getaddrinfo EAI_AGAIN ac-mzhgkzk-shard-00-00.pjvh6qj.mongodb.net
+        URL Path: /api/v1/auth/login
+        Method: POST
+        Stack: MongoServerSelectionError: getaddrinfo EAI_AGAIN ac-mzhgkzk-shard-00-00.pjvh6qj.mongodb.net
+    at Topology.selectServer (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/sdam/topology.js:326:38)
+    at async tryOperation (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/operations/execute_operation.js:145:18)
+    at async executeOperation (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/operations/execute_operation.js:75:16)
+    at async FindCursor._initialize (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/cursor/find_cursor.js:61:26)
+    at async FindCursor.cursorInit (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/cursor/abstract_cursor.js:632:27)
+    at async FindCursor.fetchBatch (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/cursor/abstract_cursor.js:666:13)
+    at async FindCursor.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/cursor/abstract_cursor.js:342:17)
+    at async Collection.findOne (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/collection.js:277:21)
+    at async model.Query._findOne (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:2710:15)
+    at async model.Query.exec (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:4627:63)
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Time: 2025-12-27T11:56:38.091Z
+        Message: User not found.Check you email and try again
+        URL Path: /api/v1/auth/login
+        Method: POST
+        Stack: Error: User not found.Check you email and try again
+    at login (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:62:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-12-27T11:56:42.687Z
+        Message: User not found.Check you email and try again
+        URL Path: /api/v1/auth/login
+        Method: POST
+        Stack: Error: User not found.Check you email and try again
+    at login (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:62:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-12-27T11:56:46.364Z
+        Message: User not found.Check you email and try again
+        URL Path: /api/v1/auth/login
+        Method: POST
+        Stack: Error: User not found.Check you email and try again
+    at login (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:62:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-12-27T11:58:08.075Z
+        Message: response is not defined
+        URL Path: /api/v1/auth/login
+        Method: POST
+        Stack: ReferenceError: response is not defined
+    at login (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:62:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-12-27T11:58:12.955Z
+        Message: response is not defined
+        URL Path: /api/v1/auth/login
+        Method: POST
+        Stack: ReferenceError: response is not defined
+    at login (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:62:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-12-31T06:13:17.684Z
+        Message: jwt is not defined
+        URL Path: /api/v1/auth/verify-token
+        Method: POST
+        Stack: ReferenceError: jwt is not defined
+    at verifyToken (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:102:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-12-31T06:15:22.493Z
+        Message: jwt is not defined
+        URL Path: /api/v1/auth/verify-token
+        Method: POST
+        Stack: ReferenceError: jwt is not defined
+    at verifyToken (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:102:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-12-31T06:16:55.627Z
+        Message: jwt is not defined
+        URL Path: /api/v1/auth/verify-token
+        Method: POST
+        Stack: ReferenceError: jwt is not defined
+    at verifyToken (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:103:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-12-31T06:19:54.972Z
+        Message: jwt is not defined
+        URL Path: /api/v1/auth/verify-token
+        Method: POST
+        Stack: ReferenceError: jwt is not defined
+    at verifyToken (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:105:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-12-31T06:21:26.693Z
+        Message: jwt is not defined
+        URL Path: /api/v1/auth/verify-token
+        Method: POST
+        Stack: ReferenceError: jwt is not defined
+    at verifyToken (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:105:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-12-31T06:24:18.021Z
+        Message: jwt is not defined
+        URL Path: /api/v1/auth/verify-token
+        Method: POST
+        Stack: ReferenceError: jwt is not defined
+    at verifyToken (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:104:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2025-12-31T06:31:45.722Z
+        Message: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "User"
+        URL Path: /api/v1/auth/verify-token
+        Method: POST
+        Stack: CastError: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "User"
+    at SchemaObjectId.cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schema/objectId.js:251:11)
+    at SchemaType.applySetters (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1258:12)
+    at SchemaType.castForQuery (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1694:17)
+    at cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/cast.js:390:32)
+    at Query.cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:5060:12)
+    at Query._castConditions (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:2374:10)
+    at model.Query._findOne (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:2697:8)
+    at model.Query.exec (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:4627:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async verifyToken (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:106:18)
+
+Time: 2025-12-31T06:33:58.797Z
+        Message: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "User"
+        URL Path: /api/v1/auth/verify-token
+        Method: POST
+        Stack: CastError: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "User"
+    at SchemaObjectId.cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schema/objectId.js:251:11)
+    at SchemaType.applySetters (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1258:12)
+    at SchemaType.castForQuery (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1694:17)
+    at cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/cast.js:390:32)
+    at Query.cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:5060:12)
+    at Query._castConditions (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:2374:10)
+    at model.Query._findOne (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:2697:8)
+    at model.Query.exec (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:4627:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async verifyToken (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:106:18)
+

@@ -13,6 +13,7 @@ const userSchema = mongoose.Schema(
             trim: true,
         },
         password: {type: String,required:true,trim: true,select: false},
+        paymentCustomerId: String,
         street: String,
         apartment: String,
         city: String,

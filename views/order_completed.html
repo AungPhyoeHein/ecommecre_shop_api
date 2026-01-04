@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Completed</title>
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+        overflow-x: hidden;
+      }
+      /* h1, */
+      h2,
+      h3,
+      h4,
+      span {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .bg-theme {
+        position: absolute;
+        top: -200px;
+        left: -200px;
+        height: 500px;
+        width: 200%;
+        z-index: -1;
+        rotate: -8deg;
+        background: rgb(15, 49, 15);
+      }
+      .status-icon-container {
+        display: flex;
+        height: 100px;
+        margin-top: 50px;
+        justify-content: center;
+        align-items: center;
+      }
+      .white-theme {
+        position: absolute;
+        height: 80px;
+        width: 80px;
+        border-radius: 50%;
+        z-index: 2;
+        background: white;
+      }
+
+      .order-no-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        div {
+          background-color: rgb(255, 196, 0);
+          border-radius: 10px;
+          margin: 40px 0 0 0;
+          padding: 15px;
+          letter-spacing: 1.5px;
+        }
+      }
+
+      th {
+        width: auto;
+        font-size: large;
+        font-weight: 500;
+      }
+      td {
+        font-size: small;
+        font-weight: 100;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-theme"></div>
+    <div class="status-icon-container">
+      <div class="white-theme"></div>
+      <img
+        src="./images/order_completed_status.png"
+        style="z-index: 2"
+        alt=""
+        height="100"
+      />
+    </div>
+
+    <div style="text-align: center; color: white">
+      <h1>Order Completed</h1>
+      <span>order has been successfully completed</span>
+    </div>
+
+    <div class="order-no-container"><div>Order No #38207</div></div>
+
+    <div>
+      <table style="width: 100%;text-align: center;font-weight: 200;">
+        <tr>
+          <th>Date</th>
+          <th>Billing Address</th>
+          <th>Payment Methods</th>
+        </tr>
+        <tr>
+            <td>June 25, 2005</td>
+            <td>566 Mandalay</td>
+            <td>Master Card</td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
