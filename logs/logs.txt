@@ -584,3 +584,209 @@ Time: 2025-12-31T06:33:58.797Z
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async verifyToken (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/authController.js:106:18)
 
+Time: 2026-01-25T15:24:04.604Z
+        Message: Operation `users.findOne()` buffering timed out after 10000ms
+        URL Path: /api/v1/auth/login
+        Method: POST
+        Stack: MongooseError: Operation `users.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/drivers/node-mongodb-native/collection.js:187:23)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+
+Time: 2026-01-25T15:24:23.345Z
+        Message: Operation `users.findOne()` buffering timed out after 10000ms
+        URL Path: /api/v1/auth/login
+        Method: POST
+        Stack: MongooseError: Operation `users.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/drivers/node-mongodb-native/collection.js:187:23)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+
+Time: 2026-01-25T15:24:58.621Z
+        Message: Operation `users.findOne()` buffering timed out after 10000ms
+        URL Path: /api/v1/auth/login
+        Method: POST
+        Stack: MongooseError: Operation `users.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/drivers/node-mongodb-native/collection.js:187:23)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+
+Time: 2026-01-25T15:25:20.484Z
+        Message: Operation `users.findOne()` buffering timed out after 10000ms
+        URL Path: /api/v1/auth/login
+        Method: POST
+        Stack: MongooseError: Operation `users.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/drivers/node-mongodb-native/collection.js:187:23)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+
+Time: 2026-02-13T17:46:31.570Z
+        Message: ai_helper is not defined
+        URL Path: /api/v1/admin/products
+        Method: POST
+        Stack: ReferenceError: ai_helper is not defined
+    at addProduct (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/productController.js:88:25)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2026-02-13T17:48:17.104Z
+        Message: ai_helper is not defined
+        URL Path: /api/v1/admin/products
+        Method: POST
+        Stack: ReferenceError: ai_helper is not defined
+    at addProduct (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/productController.js:88:25)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2026-02-13T18:17:36.265Z
+        Message: Cannot read properties of null (reading 'vector_data')
+        URL Path: /api/v1/admin/products
+        Method: POST
+        Stack: TypeError: Cannot read properties of null (reading 'vector_data')
+    at addProduct (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/productController.js:91:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2026-02-13T18:18:19.240Z
+        Message: Cannot read properties of null (reading 'vector_data')
+        URL Path: /api/v1/admin/products
+        Method: POST
+        Stack: TypeError: Cannot read properties of null (reading 'vector_data')
+    at addProduct (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/productController.js:92:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2026-02-13T18:18:46.256Z
+        Message: product is not defined
+        URL Path: /api/v1/admin/products
+        Method: POST
+        Stack: ReferenceError: product is not defined
+    at addProduct (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/productController.js:94:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2026-02-13T18:43:40.841Z
+        Message: Cannot read properties of null (reading 'vector_data')
+        URL Path: /api/v1/admin/products
+        Method: POST
+        Stack: TypeError: Cannot read properties of null (reading 'vector_data')
+    at addProduct (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/productController.js:92:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2026-02-13T18:45:00.121Z
+        Message: Cannot read properties of null (reading 'vector_data')
+        URL Path: /api/v1/admin/products
+        Method: POST
+        Stack: TypeError: Cannot read properties of null (reading 'vector_data')
+    at addProduct (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/productController.js:92:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2026-02-13T18:45:04.138Z
+        Message: Cannot read properties of null (reading 'vector_data')
+        URL Path: /api/v1/admin/products
+        Method: POST
+        Stack: TypeError: Cannot read properties of null (reading 'vector_data')
+    at addProduct (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/productController.js:92:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2026-02-13T18:45:33.455Z
+        Message: Cannot read properties of null (reading 'vector_data')
+        URL Path: /api/v1/admin/products
+        Method: POST
+        Stack: TypeError: Cannot read properties of null (reading 'vector_data')
+    at addProduct (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/productController.js:92:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2026-02-13T18:45:48.934Z
+        Message: Cannot read properties of null (reading 'vector_data')
+        URL Path: /api/v1/admin/products
+        Method: POST
+        Stack: TypeError: Cannot read properties of null (reading 'vector_data')
+    at addProduct (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/productController.js:92:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2026-02-13T18:47:20.194Z
+        Message: Cannot read properties of null (reading 'vector_data')
+        URL Path: /api/v1/admin/products
+        Method: POST
+        Stack: TypeError: Cannot read properties of null (reading 'vector_data')
+    at addProduct (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/productController.js:92:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Time: 2026-02-13T19:42:39.120Z
+        Message: Cast to ObjectId failed for value "Convert this text into a 768-dimension vector array. \n' +
+  '             Return ONLY a flat JSON array of numbers." (type string) at path "_id" for model "Category"
+        URL Path: /api/v1/admin/products
+        Method: POST
+        Stack: CastError: Cast to ObjectId failed for value "Convert this text into a 768-dimension vector array. \n' +
+  '             Return ONLY a flat JSON array of numbers." (type string) at path "_id" for model "Category"
+    at SchemaObjectId.cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schema/objectId.js:251:11)
+    at SchemaType.applySetters (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1258:12)
+    at SchemaType.castForQuery (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/schemaType.js:1694:17)
+    at cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/cast.js:390:32)
+    at Query.cast (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:5060:12)
+    at Query._castConditions (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:2374:10)
+    at model.Query._findOne (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:2697:8)
+    at model.Query.exec (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/lib/query.js:4627:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async addProduct (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/admin/productController.js:55:22)
+
+Time: 2026-02-14T12:20:41.840Z
+        Message: ai_helper is not defined
+        URL Path: /api/v1/assistant?message=%22Hi%20I%20want%20to%20find%20premiun%20laptop%20can%20you%20search%20for%20me
+        Method: GET
+        Stack: ReferenceError: ai_helper is not defined
+    at chatWithAiAssistant (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/controllers/aiAssistantController.js:11:24)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/route.js:117:3)
+    at handle (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/lib/layer.js:152:17)
+    at /home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:295:15
+    at processParams (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:582:12)
+    at next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:291:5)
+    at Function.handle (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/router/index.js:186:3)
+
+Time: 2026-02-14T12:24:41.473Z
+        Message: PlanExecutor error during aggregation :: caused by :: vector field is indexed with 768 dimensions but queried with 608
+        URL Path: /api/v1/assistant?message=%22Hi%20I%20want%20to%20find%20premiun%20laptop%20can%20you%20search%20for%20me
+        Method: GET
+        Stack: MongoServerError: PlanExecutor error during aggregation :: caused by :: vector field is indexed with 768 dimensions but queried with 608
+    at Connection.sendCommand (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/cmap/connection.js:305:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Connection.command (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/cmap/connection.js:333:26)
+    at async Server.command (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/sdam/server.js:171:29)
+    at async AggregateOperation.executeCommand (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/operations/command.js:76:16)
+    at async AggregateOperation.execute (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/operations/aggregate.js:86:16)
+    at async tryOperation (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/operations/execute_operation.js:207:20)
+    at async executeOperation (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/operations/execute_operation.js:75:16)
+    at async AggregationCursor._initialize (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/cursor/aggregation_cursor.js:56:26)
+    at async AggregationCursor.cursorInit (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/cursor/abstract_cursor.js:632:27)
+
+Time: 2026-02-14T12:25:04.451Z
+        Message: PlanExecutor error during aggregation :: caused by :: vector field is indexed with 768 dimensions but queried with 0
+        URL Path: /api/v1/assistant?message=Hi%20I%20want%20to%20find%20premiun%20laptop%20can%20you%20search%20for%20me
+        Method: GET
+        Stack: MongoServerError: PlanExecutor error during aggregation :: caused by :: vector field is indexed with 768 dimensions but queried with 0
+    at Connection.sendCommand (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/cmap/connection.js:305:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Connection.command (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/cmap/connection.js:333:26)
+    at async Server.command (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/sdam/server.js:171:29)
+    at async AggregateOperation.executeCommand (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/operations/command.js:76:16)
+    at async AggregateOperation.execute (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/operations/aggregate.js:86:16)
+    at async tryOperation (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/operations/execute_operation.js:207:20)
+    at async executeOperation (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/operations/execute_operation.js:75:16)
+    at async AggregationCursor._initialize (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/cursor/aggregation_cursor.js:56:26)
+    at async AggregationCursor.cursorInit (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/cursor/abstract_cursor.js:632:27)
+
+Time: 2026-02-14T12:29:35.136Z
+        Message: PlanExecutor error during aggregation :: caused by :: vector field is indexed with 768 dimensions but queried with 528
+        URL Path: /api/v1/assistant?message=Hi%20I%20want%20to%20find%20premiun%20laptop%20can%20you%20search%20for%20me
+        Method: GET
+        Stack: MongoServerError: PlanExecutor error during aggregation :: caused by :: vector field is indexed with 768 dimensions but queried with 528
+    at Connection.sendCommand (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/cmap/connection.js:305:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Connection.command (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/cmap/connection.js:333:26)
+    at async Server.command (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/sdam/server.js:171:29)
+    at async AggregateOperation.executeCommand (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/operations/command.js:76:16)
+    at async AggregateOperation.execute (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/operations/aggregate.js:86:16)
+    at async tryOperation (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/operations/execute_operation.js:207:20)
+    at async executeOperation (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/operations/execute_operation.js:75:16)
+    at async AggregationCursor._initialize (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/cursor/aggregation_cursor.js:56:26)
+    at async AggregationCursor.cursorInit (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongodb/lib/cursor/abstract_cursor.js:632:27)
+
