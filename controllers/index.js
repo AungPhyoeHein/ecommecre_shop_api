@@ -8,5 +8,6 @@ const cartController = require('./cartController.js');
 const checkoutController = require('./checkoutController.js');
 const orderController = require('./orderController.js');
 const notFoundController = require('./notFoundController.js');
+const aiAssistantController = require('./aiAssistantController.js');
 
-module.exports = {authController,userController,categoryController,productController,reviewController,wishListController,cartController,checkoutController,orderController,notFoundController};
+module.exports = {authController,userController,categoryController,productController,reviewController,wishListController,cartController,checkoutController,orderController,aiAssistantController,notFoundController};

@@ -45,6 +45,18 @@ const productSchema = mongoose.Schema({
     },
     genderAgeCategory: {type:String,enum: ['men','women','unisex','kids']},
     countInStock: {type:Number,required: true,min:0,max:255},
+    vector_data: {
+        type:[Number],
+        default: []
+    },
+    ai_analysis: {
+        type: String,
+        default: ''
+    },
+    aiStatus: {
+        type: String,
+        default: 'pending'
+    }
 },{
         timestamps: true
     })

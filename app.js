@@ -9,7 +9,7 @@ require('dotenv/config.js')
 
 
 const {errorHandler,tokenRefreshHandler} = require('./middleware');
-const {authRouter, productRouter, userRouter, adminRouter, categoryRouter, checkoutRouter, orderRouter} = require('./routers');
+const {authRouter, productRouter, userRouter, adminRouter, categoryRouter, checkoutRouter, orderRouter,assistantRouter} = require('./routers');
 const { notFoundController } = require('./controllers');
 const autJwt = require('./middleware/jwt');
 const { authorizePostRequests } = require('./middleware/authorization.js');
@@ -43,6 +43,8 @@ app.use(`${baseUrl}/categories`,categoryRouter);
 app.use(`${baseUrl}/products`,productRouter);
 app.use(`${baseUrl}/checkout`,checkoutRouter);
 app.use(`${baseUrl}/orders`,orderRouter);
+app.use(`${baseUrl}/assistant`,assistantRouter);
+
 
 app.use('/public/uploads', express.static(path.join(__dirname, 'public/uploads')));
 // app.use(`${baseUrl}/public`,express.static(__dirname,'/public'));
