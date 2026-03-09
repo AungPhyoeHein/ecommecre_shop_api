@@ -14,6 +14,11 @@ const chatWithAiAssistant = async (req, res, next) => {
     const aiResponse = await ai_helper.generateVectorDataForSearch({
       prompt: message,
     });
+
+    if (!aiResponse) {
+      return res.status(500).json({ message: "AI Assistant is currently unavailable." });
+    }
+
     const queryVector = aiResponse["vector_data"];
 
     // ၁။ FAQ ရှာပြီး AI နဲ့ ပြန်ဖြေတဲ့အပိုင်း
@@ -24,10 +29,20 @@ const chatWithAiAssistant = async (req, res, next) => {
             index: "faq_vector_index",
             path: "vector_data",
             queryVector: queryVector,
-            numCandidates: 50, // ၅ ခုပဲ ယူမှာမို့ numCandidates ကို လျှော့ထားလို့ရပါတယ်
+            numCandidates: 50,
             limit: 3,
           },
         },
+        {
+          $addFields: {
+            score: { $meta: "vectorSearchScore" },
+          },
+        },
+        {
+          $match: {
+            score: { $gte: 0.725 }
+          }
+        }
       ]);
 
       if (faqResults.length > 0) {
@@ -38,8 +53,16 @@ const chatWithAiAssistant = async (req, res, next) => {
           userPrompt: message,
           context: context,
         });
-        return res.json({ type: "faq", message: finalAiAnswer });
+        return res.json({ 
+          type: "faq", 
+          message: finalAiAnswer,
+          response: aiResponse["response_text"] 
+        });
       }
+      return res.status(404).json({ 
+        type: "faq",
+        message: "ကျွန်တော်တို့ ဆိုင်နဲ့ပတ်သက်တဲ့ ဒီအချက်အလက်ကို မတွေ့ပါဘူးဗျာ။ (No similar information found about us)"
+      });
     }
 
     // ၂။ Product ရှာတဲ့အပိုင်း (အနီးစပ်ဆုံး ၅ ခု)
@@ -51,26 +74,38 @@ const chatWithAiAssistant = async (req, res, next) => {
             path: "vector_data",
             queryVector: queryVector,
             numCandidates: 100,
-            limit: 5, // ဒီမှာ ၅ ခုပဲ ကန့်သတ်လိုက်ပါပြီ
+            limit: 5,
           },
         },
         {
           $addFields: {
-            score: { $meta: "vectorSearchScore" }, // ဘယ်လောက်နီးစပ်လဲဆိုတဲ့ score ကိုပါ ထည့်ကြည့်လို့ရတယ်
+            score: { $meta: "vectorSearchScore" },
           },
         },
+        {
+          $match: {
+            score: { $gte: 0.725 }
+          }
+        }
       ]);
 
-      if (products.length === 0) {
-        return res
-          .status(404)
-          .json({ message: "ရှာဖွေနေတဲ့ ပစ္စည်း မတွေ့ပါဘူးဗျာ။" });
+      if (products.length > 0) {
+        console.log("Product Scores for query:", message, products.map(p => ({ name: p.name, score: p.score })));
+        return res.json({ 
+          type: "products", 
+          data: products,
+          response: aiResponse["response_text"]
+        });
       }
-      return res.json({ type: "products", data: products });
+      // If not found, send only message
+      return res.status(404).json({ 
+        type: "products",
+        message: "ရှာဖွေနေတဲ့ ပစ္စည်းနဲ့ ဆင်တူတဲ့ ပစ္စည်း မတွေ့ပါဘူးဗျာ။ (There is no product similar to that product)"
+      });
     }
 
     // ၃။ တခြား စကားပြောတဲ့ မေးခွန်းများ
-    return res.json({ type: "chat", message: aiResponse["response_text"] });
+    return res.json({ type: "chat", response: aiResponse["response_text"] });
   } catch (err) {
     console.error("Search Error:", err);
     next(err);

@@ -9,6 +9,7 @@ function autJwt() {
             `${API}/auth/forgot-password`,
             `${API}/auth/verify-otp`,
             `${API}/auth/reset-password`,
+            `${API}/assistant`,
             { url: /\/public\/uploads\/(.*)/, methods: ['GET'] }
         ]})
 }

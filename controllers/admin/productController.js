@@ -225,7 +225,6 @@ const editProduct = async (req, res, next) => {
 
         await Product.findByIdAndUpdate(req.params.id, {
           vector_data: aiResult.vector_data,
-          ai_analysis: aiResult.ai_analysis_summary,
           aiStatus: "completed",
         });
       } catch (aiError) {
