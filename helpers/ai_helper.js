@@ -150,7 +150,23 @@ const generateVectorDataForAddProduct = async (productInfo) => {
   
   try {
     const embeddingModel = genAI.getGenerativeModel({ model: "gemini-embedding-001" });
-    const textToEmbed = `${productInfo.name} ${productInfo.description}`;
+    
+    const attributes = [];
+    if (productInfo.name) attributes.push(`Name: ${productInfo.name}`);
+    if (productInfo.description) attributes.push(`Description: ${productInfo.description}`);
+    if (productInfo.categoryName) attributes.push(`Category: ${productInfo.categoryName}`);
+    if (productInfo.price) attributes.push(`Price: ${productInfo.price}`);
+    if (productInfo.genderAgeCategory) attributes.push(`Target Audience: ${productInfo.genderAgeCategory}`);
+    if (productInfo.colors && productInfo.colors.length > 0) attributes.push(`Colors: ${productInfo.colors.join(", ")}`);
+    if (productInfo.sizes && productInfo.sizes.length > 0) attributes.push(`Sizes: ${productInfo.sizes.join(", ")}`);
+
+    const textToEmbed = attributes.join(". ");
+    
+    if (!textToEmbed) {
+      console.warn("Warning: No product attributes to embed.");
+      return { vector_data: [] };
+    }
+
     const embeddingResult = await embeddingModel.embedContent({
       content: { parts: [{ text: textToEmbed }] },
       outputDimensionality: 768,

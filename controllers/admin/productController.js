@@ -91,13 +91,14 @@ const addProduct = async (req, res, next) => {
     }
 
     res.status(201).json(product);
-
+    
     // Run AI analysis in the background
     (async () => {
       try {
-        const aiResult = await ai_helper.generateVectorDataForAddProduct(
-          req.body,
-        );
+        const aiResult = await ai_helper.generateVectorDataForAddProduct({
+          ...product.toObject(),
+          categoryName: category.name,
+        });
 
         if (!aiResult) {
           throw new Error("AI analysis returned no result.");
@@ -215,9 +216,16 @@ const editProduct = async (req, res, next) => {
     // Run AI analysis in the background
     (async () => {
       try {
-        const aiResult = await ai_helper.generateVectorDataForAddProduct(
-          req.body,
-        );
+        let categoryName = "";
+        if (updatedProduct.category) {
+          const category = await Category.findById(updatedProduct.category);
+          if (category) categoryName = category.name;
+        }
+
+        const aiResult = await ai_helper.generateVectorDataForAddProduct({
+          ...updatedProduct.toObject(),
+          categoryName,
+        });
 
         if (!aiResult) {
           throw new Error("AI analysis returned no result.");
