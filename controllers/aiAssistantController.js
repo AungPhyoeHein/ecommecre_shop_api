@@ -11,25 +11,30 @@ const chatWithAiAssistant = async (req, res, next) => {
       return res.json({ type: "products", data: products });
     }
 
-    const aiResponse = await ai_helper.generateVectorDataForSearch({
-      prompt: message,
-    });
+    const intentResponse = await ai_helper.classifyIntent(message);
 
-    if (!aiResponse) {
+    if (!intentResponse) {
       return res.status(500).json({ message: "AI Assistant is currently unavailable." });
     }
 
-    const queryVector = aiResponse["vector_data"];
-
     // ၁။ FAQ ရှာပြီး AI နဲ့ ပြန်ဖြေတဲ့အပိုင်း
-    if (aiResponse["ask_about_us"] === true) {
+    if (intentResponse.ask_about_us === true) {
+      const vectorResponse = await ai_helper.generateVectorDataForSearch({
+        prompt: message, // Use full message for FAQ embedding
+      });
+
+      if (!vectorResponse) {
+        return res.status(500).json({ message: "Vector search unavailable." });
+      }
+
+      const queryVector = vectorResponse.vector_data;
       const faqResults = await Faq.aggregate([
         {
           $vectorSearch: {
             index: "faq_vector_index",
             path: "vector_data",
             queryVector: queryVector,
-            numCandidates: 50,
+            numCandidates: 100,
             limit: 3,
           },
         },
@@ -40,7 +45,7 @@ const chatWithAiAssistant = async (req, res, next) => {
         },
         {
           $match: {
-            score: { $gte: 0.725 }
+            score: { $gte: 0.6 }
           }
         }
       ]);
@@ -55,18 +60,30 @@ const chatWithAiAssistant = async (req, res, next) => {
         });
         return res.json({ 
           type: "faq", 
-          message: finalAiAnswer,
-          response: aiResponse["response_text"] 
+          message: finalAiAnswer
         });
       }
+      const notFoundMessage = await ai_helper.generateNotFoundResponse({
+        userPrompt: message,
+        type: "faq"
+      });
       return res.status(404).json({ 
         type: "faq",
-        message: "ကျွန်တော်တို့ ဆိုင်နဲ့ပတ်သက်တဲ့ ဒီအချက်အလက်ကို မတွေ့ပါဘူးဗျာ။ (No similar information found about us)"
+        message: notFoundMessage
       });
     }
 
     // ၂။ Product ရှာတဲ့အပိုင်း (အနီးစပ်ဆုံး ၅ ခု)
-    if (aiResponse["is_product_search"] === true) {
+    if (intentResponse.is_product_search === true) {
+      const vectorResponse = await ai_helper.generateVectorDataForSearch({
+        prompt: intentResponse.search_query || message,
+      });
+
+      if (!vectorResponse) {
+        return res.status(500).json({ message: "Vector search unavailable." });
+      }
+
+      const queryVector = vectorResponse.vector_data;
       const products = await Product.aggregate([
         {
           $vectorSearch: {
@@ -84,28 +101,31 @@ const chatWithAiAssistant = async (req, res, next) => {
         },
         {
           $match: {
-            score: { $gte: 0.725 }
+            score: { $gte: 0.8 }
           }
         }
       ]);
 
       if (products.length > 0) {
-        console.log("Product Scores for query:", message, products.map(p => ({ name: p.name, score: p.score })));
+        console.log("Product Search Scores:", products.map(p => ({ name: p.name, score: p.score })));
         return res.json({ 
           type: "products", 
-          data: products,
-          response: aiResponse["response_text"]
+          data: products
         });
       }
-      // If not found, send only message
+      // If not found, generate a dynamic AI response
+      const notFoundMessage = await ai_helper.generateNotFoundResponse({
+        userPrompt: message,
+        type: "products"
+      });
       return res.status(404).json({ 
         type: "products",
-        message: "ရှာဖွေနေတဲ့ ပစ္စည်းနဲ့ ဆင်တူတဲ့ ပစ္စည်း မတွေ့ပါဘူးဗျာ။ (There is no product similar to that product)"
+        message: notFoundMessage
       });
     }
 
     // ၃။ တခြား စကားပြောတဲ့ မေးခွန်းများ
-    return res.json({ type: "chat", response: aiResponse["response_text"] });
+    return res.json({ type: "chat", response: intentResponse.response_text });
   } catch (err) {
     console.error("Search Error:", err);
     next(err);

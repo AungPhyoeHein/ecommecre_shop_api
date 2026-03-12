@@ -1,9 +1,10 @@
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+const { GoogleGenerativeAI, TaskType } = require('@google/generative-ai');
+require('dotenv').config();
 
-// API Key ထည့်ပါ
-const genAI = new GoogleGenerativeAI('AIzaSyChehNYEEqSdmfhv2oYGV7HEtZFfi_62Ok');
+// API Key from environment variables
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-const generateVectorDataForSearch = async ({ prompt }) => {
+const classifyIntent = async (prompt) => {
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite-preview" });
     const classificationPrompt = `
@@ -19,7 +20,7 @@ const generateVectorDataForSearch = async ({ prompt }) => {
             "is_product_search": boolean,
             "ask_about_us": boolean,
             "telling_other_question": boolean,
-            "search_query": "string" (A concise English search term like "car", "macbook pro", "contact info". Leave empty if not searching. For product searches, use specific terms that describe the product exactly.)
+            "search_query": "string" (A concise English search term. For products, use ONLY the specific product name or category. Leave empty if not searching.)
           }
       
       User Input: "${prompt}"
@@ -27,18 +28,13 @@ const generateVectorDataForSearch = async ({ prompt }) => {
 
     const result = await model.generateContent(classificationPrompt);
     let aiText = result.response.text().trim();
-    console.log("Raw AI Classification Response:", aiText);
-    
-    // Clean up JSON response from AI
     aiText = aiText.replace(/```json/g, "").replace(/```/g, "").trim();
-    console.log("Cleaned AI Classification JSON:", aiText);
     
     let intent;
     try {
       intent = JSON.parse(aiText);
     } catch (parseError) {
       console.error("JSON Parse Error for Intent:", parseError);
-      // Fallback intent if AI fails to return valid JSON
       intent = {
         is_product_search: false,
         ask_about_us: false,
@@ -47,75 +43,78 @@ const generateVectorDataForSearch = async ({ prompt }) => {
       };
     }
 
-    // If it's a search or about us, we need vector data
-    let vectorData = [];
-    if (intent.is_product_search || intent.ask_about_us) {
-      const embeddingModel = genAI.getGenerativeModel({ model: "gemini-embedding-001" });
-      const embeddingResult = await embeddingModel.embedContent({
-        content: { parts: [{ text: intent.search_query || prompt }] },
-        outputDimensionality: 768,
-      });
-      vectorData = embeddingResult.embedding.values;
+    // Get response text
+    let responseText = "";
+    const chatModel = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite-preview" });
+    let chatPrompt = "";
+    
+    if (intent.telling_other_question) {
+      chatPrompt = `
+        You are a friendly customer service assistant for an e-commerce shop. 
+        User says: "${prompt}"
+        Respond politely in the SAME language as the user (If user speaks Burmese, respond in Burmese only. If user speaks English, respond in English only). Keep it brief.
+        Return ONLY a JSON object with a single "response" field:
+        { "response": "Your response here" }
+      `;
+    } else if (intent.is_product_search) {
+      chatPrompt = `
+        You are a friendly customer service assistant. The user is looking for products: "${prompt}".
+        Give a very brief, helpful response in the SAME language as the user.
+        Return ONLY a JSON object: { "response": "Your response here" }
+      `;
+    } else if (intent.ask_about_us) {
+      chatPrompt = `
+        You are a friendly customer service assistant. The user is asking about the shop: "${prompt}".
+        Give a very brief, helpful response in the SAME language as the user.
+        Return ONLY a JSON object: { "response": "Your response here" }
+      `;
     }
 
-    // Always get a response text for products or ask_about_us intents
-    let responseText = "";
-    if (intent.telling_other_question || intent.is_product_search || intent.ask_about_us) {
-      const chatModel = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite-preview" });
-      let chatPrompt = "";
-      
-      if (intent.telling_other_question) {
-        chatPrompt = `
-          You are a friendly customer service assistant for an e-commerce shop. 
-          User says: "${prompt}"
-          Respond politely. Keep it brief.
-          Return ONLY a JSON object with a single "response" field:
-          { "response": "Your response here" }
-        `;
-      } else if (intent.is_product_search) {
-        chatPrompt = `
-          You are a friendly customer service assistant. The user is looking for products: "${prompt}".
-          Give a very brief, helpful response like "Let me find those products for you!" or "Searching for your items now...".
-          Return ONLY a JSON object: { "response": "Your response here" }
-        `;
-      } else if (intent.ask_about_us) {
-        chatPrompt = `
-          You are a friendly customer service assistant. The user is asking about the shop: "${prompt}".
-          Give a very brief, helpful response like "Let me check our store information for you!" or "Checking that for you now...".
-          Return ONLY a JSON object: { "response": "Your response here" }
-        `;
-      }
-
+    if (chatPrompt) {
       const chatResult = await chatModel.generateContent(chatPrompt);
       let chatResponse = chatResult.response.text();
-      console.log("Raw AI Chat Response:", chatResponse);
       chatResponse = chatResponse.replace(/```json/g, "").replace(/```/g, "").trim();
-      console.log("Cleaned AI Response Text:", chatResponse);
       try {
         const parsedChat = JSON.parse(chatResponse);
         responseText = parsedChat.response || chatResponse;
       } catch (e) {
-        console.error("JSON Parse Error for Response Text:", e);
         responseText = chatResponse;
       }
     }
 
-    return {
-      ...intent,
-      vector_data: vectorData,
-      response_text: responseText
-    };
+    return { ...intent, response_text: responseText };
   } catch (error) {
-    console.error("Vector Search Error:", error);
-    // Return a structured error response instead of null
+    console.error("Classify Intent Error:", error);
     return {
       is_product_search: false,
       ask_about_us: false,
       telling_other_question: true,
       search_query: "",
-      vector_data: [],
-      response_text: "I'm sorry, I'm having trouble processing your request right now. How can I help you with our products?"
+      response_text: "I'm sorry, I'm having trouble processing your request right now."
     };
+  }
+};
+
+const generateVectorDataForSearch = async ({ prompt }) => {
+  if (!prompt) {
+    console.error("Error: prompt is missing!");
+    return null;
+  }
+
+  try {
+    const embeddingModel = genAI.getGenerativeModel({ model: "gemini-embedding-001" });
+    const embeddingResult = await embeddingModel.embedContent({
+      content: { parts: [{ text: prompt }] },
+      taskType: TaskType.RETRIEVAL_QUERY,
+      outputDimensionality: 768,
+    });
+
+    return {
+      vector_data: embeddingResult.embedding.values
+    };
+  } catch (error) {
+    console.error("Vector Search Error:", error);
+    return null;
   }
 };
 
@@ -125,6 +124,10 @@ const generateFinalResponse = async ({ userPrompt, context }) => {
     const prompt = `
       You are a helpful customer service assistant for our e-commerce shop.
       Based on the following FAQ information, answer the user's question accurately and politely.
+      
+      IMPORTANT: Respond in the SAME language as the user's question. 
+      If user asks in Burmese, respond in Burmese only. 
+      If user asks in English, respond in English only.
       
       FAQ Context:
       ${context}
@@ -139,6 +142,32 @@ const generateFinalResponse = async ({ userPrompt, context }) => {
   } catch (error) {
     console.error("Final Response Error:", error);
     return "I'm sorry, I'm having trouble answering that right now.";
+  }
+};
+
+const generateNotFoundResponse = async ({ userPrompt, type }) => {
+  try {
+    const model = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite-preview" });
+    const prompt = `
+      You are a friendly customer service assistant for an e-commerce shop.
+      The user asked: "${userPrompt}"
+      We searched our ${type === 'products' ? 'product catalog' : 'store information'} but couldn't find anything matching their request.
+      
+      IMPORTANT: Respond in the SAME language as the user's question. 
+      If user speaks Burmese, respond in Burmese only. 
+      If user speaks English, respond in English only.
+      Keep it friendly and professional.
+      
+      Response:
+    `;
+
+    const result = await model.generateContent(prompt);
+    return result.response.text().trim();
+  } catch (error) {
+    console.error("Not Found Response Error:", error);
+    return type === 'products' 
+      ? "ရှာဖွေနေတဲ့ ပစ္စည်းနဲ့ ဆင်တူတဲ့ ပစ္စည်း မတွေ့ပါဘူးဗျာ။ (There is no product similar to that product)"
+      : "ကျွန်တော်တို့ ဆိုင်နဲ့ပတ်သက်တဲ့ ဒီအချက်အလက်ကို မတွေ့ပါဘူးဗျာ။ (No similar information found about us)";
   }
 };
 
@@ -169,6 +198,7 @@ const generateVectorDataForAddProduct = async (productInfo) => {
 
     const embeddingResult = await embeddingModel.embedContent({
       content: { parts: [{ text: textToEmbed }] },
+      taskType: TaskType.RETRIEVAL_DOCUMENT,
       outputDimensionality: 768,
     });
     
@@ -182,7 +212,9 @@ const generateVectorDataForAddProduct = async (productInfo) => {
 };
 
 module.exports = {
+  classifyIntent,
   generateVectorDataForSearch,
   generateVectorDataForAddProduct,
   generateFinalResponse,
+  generateNotFoundResponse,
 };

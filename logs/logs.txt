@@ -830,3 +830,19 @@ Time: 2026-03-07T06:26:32.315Z
     at async AggregationCursor._initialize (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongodb\lib\cursor\aggregation_cursor.js:56:26)
     at async AggregationCursor.cursorInit (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongodb\lib\cursor\abstract_cursor.js:632:27)
 
+Time: 2026-03-12T03:05:19.418Z
+        Message: PlanExecutor error during aggregation :: caused by :: vector field is indexed with 768 dimensions but queried with 3072
+        URL Path: /api/v1/assistant?message=i%20want%20a%20laptop.&type=text
+        Method: GET
+        Stack: MongoServerError: PlanExecutor error during aggregation :: caused by :: vector field is indexed with 768 dimensions but queried with 3072
+    at Connection.sendCommand (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongodb\lib\cmap\connection.js:305:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async Connection.command (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongodb\lib\cmap\connection.js:333:26)
+    at async Server.command (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongodb\lib\sdam\server.js:171:29)
+    at async AggregateOperation.executeCommand (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongodb\lib\operations\command.js:76:16)
+    at async AggregateOperation.execute (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongodb\lib\operations\aggregate.js:86:16)
+    at async tryOperation (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongodb\lib\operations\execute_operation.js:207:20)
+    at async executeOperation (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongodb\lib\operations\execute_operation.js:75:16)
+    at async AggregationCursor._initialize (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongodb\lib\cursor\aggregation_cursor.js:56:26)
+    at async AggregationCursor.cursorInit (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongodb\lib\cursor\abstract_cursor.js:632:27)
+
