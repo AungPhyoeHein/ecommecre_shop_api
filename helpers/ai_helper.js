@@ -4,10 +4,17 @@ require('dotenv').config();
 // API Key from environment variables
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-const classifyIntent = async (prompt) => {
+const classifyIntent = async (prompt, chatHistory = []) => {
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite-preview" });
+    
+    // Prepare history context for intent classification
+    const historyContext = chatHistory.length > 0 
+      ? `Recent Conversation History:\n${chatHistory.map(m => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.parts[0].text}`).join('\n')}\n\n`
+      : '';
+
     const classificationPrompt = `
+      ${historyContext}
       Analyze the user input and determine their intent.
       
       Rules for classification:
@@ -53,10 +60,17 @@ const classifyIntent = async (prompt) => {
     // Get response text
     let responseText = "";
     const chatModel = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite-preview" });
+    
+    // Prepare history context for general chat
+    const historyContextChat = chatHistory.length > 0 
+      ? `Recent Conversation History:\n${chatHistory.map(m => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.parts[0].text}`).join('\n')}\n\n`
+      : '';
+
     let chatPrompt = "";
     
     if (intent.telling_other_question) {
       chatPrompt = `
+        ${historyContextChat}
         You are a friendly customer service assistant for an e-commerce shop. 
         User says: "${prompt}"
         Respond politely in the SAME language as the user (If user speaks Burmese, respond in Burmese only. If user speaks English, respond in English only). Keep it brief.
@@ -65,12 +79,14 @@ const classifyIntent = async (prompt) => {
       `;
     } else if (intent.is_product_search) {
       chatPrompt = `
+        ${historyContextChat}
         You are a friendly customer service assistant. The user is looking for products: "${prompt}".
         Give a very brief, helpful response in the SAME language as the user.
         Return ONLY a JSON object: { "response": "Your response here" }
       `;
     } else if (intent.ask_about_us) {
       chatPrompt = `
+        ${historyContextChat}
         You are a friendly customer service assistant. The user is asking about the shop: "${prompt}".
         Give a very brief, helpful response in the SAME language as the user.
         Return ONLY a JSON object: { "response": "Your response here" }
@@ -125,42 +141,93 @@ const generateVectorDataForSearch = async ({ prompt }) => {
   }
 };
 
-const generateFinalResponse = async ({ userPrompt, context }) => {
+const generateFinalResponse = async ({ userPrompt, context, chatHistory = [] }) => {
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite-preview" });
+    
+    // Prepare history context for conversation
+    const historyContext = chatHistory.length > 0 
+      ? `Recent Conversation History:\n${chatHistory.map(m => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.parts[0].text}`).join('\n')}\n\n`
+      : '';
+
     const prompt = `
-      You are a helpful customer service assistant for our e-commerce shop.
-      Based on the following FAQ information, answer the user's question accurately and politely.
+      ${historyContext}
+      You are a friendly customer service assistant for an e-commerce shop.
+      Use the following context to answer the user's question.
       
-      IMPORTANT: Respond in the SAME language as the user's question. 
-      If user asks in Burmese, respond in Burmese only. 
-      If user asks in English, respond in English only.
-      
-      FAQ Context:
+      Context:
       ${context}
       
       User Question: "${userPrompt}"
       
-      Answer:
+      Rules:
+      1. ONLY use the provided context to answer. If the answer is not in the context, say you don't know politely.
+      2. Respond in the SAME language as the user's question (If user speaks Burmese, respond in Burmese only. If user speaks English, respond in English only).
+      3. Keep the tone helpful, professional, and friendly.
+      4. Use the conversation history to maintain context if the user's current question refers to previous topics.
+      
+      Response:
     `;
 
     const result = await model.generateContent(prompt);
     return result.response.text().trim();
   } catch (error) {
-    console.error("Final Response Error:", error);
+    console.error("Generate Final Response Error:", error);
     return "I'm sorry, I'm having trouble answering that right now.";
   }
 };
 
-const generateProductFoundResponse = async ({ userPrompt, products }) => {
+const generateNotFoundResponse = async ({ userPrompt, type, chatHistory = [] }) => {
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite-preview" });
     
+    // Prepare history context for conversation
+    const historyContext = chatHistory.length > 0 
+      ? `Recent Conversation History:\n${chatHistory.map(m => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.parts[0].text}`).join('\n')}\n\n`
+      : '';
+
+    const prompt = `
+      ${historyContext}
+      You are a friendly customer service assistant for an e-commerce shop.
+      The user is looking for something we couldn't find in our records.
+      
+      User Search: "${userPrompt}"
+      Search Type: ${type}
+      
+      Rules:
+      1. Politely explain that we couldn't find specific information about this right now.
+      2. If it's a product, suggest they check back later or contact support.
+      3. If it's an FAQ/About Us question, tell them an administrator will review their question.
+      4. Respond in the SAME language as the user's question.
+      5. Keep it brief (1-2 sentences).
+      6. Use the conversation history to maintain context if the user's current question refers to previous topics.
+      
+      Response:
+    `;
+
+    const result = await model.generateContent(prompt);
+    return result.response.text().trim();
+  } catch (error) {
+    console.error("Generate Not Found Response Error:", error);
+    return "ရှာဖွေနေတဲ့ အချက်အလက်ကို မတွေ့ရှိပါဘူးဗျာ။ (Couldn't find the information you're looking for)";
+  }
+};
+
+const generateProductFoundResponse = async ({ userPrompt, products, chatHistory = [] }) => {
+  try {
+    const model = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite-preview" });
+    
+    // Prepare history context for conversation
+    const historyContext = chatHistory.length > 0 
+      ? `Recent Conversation History:\n${chatHistory.map(m => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.parts[0].text}`).join('\n')}\n\n`
+      : '';
+
     const productContext = products.map(p => 
       `Name: ${p.name}, Price: ${p.price}, Description: ${p.description}, Sizes: ${p.sizes ? p.sizes.join(", ") : 'N/A'}`
     ).join("\n\n");
 
     const prompt = `
+      ${historyContext}
       You are a friendly and persuasive sales assistant for an e-commerce shop.
       The user is searching for: "${userPrompt}"
       We found the following products that match their search.
@@ -175,6 +242,7 @@ const generateProductFoundResponse = async ({ userPrompt, products }) => {
       2. Respond in the SAME language as the user's question (If Burmese, respond in Burmese; if English, respond in English).
       3. Do NOT list all the product details again (they are shown separately), just provide a cohesive and motivating response.
       4. Keep it concise (2-3 sentences).
+      5. Use the conversation history to maintain context if the user's current question refers to previous topics.
       
       Response:
     `;
@@ -184,32 +252,6 @@ const generateProductFoundResponse = async ({ userPrompt, products }) => {
   } catch (error) {
     console.error("Product Found Response Error:", error);
     return "ရှာဖွေနေတဲ့ ပစ္စည်းတွေကို တွေ့ရှိထားပါတယ်ဗျာ။ ဒီပစ္စည်းတွေက သင့်အတွက် အဆင်ပြေစေမှာပါ (Found the products you're looking for, these would be great for you!)";
-  }
-};
-
-const generateNotFoundResponse = async ({ userPrompt, type }) => {
-  try {
-    const model = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite-preview" });
-    const prompt = `
-      You are a friendly customer service assistant for an e-commerce shop.
-      The user asked: "${userPrompt}"
-      We searched our ${type === 'products' ? 'product catalog' : 'store information'} but couldn't find anything matching their request.
-      
-      IMPORTANT: Respond in the SAME language as the user's question. 
-      If user speaks Burmese, respond in Burmese only. 
-      If user speaks English, respond in English only.
-      Keep it friendly and professional.
-      
-      Response:
-    `;
-
-    const result = await model.generateContent(prompt);
-    return result.response.text().trim();
-  } catch (error) {
-    console.error("Not Found Response Error:", error);
-    return type === 'products' 
-      ? "ရှာဖွေနေတဲ့ ပစ္စည်းနဲ့ ဆင်တူတဲ့ ပစ္စည်း မတွေ့ပါဘူးဗျာ။ (There is no product similar to that product)"
-      : "ကျွန်တော်တို့ ဆိုင်နဲ့ပတ်သက်တဲ့ ဒီအချက်အလက်ကို မတွေ့ပါဘူးဗျာ။ (No similar information found about us)";
   }
 };
 

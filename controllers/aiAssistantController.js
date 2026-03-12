@@ -1,9 +1,23 @@
-const { Product, Faq, UnansweredQuestion } = require("../models");
+const { Product, Faq, UnansweredQuestion, ChatHistory } = require("../models");
 const ai_helper = require("../helpers/ai_helper.js");
 
 const chatWithAiAssistant = async (req, res, next) => {
   try {
     const message = req.query.message || "";
+    const userId = req.user?.id; // Assuming auth middleware provides this
+
+    // Fetch chat history if user is logged in
+    let chatHistory = [];
+    let chatHistoryDoc = null;
+    if (userId) {
+      chatHistoryDoc = await ChatHistory.findOne({ userId, isDeleted: false });
+      if (chatHistoryDoc) {
+        chatHistory = chatHistoryDoc.messages.map(m => ({
+          role: m.role,
+          parts: m.parts
+        }));
+      }
+    }
 
     if (!message) {
       // Message မပါရင် Rating အမြင့်ဆုံး ၅ ခုကိုပဲ အမြန်ပြပေးလိုက်မယ်
@@ -26,7 +40,25 @@ const chatWithAiAssistant = async (req, res, next) => {
       });
     }
 
-    const intentResponse = await ai_helper.classifyIntent(message);
+    // Function to update chat history
+    const updateChatHistory = async (userMsg, aiMsg) => {
+      if (!userId) return;
+      try {
+        if (!chatHistoryDoc) {
+          chatHistoryDoc = new ChatHistory({
+            userId,
+            messages: []
+          });
+        }
+        chatHistoryDoc.messages.push({ role: 'user', parts: [{ text: userMsg }] });
+        chatHistoryDoc.messages.push({ role: 'model', parts: [{ text: aiMsg }] });
+        await chatHistoryDoc.save();
+      } catch (err) {
+        console.error("Error updating chat history:", err);
+      }
+    };
+
+    const intentResponse = await ai_helper.classifyIntent(message, chatHistory);
 
     if (!intentResponse) {
       return res.status(500).json({ message: "AI Assistant is currently unavailable." });
@@ -79,7 +111,9 @@ const chatWithAiAssistant = async (req, res, next) => {
         const finalAiAnswer = await ai_helper.generateFinalResponse({
           userPrompt: message,
           context: context,
+          chatHistory: chatHistory
         });
+        await updateChatHistory(message, finalAiAnswer);
         return res.json({ 
           type: "faq", 
           message: finalAiAnswer
@@ -87,8 +121,10 @@ const chatWithAiAssistant = async (req, res, next) => {
       }
       const notFoundMessage = await ai_helper.generateNotFoundResponse({
         userPrompt: message,
-        type: "faq"
+        type: "faq",
+        chatHistory: chatHistory
       });
+      await updateChatHistory(message, notFoundMessage);
       // Store unanswered question for admin
       try {
         await UnansweredQuestion.create({
@@ -152,22 +188,27 @@ const chatWithAiAssistant = async (req, res, next) => {
           score: p.score
         }));
 
-        const aiMessage = await ai_helper.generateProductFoundResponse({
-          userPrompt: message,
-          products: filteredProducts
+        const aiMessage = await ai_helper.generateProductFoundResponse({ 
+          userPrompt: message, 
+          products: filteredProducts,
+          chatHistory: chatHistory
         });
+
+        await updateChatHistory(message, aiMessage);
 
         return res.json({ 
           type: "products", 
-          message: aiMessage,
+          message: aiMessage, 
           data: filteredProducts
         });
       }
       // If not found, generate a dynamic AI response
       const notFoundMessage = await ai_helper.generateNotFoundResponse({
         userPrompt: message,
-        type: "products"
+        type: "products",
+        chatHistory: chatHistory
       });
+      await updateChatHistory(message, notFoundMessage);
       // Store unanswered question for admin
       try {
         await UnansweredQuestion.create({
@@ -184,7 +225,9 @@ const chatWithAiAssistant = async (req, res, next) => {
     }
 
     // ၃။ တခြား စကားပြောတဲ့ မေးခွန်းများ
-    return res.json({ type: "chat", response: intentResponse.response_text });
+    const finalAiMessage = intentResponse.response_text || "မင်္ဂလာပါ။ ဘာကူညီပေးရမလဲခင်ဗျာ။ (Hello, how can I help you?)";
+    await updateChatHistory(message, finalAiMessage);
+    return res.json({ type: "chat", response: finalAiMessage });
   } catch (err) {
     console.error("Search Error:", err);
     next(err);

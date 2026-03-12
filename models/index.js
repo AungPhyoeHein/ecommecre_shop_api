@@ -8,5 +8,7 @@ const Review = require('./reviews.js');
 const Token = require('./token.js');
 const Faq = require('./faq.js');
 const UnansweredQuestion = require('./unanswered_question.js');
+const ChatHistory = require('./chat_history.js');
+const AuditLog = require('./audit_log.js');
 
-module.exports = {User,Category,Product,CartProduct,Order,OrderItem,Review,Token,Faq,UnansweredQuestion}
+module.exports = {User,Category,Product,CartProduct,Order,OrderItem,Review,Token,Faq,UnansweredQuestion,ChatHistory,AuditLog}
