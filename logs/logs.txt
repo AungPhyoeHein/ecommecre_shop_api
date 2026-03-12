@@ -846,3 +846,19 @@ Time: 2026-03-12T03:05:19.418Z
     at async AggregationCursor._initialize (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongodb\lib\cursor\aggregation_cursor.js:56:26)
     at async AggregationCursor.cursorInit (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongodb\lib\cursor\abstract_cursor.js:632:27)
 
+Time: 2026-03-12T04:29:32.577Z
+        Message: Error sending email.
+        URL Path: /api/v1/auth/forgot-password
+        Method: POST
+        Stack: Error: Error sending email.
+    at forgotPassword (C:\Users\User\Desktop\My Project\ecommecre_shop_api\controllers\authController.js:151:14)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+
+Time: 2026-03-12T04:31:00.130Z
+        Message: Error sending email.
+        URL Path: /api/v1/auth/forgot-password
+        Method: POST
+        Stack: Error: Error sending email.
+    at forgotPassword (C:\Users\User\Desktop\My Project\ecommecre_shop_api\controllers\authController.js:151:14)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+

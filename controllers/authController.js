@@ -5,6 +5,7 @@ const comparePassword = require('../utils/comparePassword');
 const generateToken = require('../utils/generateToken');
 const Token = require('../models/token');
 const sendMail = require('../helpers/email_send');
+const otpEmailTemplate = require('../helpers/otp_email_template');
 const jwt = require('jsonwebtoken');
 
 
@@ -144,7 +145,8 @@ const forgotPassword = async(req,res,next)=>{
     user.resetPasswordOtp = otp;
     user.resetPasswordOtpExpires = Date.now() + 600000;
     await user.save();
-    const result = await sendMail(email, `Password Reset OTP`,`Your otp for password reset is :${otp}`);
+    const html = otpEmailTemplate(otp);
+    const result = await sendMail(email, `Password Reset OTP`,`Your otp for password reset is :${otp}`,html);
     if(!result){
        throw new Error("Error sending email.");
     }
