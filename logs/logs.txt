@@ -862,3 +862,19 @@ Time: 2026-03-12T04:31:00.130Z
     at forgotPassword (C:\Users\User\Desktop\My Project\ecommecre_shop_api\controllers\authController.js:151:14)
     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
 
+Time: 2026-03-12T05:35:49.921Z
+        Message: Cannot destructure property 'question' of 'req.body' as it is undefined.
+        URL Path: /api/v1/admin/faqs
+        Method: POST
+        Stack: TypeError: Cannot destructure property 'question' of 'req.body' as it is undefined.
+    at createFaq (C:\Users\User\Desktop\My Project\ecommecre_shop_api\controllers\admin\faqController.js:6:17)
+    at Layer.handleRequest (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\router\index.js:295:15
+    at processParams (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\router\index.js:582:12)
+    at next (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\router\index.js:291:5)
+    at router.handle (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\router\index.js:186:3)
+

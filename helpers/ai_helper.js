@@ -152,6 +152,41 @@ const generateFinalResponse = async ({ userPrompt, context }) => {
   }
 };
 
+const generateProductFoundResponse = async ({ userPrompt, products }) => {
+  try {
+    const model = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite-preview" });
+    
+    const productContext = products.map(p => 
+      `Name: ${p.name}, Price: ${p.price}, Description: ${p.description}, Sizes: ${p.sizes ? p.sizes.join(", ") : 'N/A'}`
+    ).join("\n\n");
+
+    const prompt = `
+      You are a friendly and persuasive sales assistant for an e-commerce shop.
+      The user is searching for: "${userPrompt}"
+      We found the following products that match their search.
+      
+      Products:
+      ${productContext}
+      
+      Your goal is to tell the user that you've found these products and explain briefly why they should consider buying or looking at them based on their search.
+      
+      IMPORTANT: 
+      1. Be persuasive but helpful. Highlight a key feature or reason why these products are a good choice.
+      2. Respond in the SAME language as the user's question (If Burmese, respond in Burmese; if English, respond in English).
+      3. Do NOT list all the product details again (they are shown separately), just provide a cohesive and motivating response.
+      4. Keep it concise (2-3 sentences).
+      
+      Response:
+    `;
+
+    const result = await model.generateContent(prompt);
+    return result.response.text().trim();
+  } catch (error) {
+    console.error("Product Found Response Error:", error);
+    return "ရှာဖွေနေတဲ့ ပစ္စည်းတွေကို တွေ့ရှိထားပါတယ်ဗျာ။ ဒီပစ္စည်းတွေက သင့်အတွက် အဆင်ပြေစေမှာပါ (Found the products you're looking for, these would be great for you!)";
+  }
+};
+
 const generateNotFoundResponse = async ({ userPrompt, type }) => {
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite-preview" });
@@ -224,4 +259,5 @@ module.exports = {
   generateVectorDataForAddProduct,
   generateFinalResponse,
   generateNotFoundResponse,
+  generateProductFoundResponse,
 };

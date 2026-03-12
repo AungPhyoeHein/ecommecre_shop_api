@@ -1,9 +1,18 @@
 const { Faq, UnansweredQuestion } = require("../../models");
 const ai_helper = require("../../helpers/ai_helper");
+const { validationResult } = require('express-validator');
 
 const createFaq = async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const errorMessage = errors.array().map((error) => ({
+            field: error.path,
+            message: error.msg,
+        }));
+        return res.status(400).json({ errors: errorMessage });
+    }
     try {
-        const { question, answer, unansweredQuestionId } = req.body;
+        const { question, answer, unansweredQuestionId } = req.body || {};
 
         if (!question || !answer) {
             return res.status(400).json({ message: "Question and answer are required." });

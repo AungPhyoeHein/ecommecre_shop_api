@@ -8,7 +8,22 @@ const chatWithAiAssistant = async (req, res, next) => {
     if (!message) {
       // Message မပါရင် Rating အမြင့်ဆုံး ၅ ခုကိုပဲ အမြန်ပြပေးလိုက်မယ်
       const products = await Product.find({}).sort({ rating: -1 }).limit(5);
-      return res.json({ type: "products", data: products });
+      
+      const filteredProducts = products.map(p => ({
+        _id: p._id,
+        name: p.name,
+        price: p.price,
+        description: p.description,
+        sizes: p.sizes,
+        image: p.image,
+        rating: p.rating
+      }));
+
+      return res.json({ 
+        type: "products", 
+        message: "Check out our top-rated products!",
+        data: filteredProducts 
+      });
     }
 
     const intentResponse = await ai_helper.classifyIntent(message);
@@ -124,9 +139,28 @@ const chatWithAiAssistant = async (req, res, next) => {
 
       if (products.length > 0) {
         console.log("Product Search Scores:", products.map(p => ({ name: p.name, score: p.score })));
+        
+        // Filter products to only include specific fields for AI and user
+        const filteredProducts = products.map(p => ({
+          _id: p._id,
+          name: p.name,
+          price: p.price,
+          description: p.description,
+          sizes: p.sizes,
+          image: p.image,
+          rating: p.rating,
+          score: p.score
+        }));
+
+        const aiMessage = await ai_helper.generateProductFoundResponse({
+          userPrompt: message,
+          products: filteredProducts
+        });
+
         return res.json({ 
           type: "products", 
-          data: products
+          message: aiMessage,
+          data: filteredProducts
         });
       }
       // If not found, generate a dynamic AI response
