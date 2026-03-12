@@ -1,4 +1,4 @@
-const { Product, Faq } = require("../models");
+const { Product, Faq, UnansweredQuestion } = require("../models");
 const ai_helper = require("../helpers/ai_helper.js");
 
 const chatWithAiAssistant = async (req, res, next) => {
@@ -24,6 +24,13 @@ const chatWithAiAssistant = async (req, res, next) => {
       });
 
       if (!vectorResponse) {
+        // Record even if vector search fails for admin to see what they missed
+        try {
+          await UnansweredQuestion.create({
+            question: message,
+            intent: "faq"
+          });
+        } catch (e) {}
         return res.status(500).json({ message: "Vector search unavailable." });
       }
 
@@ -45,7 +52,7 @@ const chatWithAiAssistant = async (req, res, next) => {
         },
         {
           $match: {
-            score: { $gte: 0.6 }
+            score: { $gte: 0.85 }
           }
         }
       ]);
@@ -67,6 +74,15 @@ const chatWithAiAssistant = async (req, res, next) => {
         userPrompt: message,
         type: "faq"
       });
+      // Store unanswered question for admin
+      try {
+        await UnansweredQuestion.create({
+          question: message,
+          intent: "faq"
+        });
+      } catch (saveError) {
+        console.error("Error saving unanswered FAQ question:", saveError);
+      }
       return res.status(404).json({ 
         type: "faq",
         message: notFoundMessage
@@ -118,6 +134,15 @@ const chatWithAiAssistant = async (req, res, next) => {
         userPrompt: message,
         type: "products"
       });
+      // Store unanswered question for admin
+      try {
+        await UnansweredQuestion.create({
+          question: message,
+          intent: "products"
+        });
+      } catch (saveError) {
+        console.error("Error saving unanswered product search:", saveError);
+      }
       return res.status(404).json({ 
         type: "products",
         message: notFoundMessage

@@ -11,9 +11,14 @@ const classifyIntent = async (prompt) => {
       Analyze the user input and determine their intent.
       
       Rules for classification:
-      1. is_product_search: Set to true if the user specifically mentions a product name, category, or features they want to buy (e.g., "find me a car", "macbook", "iphone").
-      2. ask_about_us: Set to true if the user asks about the shop's physical details like location, address, phone number, email, opening hours, or company history.
-      3. telling_other_question: Set to true for general greetings ("hi", "hello"), asking who you are ("who are you?"), asking about your feelings ("how are you?"), or any topic NOT related to buying products or shop logistics.
+      1. is_product_search: Set to true if the user mentions a product name, category, or features they want to buy (e.g., "find me a car", "macbook", "iphone").
+      2. ask_about_us: Set to true if the user asks ANY question related to the store, its services, or its policies. This includes:
+         - Physical details (location, address, phone, email, opening hours).
+         - Store history, general "about us" info.
+         - Store policies (refunds, delivery, payments, returns).
+         - Facilities or services (parking, branches, gift wrapping).
+         - Questions like "who are you?", "what is this shop?", "where are you located?".
+      3. telling_other_question: Set to true ONLY for general greetings ("hi", "hello"), asking about your feelings ("how are you?"), or topics COMPLETELY UNRELATED to the store, its products, or its operations. If you are in doubt, prefer setting ask_about_us to true if it mentions anything that could be store-related.
       
       Return ONLY a JSON object with these fields:
           {
@@ -24,6 +29,8 @@ const classifyIntent = async (prompt) => {
           }
       
       User Input: "${prompt}"
+      
+      IMPORTANT: The user input might be in English or Burmese. Analyze the intent regardless of the language.
     `;
 
     const result = await model.generateContent(classificationPrompt);

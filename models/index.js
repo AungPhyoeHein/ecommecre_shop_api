@@ -7,5 +7,6 @@ const OrderItem = require('./order_item.js');
 const Review = require('./reviews.js');
 const Token = require('./token.js');
 const Faq = require('./faq.js');
+const UnansweredQuestion = require('./unanswered_question.js');
 
-module.exports = {User,Category,Product,CartProduct,Order,OrderItem,Review,Token,Faq}
+module.exports = {User,Category,Product,CartProduct,Order,OrderItem,Review,Token,Faq,UnansweredQuestion}
