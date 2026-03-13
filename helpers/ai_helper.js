@@ -18,6 +18,7 @@ const classifyIntent = async (prompt, chatHistory = []) => {
       Analyze the user input and determine their intent.
       
       Rules for classification:
+      0. is_recommend_request: Set to true if the user asks for recommendations/suggestions/best picks/popular items (e.g., "recommend me something", "what should I buy?", "best shoes", "recommend").
       1. is_product_search: Set to true if the user mentions a product name, category, or features they want to buy (e.g., "find me a car", "macbook", "iphone").
       2. ask_about_us: Set to true if the user asks ANY question related to the store, its services, or its policies. This includes:
          - Physical details (location, address, phone, email, opening hours).
@@ -29,6 +30,7 @@ const classifyIntent = async (prompt, chatHistory = []) => {
       
       Return ONLY a JSON object with these fields:
           {
+            "is_recommend_request": boolean,
             "is_product_search": boolean,
             "ask_about_us": boolean,
             "telling_other_question": boolean,
@@ -50,6 +52,7 @@ const classifyIntent = async (prompt, chatHistory = []) => {
     } catch (parseError) {
       console.error("JSON Parse Error for Intent:", parseError);
       intent = {
+        is_recommend_request: false,
         is_product_search: false,
         ask_about_us: false,
         telling_other_question: true,
@@ -76,6 +79,14 @@ const classifyIntent = async (prompt, chatHistory = []) => {
         Respond politely in the SAME language as the user (If user speaks Burmese, respond in Burmese only. If user speaks English, respond in English only). Keep it brief.
         Return ONLY a JSON object with a single "response" field:
         { "response": "Your response here" }
+      `;
+    } else if (intent.is_recommend_request) {
+      chatPrompt = `
+        ${historyContextChat}
+        You are a friendly sales assistant for an e-commerce shop.
+        The user is asking for recommendations: "${prompt}".
+        Respond in the SAME language as the user with 1-2 short sentences to introduce the recommendations.
+        Return ONLY a JSON object: { "response": "Your response here" }
       `;
     } else if (intent.is_product_search) {
       chatPrompt = `
@@ -109,6 +120,7 @@ const classifyIntent = async (prompt, chatHistory = []) => {
   } catch (error) {
     console.error("Classify Intent Error:", error);
     return {
+      is_recommend_request: false,
       is_product_search: false,
       ask_about_us: false,
       telling_other_question: true,

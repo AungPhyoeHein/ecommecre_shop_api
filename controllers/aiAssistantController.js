@@ -64,6 +64,74 @@ const chatWithAiAssistant = async (req, res, next) => {
       return res.status(500).json({ message: "AI Assistant is currently unavailable." });
     }
 
+    const isMyanmarText = (text) => /[\u1000-\u109F]/.test(text || "");
+    const notAvailableMessage = isMyanmarText(message)
+      ? "ဒီပစ္စည်းကို ကျွန်တော်တို့ဆိုင်မှာ မရနိုင်သေးပါဘူး။"
+      : "That product is not available in our store right now.";
+
+    const escapeRegex = (text) => (text || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+    const filterProductForResponse = (p) => ({
+      _id: p._id,
+      name: p.name,
+      price: p.price,
+      description: p.description,
+      sizes: p.sizes,
+      image: p.image,
+      rating: p.rating,
+      ...(p.score !== undefined ? { score: p.score } : {})
+    });
+
+    // ၀။ Recommend ပေးတဲ့အပိုင်း
+    if (intentResponse.is_recommend_request === true) {
+      let products = [];
+
+      if ((intentResponse.search_query || "").trim()) {
+        const vectorResponse = await ai_helper.generateVectorDataForSearch({
+          prompt: intentResponse.search_query || message,
+        });
+
+        if (vectorResponse) {
+          const queryVector = vectorResponse.vector_data;
+          products = await Product.aggregate([
+            {
+              $vectorSearch: {
+                index: "vector_index",
+                path: "vector_data",
+                queryVector: queryVector,
+                numCandidates: 100,
+                limit: 5,
+              },
+            },
+            {
+              $addFields: {
+                score: { $meta: "vectorSearchScore" },
+              },
+            },
+          ]);
+        }
+      }
+
+      if (!products.length) {
+        products = await Product.find({}).sort({ rating: -1 }).limit(5);
+      }
+
+      const filteredProducts = products.map(filterProductForResponse);
+
+      const introMessage = intentResponse.response_text ||
+        (isMyanmarText(message)
+          ? "သင့်အတွက် အကြိုက်ဆုံး ပစ္စည်းတွေကို အောက်မှာ အကြံပြုထားပါတယ်။"
+          : "Here are some products I recommend for you.");
+
+      await updateChatHistory(message, introMessage);
+
+      return res.json({
+        type: "recommend",
+        message: introMessage,
+        data: filteredProducts,
+      });
+    }
+
     // ၁။ FAQ ရှာပြီး AI နဲ့ ပြန်ဖြေတဲ့အပိုင်း
     if (intentResponse.ask_about_us === true) {
       const vectorResponse = await ai_helper.generateVectorDataForSearch({
@@ -142,51 +210,51 @@ const chatWithAiAssistant = async (req, res, next) => {
 
     // ၂။ Product ရှာတဲ့အပိုင်း (အနီးစပ်ဆုံး ၅ ခု)
     if (intentResponse.is_product_search === true) {
+      const searchTerm = (intentResponse.search_query || message || "").trim();
+      let products = [];
+
       const vectorResponse = await ai_helper.generateVectorDataForSearch({
-        prompt: intentResponse.search_query || message,
+        prompt: searchTerm || message,
       });
 
-      if (!vectorResponse) {
-        return res.status(500).json({ message: "Vector search unavailable." });
+      if (vectorResponse) {
+        const queryVector = vectorResponse.vector_data;
+        products = await Product.aggregate([
+          {
+            $vectorSearch: {
+              index: "vector_index",
+              path: "vector_data",
+              queryVector: queryVector,
+              numCandidates: 100,
+              limit: 5,
+            },
+          },
+          {
+            $addFields: {
+              score: { $meta: "vectorSearchScore" },
+            },
+          },
+          {
+            $match: {
+              score: { $gte: 0.8 }
+            }
+          }
+        ]);
       }
 
-      const queryVector = vectorResponse.vector_data;
-      const products = await Product.aggregate([
-        {
-          $vectorSearch: {
-            index: "vector_index",
-            path: "vector_data",
-            queryVector: queryVector,
-            numCandidates: 100,
-            limit: 5,
-          },
-        },
-        {
-          $addFields: {
-            score: { $meta: "vectorSearchScore" },
-          },
-        },
-        {
-          $match: {
-            score: { $gte: 0.8 }
-          }
-        }
-      ]);
+      if (!products.length && searchTerm) {
+        const tokens = searchTerm.split(/\s+/).filter(Boolean);
+        const regex = new RegExp(tokens.map(escapeRegex).join("|"), "i");
+        products = await Product.find({
+          $or: [{ name: regex }, { description: regex }]
+        }).limit(5);
+      }
 
       if (products.length > 0) {
         console.log("Product Search Scores:", products.map(p => ({ name: p.name, score: p.score })));
         
         // Filter products to only include specific fields for AI and user
-        const filteredProducts = products.map(p => ({
-          _id: p._id,
-          name: p.name,
-          price: p.price,
-          description: p.description,
-          sizes: p.sizes,
-          image: p.image,
-          rating: p.rating,
-          score: p.score
-        }));
+        const filteredProducts = products.map(filterProductForResponse);
 
         const aiMessage = await ai_helper.generateProductFoundResponse({ 
           userPrompt: message, 
@@ -202,13 +270,7 @@ const chatWithAiAssistant = async (req, res, next) => {
           data: filteredProducts
         });
       }
-      // If not found, generate a dynamic AI response
-      const notFoundMessage = await ai_helper.generateNotFoundResponse({
-        userPrompt: message,
-        type: "products",
-        chatHistory: chatHistory
-      });
-      await updateChatHistory(message, notFoundMessage);
+      await updateChatHistory(message, notAvailableMessage);
       // Store unanswered question for admin
       try {
         await UnansweredQuestion.create({
@@ -220,7 +282,7 @@ const chatWithAiAssistant = async (req, res, next) => {
       }
       return res.status(404).json({ 
         type: "products",
-        message: notFoundMessage
+        message: notAvailableMessage
       });
     }
 
