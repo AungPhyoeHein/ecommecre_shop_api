@@ -3,10 +3,14 @@ const loadAiHelper = ({
   chatText,
   embedValues,
   finalResponseText,
+  notFoundText,
+  productFoundText,
   throwOnClassification,
   throwOnChat,
   throwOnEmbed,
   throwOnFinal,
+  throwOnNotFound,
+  throwOnProductFound,
 }) => {
   jest.resetModules();
 
@@ -27,9 +31,12 @@ const loadAiHelper = ({
 
     return {
       generateContent: async (prompt) => {
-        const isClassification = typeof prompt === 'string' && prompt.includes('Analyze the user input');
-        const isFinal = typeof prompt === 'string' && prompt.includes('FAQ Context:');
-        const isChat = typeof prompt === 'string' && prompt.includes('Return ONLY a JSON object');
+        const promptText = typeof prompt === 'string' ? prompt : '';
+        const isClassification = promptText.includes('Analyze the user input');
+        const isChat = promptText.includes('Return ONLY a JSON object');
+        const isFinal = promptText.includes('Context:') && promptText.includes('User Question:');
+        const isNotFound = promptText.includes("couldn't find in our records");
+        const isProductFound = promptText.includes('We found the following products that match their search.');
 
         if (isClassification) {
           if (throwOnClassification) throw throwOnClassification;
@@ -39,6 +46,16 @@ const loadAiHelper = ({
         if (isFinal) {
           if (throwOnFinal) throw throwOnFinal;
           return { response: { text: () => finalResponseText ?? ' final answer ' } };
+        }
+
+        if (isNotFound) {
+          if (throwOnNotFound) throw throwOnNotFound;
+          return { response: { text: () => notFoundText ?? ' not found ' } };
+        }
+
+        if (isProductFound) {
+          if (throwOnProductFound) throw throwOnProductFound;
+          return { response: { text: () => productFoundText ?? ' products found ' } };
         }
 
         if (isChat) {
@@ -51,117 +68,64 @@ const loadAiHelper = ({
     };
   };
 
-  jest.doMock('@google/generative-ai', () => ({ GoogleGenerativeAI }));
+  jest.doMock('@google/generative-ai', () => ({
+    GoogleGenerativeAI,
+    TaskType: { RETRIEVAL_QUERY: 'RETRIEVAL_QUERY', RETRIEVAL_DOCUMENT: 'RETRIEVAL_DOCUMENT' },
+  }));
   return require('../helpers/ai_helper');
 };
 
 describe('ai_helper unit tests', () => {
-  test('generateVectorDataForSearch: product search embeds search_query and parses chat JSON', async () => {
+  test('classifyIntent: parses intent and response_text', async () => {
     const ai_helper = loadAiHelper({
-      classificationText: '```json{"is_product_search":true,"ask_about_us":false,"telling_other_question":false,"search_query":"macbook pro"}```',
+      classificationText: '```json{"is_recommend_request":false,"is_product_search":true,"ask_about_us":false,"telling_other_question":false,"search_query":"macbook"}```',
       chatText: '```json{"response":"Searching now"} ```',
-      embedValues: new Array(768).fill(0.1),
     });
 
-    const result = await ai_helper.generateVectorDataForSearch({ prompt: 'find macbook' });
-
+    const result = await ai_helper.classifyIntent('find macbook');
     expect(result.is_product_search).toBe(true);
     expect(result.ask_about_us).toBe(false);
     expect(result.telling_other_question).toBe(false);
-    expect(result.search_query).toBe('macbook pro');
-    expect(result.vector_data).toHaveLength(768);
+    expect(result.is_recommend_request).toBe(false);
+    expect(result.search_query).toBe('macbook');
     expect(result.response_text).toBe('Searching now');
   });
 
-  test('generateVectorDataForSearch: about-us embeds prompt when search_query empty', async () => {
-    const embedSpy = jest.fn();
-
-    jest.resetModules();
-    const GoogleGenerativeAI = function () {};
-    GoogleGenerativeAI.prototype.getGenerativeModel = ({ model }) => {
-      if (model === 'gemini-embedding-001') {
-        return {
-          embedContent: async (payload) => {
-            embedSpy(payload);
-            return { embedding: { values: new Array(768).fill(0.2) } };
-          },
-        };
-      }
-      return {
-        generateContent: async (prompt) => {
-          const isClassification = typeof prompt === 'string' && prompt.includes('Analyze the user input');
-          const isChat = typeof prompt === 'string' && prompt.includes('Return ONLY a JSON object');
-          if (isClassification) {
-            return {
-              response: {
-                text: () =>
-                  '```json{"is_product_search":false,"ask_about_us":true,"telling_other_question":false,"search_query":""}```',
-              },
-            };
-          }
-          if (isChat) {
-            return { response: { text: () => '{"response":"Checking store info"}' } };
-          }
-          return { response: { text: () => '' } };
-        },
-      };
-    };
-    jest.doMock('@google/generative-ai', () => ({ GoogleGenerativeAI }));
-    const ai_helper = require('../helpers/ai_helper');
-
-    const result = await ai_helper.generateVectorDataForSearch({ prompt: 'Where are you located?' });
-    expect(result.ask_about_us).toBe(true);
-    expect(result.vector_data).toHaveLength(768);
-    expect(result.response_text).toBe('Checking store info');
-
-    const embeddedText = embedSpy.mock.calls[0][0].content.parts[0].text;
-    expect(embeddedText).toBe('Where are you located?');
-  });
-
-  test('generateVectorDataForSearch: other question does not embed and returns chat response', async () => {
+  test('classifyIntent: invalid JSON returns fallback structure', async () => {
     const ai_helper = loadAiHelper({
-      classificationText: '{"is_product_search":false,"ask_about_us":false,"telling_other_question":true,"search_query":""}',
-      chatText: '{"response":"Hello!"}',
+      classificationText: 'not-json',
+      chatText: 'not-json',
     });
 
-    const result = await ai_helper.generateVectorDataForSearch({ prompt: 'hi' });
-    expect(result.telling_other_question).toBe(true);
-    expect(result.vector_data).toEqual([]);
-    expect(result.response_text).toBe('Hello!');
-  });
-
-  test.each([
-    ['classification invalid JSON', 'not-json', '{"response":"ok"}'],
-    ['chat invalid JSON', '{"is_product_search":false,"ask_about_us":false,"telling_other_question":true,"search_query":""}', 'not-json'],
-  ])('generateVectorDataForSearch: handles %s', async (_label, classificationText, chatText) => {
-    const ai_helper = loadAiHelper({
-      classificationText,
-      chatText,
-    });
-
-    const result = await ai_helper.generateVectorDataForSearch({ prompt: 'anything' });
-    expect(result).toHaveProperty('vector_data');
-    expect(result).toHaveProperty('response_text');
-    expect(result).toHaveProperty('telling_other_question');
-  });
-
-  test('generateVectorDataForSearch: errors return structured fallback', async () => {
-    const ai_helper = loadAiHelper({
-      throwOnClassification: new Error('boom'),
-    });
-
-    const result = await ai_helper.generateVectorDataForSearch({ prompt: 'anything' });
+    const result = await ai_helper.classifyIntent('x');
     expect(result.is_product_search).toBe(false);
     expect(result.ask_about_us).toBe(false);
     expect(result.telling_other_question).toBe(true);
-    expect(result.vector_data).toEqual([]);
+    expect(result.is_recommend_request).toBe(false);
     expect(typeof result.response_text).toBe('string');
+  });
+
+  test('generateVectorDataForSearch: returns embedding values', async () => {
+    const ai_helper = loadAiHelper({
+      embedValues: new Array(768).fill(0.1),
+      classificationText: '',
+      chatText: '',
+    });
+
+    const result = await ai_helper.generateVectorDataForSearch({ prompt: 'macbook' });
+    expect(result.vector_data).toHaveLength(768);
+  });
+
+  test('generateVectorDataForSearch: missing prompt returns null', async () => {
+    const ai_helper = loadAiHelper({ classificationText: '', chatText: '' });
+    const result = await ai_helper.generateVectorDataForSearch({ prompt: '' });
+    expect(result).toBeNull();
   });
 
   test('generateFinalResponse: trims and returns AI response', async () => {
     const ai_helper = loadAiHelper({
-      classificationText: '{"is_product_search":false,"ask_about_us":false,"telling_other_question":true,"search_query":""}',
-      chatText: '{"response":"x"}',
+      classificationText: '',
+      chatText: '',
       finalResponseText: '  Answer with spaces  ',
     });
 
@@ -172,14 +136,68 @@ describe('ai_helper unit tests', () => {
   test('generateFinalResponse: handles errors with fallback message', async () => {
     const ai_helper = loadAiHelper({
       throwOnFinal: new Error('final error'),
+      classificationText: '',
+      chatText: '',
     });
 
     const result = await ai_helper.generateFinalResponse({ userPrompt: 'Q', context: 'C' });
     expect(result).toContain("I'm sorry");
   });
 
+  test('generateNotFoundResponse: trims and returns response', async () => {
+    const ai_helper = loadAiHelper({
+      classificationText: '',
+      chatText: '',
+      notFoundText: '  Not available  ',
+    });
+
+    const result = await ai_helper.generateNotFoundResponse({ userPrompt: 'x', type: 'products' });
+    expect(result).toBe('Not available');
+  });
+
+  test('generateNotFoundResponse: errors return fallback message', async () => {
+    const ai_helper = loadAiHelper({
+      classificationText: '',
+      chatText: '',
+      throwOnNotFound: new Error('boom'),
+    });
+
+    const result = await ai_helper.generateNotFoundResponse({ userPrompt: 'x', type: 'products' });
+    expect(typeof result).toBe('string');
+    expect(result.length).toBeGreaterThan(0);
+  });
+
+  test('generateProductFoundResponse: trims and returns response', async () => {
+    const ai_helper = loadAiHelper({
+      classificationText: '',
+      chatText: '',
+      productFoundText: '  Great picks  ',
+    });
+
+    const result = await ai_helper.generateProductFoundResponse({
+      userPrompt: 'x',
+      products: [{ name: 'P', price: 1, description: 'd', sizes: ['S'] }],
+    });
+    expect(result).toBe('Great picks');
+  });
+
+  test('generateProductFoundResponse: errors return fallback message', async () => {
+    const ai_helper = loadAiHelper({
+      classificationText: '',
+      chatText: '',
+      throwOnProductFound: new Error('boom'),
+    });
+
+    const result = await ai_helper.generateProductFoundResponse({
+      userPrompt: 'x',
+      products: [{ name: 'P', price: 1, description: 'd', sizes: ['S'] }],
+    });
+    expect(typeof result).toBe('string');
+    expect(result.length).toBeGreaterThan(0);
+  });
+
   test('generateVectorDataForAddProduct: null input returns null', async () => {
-    const ai_helper = loadAiHelper({});
+    const ai_helper = loadAiHelper({ classificationText: '', chatText: '' });
     const result = await ai_helper.generateVectorDataForAddProduct(null);
     expect(result).toBeNull();
   });
@@ -200,7 +218,10 @@ describe('ai_helper unit tests', () => {
       }
       return { generateContent: async () => ({ response: { text: () => '' } }) };
     };
-    jest.doMock('@google/generative-ai', () => ({ GoogleGenerativeAI }));
+    jest.doMock('@google/generative-ai', () => ({
+      GoogleGenerativeAI,
+      TaskType: { RETRIEVAL_QUERY: 'RETRIEVAL_QUERY', RETRIEVAL_DOCUMENT: 'RETRIEVAL_DOCUMENT' },
+    }));
     const ai_helper = require('../helpers/ai_helper');
 
     const result = await ai_helper.generateVectorDataForAddProduct({
@@ -222,7 +243,7 @@ describe('ai_helper unit tests', () => {
     expect(embeddedText).not.toContain('Colors:');
   });
 
-  test('generateVectorDataForAddProduct: empty object returns empty vector and skips embedding', async () => {
+  test('generateVectorDataForAddProduct: empty object returns empty vector', async () => {
     const embedSpy = jest.fn();
 
     jest.resetModules();
@@ -233,7 +254,10 @@ describe('ai_helper unit tests', () => {
       }
       return { generateContent: async () => ({ response: { text: () => '' } }) };
     };
-    jest.doMock('@google/generative-ai', () => ({ GoogleGenerativeAI }));
+    jest.doMock('@google/generative-ai', () => ({
+      GoogleGenerativeAI,
+      TaskType: { RETRIEVAL_QUERY: 'RETRIEVAL_QUERY', RETRIEVAL_DOCUMENT: 'RETRIEVAL_DOCUMENT' },
+    }));
     const ai_helper = require('../helpers/ai_helper');
 
     const result = await ai_helper.generateVectorDataForAddProduct({});
@@ -243,6 +267,8 @@ describe('ai_helper unit tests', () => {
 
   test('generateVectorDataForAddProduct: embed errors return null', async () => {
     const ai_helper = loadAiHelper({
+      classificationText: '',
+      chatText: '',
       throwOnEmbed: new Error('embed fail'),
     });
 
@@ -250,4 +276,3 @@ describe('ai_helper unit tests', () => {
     expect(result).toBeNull();
   });
 });
-

@@ -1,22 +1,32 @@
-const ai_helper = require('../helpers/ai_helper');
-const { GoogleGenerativeAI } = require('@google/generative-ai');
-
-jest.mock('@google/generative-ai');
+jest.mock('@google/generative-ai', () => ({
+  GoogleGenerativeAI: jest.fn(),
+  TaskType: { RETRIEVAL_QUERY: 'RETRIEVAL_QUERY', RETRIEVAL_DOCUMENT: 'RETRIEVAL_DOCUMENT' },
+}));
 
 describe('Vector Conversion System Tests', () => {
+  let ai_helper;
+  let GoogleGenerativeAI;
   let mockEmbedContent;
   let mockGetGenerativeModel;
 
   beforeEach(() => {
+    jest.resetModules();
+    ({ GoogleGenerativeAI } = require('@google/generative-ai'));
+
     mockEmbedContent = jest.fn().mockResolvedValue({
       embedding: { values: new Array(768).fill(0.1) }
     });
 
-    mockGetGenerativeModel = jest.fn().mockReturnValue({
-      embedContent: mockEmbedContent
+    mockGetGenerativeModel = jest.fn(({ model }) => {
+      if (model === 'gemini-embedding-001') {
+        return { embedContent: mockEmbedContent };
+      }
+      return { generateContent: jest.fn().mockResolvedValue({ response: { text: () => '' } }) };
     });
 
-    GoogleGenerativeAI.prototype.getGenerativeModel = mockGetGenerativeModel;
+    GoogleGenerativeAI.mockImplementation(() => ({ getGenerativeModel: mockGetGenerativeModel }));
+
+    ai_helper = require('../helpers/ai_helper');
   });
 
   test('Vector generation with all fields', async () => {

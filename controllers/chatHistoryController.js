@@ -9,7 +9,7 @@ const deleteChatHistory = async (req, res, next) => {
   session.startTransaction();
 
   try {
-    const userId = req.user?.id;
+    const userId = req.user?.id || req.user;
 
     if (!userId) {
       return res.status(401).json({ message: "Unauthorized access." });

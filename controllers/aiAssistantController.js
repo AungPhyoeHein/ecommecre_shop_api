@@ -4,7 +4,7 @@ const ai_helper = require("../helpers/ai_helper.js");
 const chatWithAiAssistant = async (req, res, next) => {
   try {
     const message = req.query.message || "";
-    const userId = req.user?.id; // Assuming auth middleware provides this
+    const userId = req.user?.id || req.user;
 
     // Fetch chat history if user is logged in
     let chatHistory = [];
@@ -12,7 +12,10 @@ const chatWithAiAssistant = async (req, res, next) => {
     if (userId) {
       chatHistoryDoc = await ChatHistory.findOne({ userId, isDeleted: false });
       if (chatHistoryDoc) {
-        chatHistory = chatHistoryDoc.messages.map(m => ({
+        const lastMessages = Array.isArray(chatHistoryDoc.messages)
+          ? chatHistoryDoc.messages.slice(-10)
+          : [];
+        chatHistory = lastMessages.map(m => ({
           role: m.role,
           parts: m.parts
         }));
@@ -61,15 +64,51 @@ const chatWithAiAssistant = async (req, res, next) => {
     const intentResponse = await ai_helper.classifyIntent(message, chatHistory);
 
     if (!intentResponse) {
-      return res.status(500).json({ message: "AI Assistant is currently unavailable." });
+      const isMyanmarText = (text) => /[\u1000-\u109F]/.test(text || "");
+      const assistantUnavailableMessage = isMyanmarText(message)
+        ? "AI Assistant မရရှိနိုင်သေးပါဘူး။ နောက်မှ ထပ်စမ်းကြည့်ပါ။"
+        : "AI Assistant is currently unavailable.";
+      return res.status(500).json({ message: assistantUnavailableMessage });
     }
 
-    const isMyanmarText = (text) => /[\u1000-\u109F]/.test(text || "");
-    const notAvailableMessage = isMyanmarText(message)
-      ? "ဒီပစ္စည်းကို ကျွန်တော်တို့ဆိုင်မှာ မရနိုင်သေးပါဘူး။"
-      : "That product is not available in our store right now.";
-
     const escapeRegex = (text) => (text || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+    const normalizeQuery = (text) => (text || "").replace(/\s+/g, " ").trim();
+
+    const isMyanmarText = (text) => /[\u1000-\u109F]/.test(text || "");
+
+    const getLastUserMessageText = (history) => {
+      if (!Array.isArray(history) || !history.length) return "";
+      for (let i = history.length - 1; i >= 0; i--) {
+        const m = history[i];
+        if (m?.role === "user") {
+          const parts = Array.isArray(m.parts) ? m.parts : [];
+          const text = parts?.[0]?.text;
+          if (typeof text === "string" && text.trim()) return text.trim();
+        }
+      }
+      return "";
+    };
+
+    const isPurchaseFollowUp = (text) => {
+      const hasPronoun = /\b(it|that|this|one|them)\b/i.test(text || "");
+      const hasBuy = /\b(buy|purchase|order|checkout|get it|take it)\b/i.test(text || "");
+      const hasMmBuy = /ဝယ်ချင်|အော်ဒါ|ယူချင်|ယူမယ်|ဝယ်မယ်/.test(text || "");
+      return (hasPronoun && hasBuy) || hasMmBuy;
+    };
+
+    if (
+      isPurchaseFollowUp(message) &&
+      (!intentResponse.is_product_search || !(intentResponse.search_query || "").trim())
+    ) {
+      const fallbackSearchQuery = normalizeQuery(getLastUserMessageText(chatHistory));
+      if (fallbackSearchQuery) {
+        intentResponse.is_product_search = true;
+        intentResponse.ask_about_us = false;
+        intentResponse.telling_other_question = false;
+        intentResponse.search_query = fallbackSearchQuery;
+      }
+    }
 
     const filterProductForResponse = (p) => ({
       _id: p._id,
@@ -82,34 +121,138 @@ const chatWithAiAssistant = async (req, res, next) => {
       ...(p.score !== undefined ? { score: p.score } : {})
     });
 
+    const vectorThresholdForQuery = (q) => (isMyanmarText(q) ? 0.72 : 0.8);
+
+    const buildStoreFallbackContext = (userText) => {
+      const lines = [];
+      const isMm = isMyanmarText(userText);
+
+      const storeName = process.env.STORE_NAME || process.env.SHOP_NAME;
+      const storeAddress = process.env.STORE_ADDRESS || process.env.SHOP_ADDRESS;
+      const storeCity = process.env.STORE_CITY || process.env.SHOP_CITY;
+      const storeCountry = process.env.STORE_COUNTRY || process.env.SHOP_COUNTRY;
+      const storePhone = process.env.STORE_PHONE || process.env.SHOP_PHONE;
+      const storeEmail = process.env.STORE_EMAIL || process.env.SHOP_EMAIL;
+      const storeHours = process.env.STORE_HOURS || process.env.SHOP_HOURS;
+      const storeWebsite = process.env.STORE_WEBSITE || process.env.SHOP_WEBSITE;
+
+      if (storeName) lines.push(isMm ? `ဆိုင်အမည်: ${storeName}` : `Store Name: ${storeName}`);
+      if (storeAddress) lines.push(isMm ? `လိပ်စာ: ${storeAddress}` : `Address: ${storeAddress}`);
+      if (storeCity) lines.push(isMm ? `မြို့: ${storeCity}` : `City: ${storeCity}`);
+      if (storeCountry) lines.push(isMm ? `နိုင်ငံ: ${storeCountry}` : `Country: ${storeCountry}`);
+      if (storePhone) lines.push(isMm ? `ဖုန်း: ${storePhone}` : `Phone: ${storePhone}`);
+      if (storeEmail) lines.push(isMm ? `အီးမေးလ်: ${storeEmail}` : `Email: ${storeEmail}`);
+      if (storeHours) lines.push(isMm ? `ဖွင့်ချိန်: ${storeHours}` : `Hours: ${storeHours}`);
+      if (storeWebsite) lines.push(isMm ? `ဝဘ်ဆိုဒ်: ${storeWebsite}` : `Website: ${storeWebsite}`);
+
+      if (!lines.length) {
+        return isMm
+          ? "ဆိုင်အချက်အလက်: ဤဆိုင်သည် အွန်လိုင်းစတိုးဖြစ်ပြီး ရုံး/ဆိုင်လိပ်စာကို မဖော်ပြထားသေးပါ။ သင်လိုချင်တဲ့အကူအညီ (တည်နေရာ/ဆက်သွယ်ရေး/ပို့ဆောင်မှု) ကို ပြောပေးပါ၊ သင့်ကို အကောင်းဆုံးနည်းလမ်းနဲ့ အကြံပြုပါမယ်။"
+          : "Store Information: This is an online shop and a physical address is not currently provided. Tell me what you need (location/contact/delivery) and I’ll guide you with the best option.";
+      }
+
+      return (isMm ? "ဆိုင်အချက်အလက်:\n" : "Store Information:\n") + lines.join("\n");
+    };
+
+    const mergeByHighestScore = (docs, limit) => {
+      const byId = new Map();
+      for (const doc of docs) {
+        const id = doc?._id?.toString?.() || String(doc?._id);
+        const existing = byId.get(id);
+        const score = typeof doc?.score === "number" ? doc.score : 0;
+        const existingScore = typeof existing?.score === "number" ? existing.score : 0;
+        if (!existing || score > existingScore) {
+          byId.set(id, doc);
+        }
+      }
+      return Array.from(byId.values())
+        .sort((a, b) => (b.score || 0) - (a.score || 0))
+        .slice(0, limit);
+    };
+
+    const searchProductsSmart = async ({ primaryQuery, secondaryQuery, limit = 5 }) => {
+      const candidates = [normalizeQuery(primaryQuery), normalizeQuery(secondaryQuery)].filter(Boolean);
+      const uniqueCandidates = [...new Set(candidates)];
+
+      let vectorResults = [];
+      for (const q of uniqueCandidates) {
+        const vectorResponse = await ai_helper.generateVectorDataForSearch({ prompt: q });
+        if (!vectorResponse) continue;
+
+        const queryVector = vectorResponse.vector_data;
+        const threshold = vectorThresholdForQuery(q);
+        const found = await Product.aggregate([
+          {
+            $vectorSearch: {
+              index: "vector_index",
+              path: "vector_data",
+              queryVector: queryVector,
+              numCandidates: 200,
+              limit: limit,
+            },
+          },
+          {
+            $addFields: {
+              score: { $meta: "vectorSearchScore" },
+            },
+          },
+          {
+            $match: {
+              score: { $gte: threshold }
+            }
+          }
+        ]);
+        vectorResults = vectorResults.concat(found);
+      }
+
+      const mergedVectorResults = mergeByHighestScore(vectorResults, limit);
+      if (mergedVectorResults.length) return mergedVectorResults;
+
+      const primary = normalizeQuery(primaryQuery);
+      if (primary) {
+        const textFound = await Product.find(
+          { $text: { $search: primary } },
+          { score: { $meta: "textScore" } }
+        ).sort({ score: { $meta: "textScore" } }).limit(limit);
+
+        if (textFound.length) return textFound;
+      }
+
+      for (const q of uniqueCandidates) {
+        const trimmed = normalizeQuery(q);
+        if (!trimmed) continue;
+
+        const tokens = trimmed.split(/\s+/).filter(Boolean);
+        const tokenPattern = tokens.map(escapeRegex).join("|");
+        const fullRegex = new RegExp(escapeRegex(trimmed), "i");
+        const tokenRegex = tokenPattern ? new RegExp(tokenPattern, "i") : null;
+
+        const or = [
+          { name: fullRegex },
+          { description: fullRegex },
+        ];
+
+        if (tokenRegex) {
+          or.push({ name: tokenRegex }, { description: tokenRegex });
+        }
+
+        const regexFound = await Product.find({ $or: or }).limit(limit);
+        if (regexFound.length) return regexFound;
+      }
+
+      return [];
+    };
+
     // ၀။ Recommend ပေးတဲ့အပိုင်း
     if (intentResponse.is_recommend_request === true) {
       let products = [];
 
       if ((intentResponse.search_query || "").trim()) {
-        const vectorResponse = await ai_helper.generateVectorDataForSearch({
-          prompt: intentResponse.search_query || message,
+        products = await searchProductsSmart({
+          primaryQuery: intentResponse.search_query,
+          secondaryQuery: message,
+          limit: 5
         });
-
-        if (vectorResponse) {
-          const queryVector = vectorResponse.vector_data;
-          products = await Product.aggregate([
-            {
-              $vectorSearch: {
-                index: "vector_index",
-                path: "vector_data",
-                queryVector: queryVector,
-                numCandidates: 100,
-                limit: 5,
-              },
-            },
-            {
-              $addFields: {
-                score: { $meta: "vectorSearchScore" },
-              },
-            },
-          ]);
-        }
       }
 
       if (!products.length) {
@@ -138,95 +281,19 @@ const chatWithAiAssistant = async (req, res, next) => {
         prompt: message, // Use full message for FAQ embedding
       });
 
-      if (!vectorResponse) {
-        // Record even if vector search fails for admin to see what they missed
-        try {
-          await UnansweredQuestion.create({
-            question: message,
-            intent: "faq"
-          });
-        } catch (e) {}
-        return res.status(500).json({ message: "Vector search unavailable." });
-      }
+      const faqThreshold = isMyanmarText(message) ? 0.75 : 0.8;
 
-      const queryVector = vectorResponse.vector_data;
-      const faqResults = await Faq.aggregate([
-        {
-          $vectorSearch: {
-            index: "faq_vector_index",
-            path: "vector_data",
-            queryVector: queryVector,
-            numCandidates: 100,
-            limit: 3,
-          },
-        },
-        {
-          $addFields: {
-            score: { $meta: "vectorSearchScore" },
-          },
-        },
-        {
-          $match: {
-            score: { $gte: 0.85 }
-          }
-        }
-      ]);
-
-      if (faqResults.length > 0) {
-        const context = faqResults
-          .map((f) => `Question: ${f.question} Answer: ${f.answer}`)
-          .join("\n");
-        const finalAiAnswer = await ai_helper.generateFinalResponse({
-          userPrompt: message,
-          context: context,
-          chatHistory: chatHistory
-        });
-        await updateChatHistory(message, finalAiAnswer);
-        return res.json({ 
-          type: "faq", 
-          message: finalAiAnswer
-        });
-      }
-      const notFoundMessage = await ai_helper.generateNotFoundResponse({
-        userPrompt: message,
-        type: "faq",
-        chatHistory: chatHistory
-      });
-      await updateChatHistory(message, notFoundMessage);
-      // Store unanswered question for admin
-      try {
-        await UnansweredQuestion.create({
-          question: message,
-          intent: "faq"
-        });
-      } catch (saveError) {
-        console.error("Error saving unanswered FAQ question:", saveError);
-      }
-      return res.status(404).json({ 
-        type: "faq",
-        message: notFoundMessage
-      });
-    }
-
-    // ၂။ Product ရှာတဲ့အပိုင်း (အနီးစပ်ဆုံး ၅ ခု)
-    if (intentResponse.is_product_search === true) {
-      const searchTerm = (intentResponse.search_query || message || "").trim();
-      let products = [];
-
-      const vectorResponse = await ai_helper.generateVectorDataForSearch({
-        prompt: searchTerm || message,
-      });
-
-      if (vectorResponse) {
+      let contextDocs = [];
+      if (vectorResponse && vectorResponse.vector_data) {
         const queryVector = vectorResponse.vector_data;
-        products = await Product.aggregate([
+        const faqResults = await Faq.aggregate([
           {
             $vectorSearch: {
-              index: "vector_index",
+              index: "faq_vector_index",
               path: "vector_data",
               queryVector: queryVector,
               numCandidates: 100,
-              limit: 5,
+              limit: 3,
             },
           },
           {
@@ -236,19 +303,73 @@ const chatWithAiAssistant = async (req, res, next) => {
           },
           {
             $match: {
-              score: { $gte: 0.8 }
+              score: { $gte: faqThreshold }
             }
           }
         ]);
+        contextDocs = faqResults;
       }
 
-      if (!products.length && searchTerm) {
-        const tokens = searchTerm.split(/\s+/).filter(Boolean);
-        const regex = new RegExp(tokens.map(escapeRegex).join("|"), "i");
-        products = await Product.find({
-          $or: [{ name: regex }, { description: regex }]
-        }).limit(5);
+      if (!contextDocs.length) {
+        const tokens = normalizeQuery(message).split(/\s+/).filter(Boolean).slice(0, 6);
+        if (tokens.length) {
+          const regex = new RegExp(tokens.map(escapeRegex).join("|"), "i");
+          const textMatches = await Faq.find({ $or: [{ question: regex }, { answer: regex }] }).limit(3);
+          contextDocs = textMatches;
+        }
       }
+
+      if (contextDocs.length > 0) {
+        const context = contextDocs
+          .map((f) => `Question: ${f.question} Answer: ${f.answer}`)
+          .join("\n");
+        const finalAiAnswer = await ai_helper.generateFinalResponse({
+          userPrompt: message,
+          context: context,
+          chatHistory: chatHistory
+        });
+        const safeAnswer = finalAiAnswer || (isMyanmarText(message)
+          ? "ဒီမေးခွန်းအတွက် အဖြေကို ပြန်စစ်ပြီးပေးပါမယ်။ ဆိုင်အကြောင်းအရာ/ဆက်သွယ်ရေး/ပို့ဆောင်မှုအကြောင်း အသေးစိတ်နည်းနည်း ထပ်ပြောပေးပါ။"
+          : "I can help with that—please share a bit more detail (location/contact/delivery) and I’ll answer accurately.");
+        await updateChatHistory(message, safeAnswer);
+        return res.json({
+          type: "faq",
+          message: safeAnswer
+        });
+      }
+
+      const fallbackContext = buildStoreFallbackContext(message);
+      const fallbackAnswer = await ai_helper.generateFinalResponse({
+        userPrompt: message,
+        context: fallbackContext,
+        chatHistory: chatHistory
+      });
+      const safeFallbackAnswer = fallbackAnswer || (isMyanmarText(message)
+        ? "ဤမေးခွန်းအတွက် အချက်အလက်မလုံလောက်သေးပါ။ ဆိုင်တည်နေရာ/ဆက်သွယ်ရေးအချက်အလက်လိုတာလား၊ ဒါမှမဟုတ် ပို့ဆောင်မှုအကြောင်း သိချင်တာလား ပြောပေးပါ။"
+        : "I don’t have enough stored info for that yet. Do you mean store location, contact details, or delivery information?");
+      await updateChatHistory(message, safeFallbackAnswer);
+      try {
+        await UnansweredQuestion.create({
+          question: message,
+          intent: "faq"
+        });
+      } catch (saveError) {
+        console.error("Error saving unanswered FAQ question:", saveError);
+      }
+      return res.json({
+        type: "faq",
+        message: safeFallbackAnswer
+      });
+    }
+
+    // ၂။ Product ရှာတဲ့အပိုင်း (အနီးစပ်ဆုံး ၅ ခု)
+    if (intentResponse.is_product_search === true) {
+      const searchTerm = normalizeQuery(intentResponse.search_query || message);
+      const products = await searchProductsSmart({
+        primaryQuery: searchTerm,
+        secondaryQuery: message,
+        limit: 5
+      });
 
       if (products.length > 0) {
         console.log("Product Search Scores:", products.map(p => ({ name: p.name, score: p.score })));
@@ -270,7 +391,12 @@ const chatWithAiAssistant = async (req, res, next) => {
           data: filteredProducts
         });
       }
-      await updateChatHistory(message, notAvailableMessage);
+      const notFoundMessage = await ai_helper.generateNotFoundResponse({
+        userPrompt: message,
+        type: "products",
+        chatHistory: chatHistory
+      });
+      await updateChatHistory(message, notFoundMessage);
       // Store unanswered question for admin
       try {
         await UnansweredQuestion.create({
@@ -282,7 +408,7 @@ const chatWithAiAssistant = async (req, res, next) => {
       }
       return res.status(404).json({ 
         type: "products",
-        message: notAvailableMessage
+        message: notFoundMessage
       });
     }
 

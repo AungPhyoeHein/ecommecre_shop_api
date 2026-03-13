@@ -37,7 +37,7 @@ const chatHistorySchema = new mongoose.Schema({
 
 // Limit the history to keep only the last N messages to save space
 chatHistorySchema.pre('save', function (next) {
-    const maxMessages = 20; // Keep the last 20 messages
+    const maxMessages = 10;
     if (this.messages.length > maxMessages) {
         this.messages = this.messages.slice(-maxMessages);
     }

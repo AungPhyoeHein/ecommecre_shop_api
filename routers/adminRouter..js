@@ -2,7 +2,7 @@ const express = require('express');
 const { userController, categoryController, productController, orderController, faqController } = require('../controllers/admin');
 const { createCategoryValidator } = require('../validators/category');
 const { createProductValidator } = require('../validators/product');
-const { createFaqValidator } = require('../validators/faq');
+const { createFaqValidator, updateFaqValidator } = require('../validators/faq');
 const adminRouter = express.Router();
 
 //USERS
@@ -31,6 +31,8 @@ adminRouter.delete('/orders/:id',orderController.deleteOrder)
 //FAQ
 adminRouter.get('/faqs', faqController.getAllFaqs);
 adminRouter.post('/faqs', createFaqValidator, faqController.createFaq);
+adminRouter.post('/faqs/reindex', faqController.reindexFaqVectors);
+adminRouter.patch('/faqs/:id', updateFaqValidator, faqController.updateFaq);
 adminRouter.delete('/faqs/:id', faqController.deleteFaq);
 adminRouter.get('/unanswered-questions', faqController.getUnansweredQuestions);
 adminRouter.delete('/unanswered-questions/:id', faqController.deleteUnansweredQuestion);
