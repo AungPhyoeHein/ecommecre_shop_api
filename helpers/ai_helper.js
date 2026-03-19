@@ -19,7 +19,7 @@ const classifyIntent = async (prompt, chatHistory = []) => {
       
       Rules for classification:
       0. is_recommend_request: Set to true if the user asks for recommendations/suggestions/best picks/popular items (e.g., "recommend me something", "what should I buy?", "best shoes", "recommend").
-      1. is_product_search: Set to true if the user mentions a product name, category, or features they want to buy (e.g., "find me a car", "macbook", "iphone").
+      1. is_product_search: Set to true if the user mentions a product name, category, or features they want to buy or look for (e.g., "find me a car", "macbook", "iphone"). ALSO set to true if the user is following up to buy/get a previously discussed item (e.g., "I want to buy it", "ဝယ်ချင်တယ်", "ယူမယ်"). In this case, infer the "search_query" from the chat history.
       2. ask_about_us: Set to true if the user asks ANY question related to the store, its services, or its policies. This includes:
          - Physical details (location, address, phone, email, opening hours).
          - Store history, general "about us" info.
@@ -34,7 +34,7 @@ const classifyIntent = async (prompt, chatHistory = []) => {
             "is_product_search": boolean,
             "ask_about_us": boolean,
             "telling_other_question": boolean,
-            "search_query": "string" (A concise English search term. For products, use ONLY the specific product name or category. Leave empty if not searching.)
+            "search_query": "string" (A concise English search term. For products, use ONLY the specific product name or category. If they say "buy it", use the product name from history. Leave empty if not searching.)
           }
       
       User Input: "${prompt}"
@@ -307,6 +307,78 @@ const generateVectorDataForAddProduct = async (productInfo) => {
   }
 };
 
+const filterIrrelevantProducts = async (userPrompt, products) => {
+  if (!products || products.length === 0) return [];
+  try {
+    const model = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite-preview" });
+    
+    const productContext = products.map(p => 
+      `ID: "${p._id.toString()}", Name: "${p.name}", Description: "${p.description}"`
+    ).join("\n");
+
+    const prompt = `
+      The user is searching for: "${userPrompt}".
+      We have the following products retrieved from our database:
+      
+      ${productContext}
+      
+      Your task is to determine which of these products are ACTUALLY relevant to the user's search.
+      For example, if the user searches for a "car", an "iPhone" is NOT relevant.
+      If the user searches for "shoes", "pants" are NOT relevant.
+      
+      Return ONLY a JSON array containing the string IDs of the relevant products. 
+      If none are relevant, return an empty array [].
+      Do not include any other text, just the JSON array.
+    `;
+
+    const result = await model.generateContent(prompt);
+    let aiText = result.response.text().trim();
+    aiText = aiText.replace(/```json/g, "").replace(/```/g, "").trim();
+    
+    const relevantIds = JSON.parse(aiText);
+    if (!Array.isArray(relevantIds)) {
+      console.error("Filter returned non-array:", relevantIds);
+      return products; // fallback
+    }
+    
+    return products.filter(p => relevantIds.includes(p._id.toString()));
+  } catch (error) {
+    console.error("Filter Irrelevant Products Error:", error);
+    return products; // On error, return original products
+  }
+};
+
+const generateGeneralRecommendation = async ({ userPrompt, chatHistory = [] }) => {
+  try {
+    const model = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite-preview" });
+    
+    const historyContext = chatHistory.length > 0 
+      ? `Recent Conversation History:\n${chatHistory.map(m => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.parts[0].text}`).join('\n')}\n\n`
+      : '';
+
+    const prompt = `
+      ${historyContext}
+      You are a friendly and helpful sales assistant for an e-commerce shop.
+      The user is asking for advice or a recommendation: "${userPrompt}"
+      
+      Your task:
+      1. Provide a helpful, general recommendation or advice based on their request.
+      2. If they ask for specific specs or types of items (e.g. for gaming, for a specific use case), give them good advice.
+      3. Encourage them to search our store for products matching these recommendations.
+      4. Respond in the SAME language as the user's question (If Burmese, respond in Burmese; if English, respond in English).
+      5. Keep it friendly and concise (2-3 sentences).
+      
+      Response:
+    `;
+
+    const result = await model.generateContent(prompt);
+    return result.response.text().trim();
+  } catch (error) {
+    console.error("General Recommendation Error:", error);
+    return "အကြံပြုပေးချင်ပေမယ့် အခုလောလောဆယ် အကြောင်းအရာကို သေချာမသိသေးပါဘူးဗျာ။ (I'd love to give a recommendation, but I'm having trouble processing that right now.)";
+  }
+};
+
 module.exports = {
   classifyIntent,
   generateVectorDataForSearch,
@@ -314,4 +386,6 @@ module.exports = {
   generateFinalResponse,
   generateNotFoundResponse,
   generateProductFoundResponse,
+  filterIrrelevantProducts,
+  generateGeneralRecommendation,
 };

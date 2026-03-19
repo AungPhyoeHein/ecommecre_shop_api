@@ -41,6 +41,10 @@ describe('ai_helper end-to-end journey (assistant search)', () => {
     }));
 
     const app = express();
+    app.use((req, _res, next) => {
+      req.user = { id: 'u1' };
+      next();
+    });
     app.use('/assistant', require('../routers/assistantRouter'));
 
     const res = await request(app).get('/assistant?message=macbook').expect(200);

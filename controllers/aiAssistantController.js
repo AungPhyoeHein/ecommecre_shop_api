@@ -44,7 +44,7 @@ const chatWithAiAssistant = async (req, res, next) => {
     }
 
     // Function to update chat history
-    const updateChatHistory = async (userMsg, aiMsg) => {
+    const updateChatHistory = async (userMsg, aiMsg, type = 'text', data = null) => {
       if (!userId) return;
       try {
         if (!chatHistoryDoc) {
@@ -53,8 +53,17 @@ const chatWithAiAssistant = async (req, res, next) => {
             messages: []
           });
         }
-        chatHistoryDoc.messages.push({ role: 'user', parts: [{ text: userMsg }] });
-        chatHistoryDoc.messages.push({ role: 'model', parts: [{ text: aiMsg }] });
+        chatHistoryDoc.messages.push({ 
+          role: 'user', 
+          parts: [{ text: userMsg }],
+          responseType: 'text'
+        });
+        chatHistoryDoc.messages.push({ 
+          role: 'model', 
+          parts: [{ text: aiMsg }],
+          responseType: type,
+          data: data
+        });
         await chatHistoryDoc.save();
       } catch (err) {
         console.error("Error updating chat history:", err);
@@ -76,39 +85,6 @@ const chatWithAiAssistant = async (req, res, next) => {
     const normalizeQuery = (text) => (text || "").replace(/\s+/g, " ").trim();
 
     const isMyanmarText = (text) => /[\u1000-\u109F]/.test(text || "");
-
-    const getLastUserMessageText = (history) => {
-      if (!Array.isArray(history) || !history.length) return "";
-      for (let i = history.length - 1; i >= 0; i--) {
-        const m = history[i];
-        if (m?.role === "user") {
-          const parts = Array.isArray(m.parts) ? m.parts : [];
-          const text = parts?.[0]?.text;
-          if (typeof text === "string" && text.trim()) return text.trim();
-        }
-      }
-      return "";
-    };
-
-    const isPurchaseFollowUp = (text) => {
-      const hasPronoun = /\b(it|that|this|one|them)\b/i.test(text || "");
-      const hasBuy = /\b(buy|purchase|order|checkout|get it|take it)\b/i.test(text || "");
-      const hasMmBuy = /ဝယ်ချင်|အော်ဒါ|ယူချင်|ယူမယ်|ဝယ်မယ်/.test(text || "");
-      return (hasPronoun && hasBuy) || hasMmBuy;
-    };
-
-    if (
-      isPurchaseFollowUp(message) &&
-      (!intentResponse.is_product_search || !(intentResponse.search_query || "").trim())
-    ) {
-      const fallbackSearchQuery = normalizeQuery(getLastUserMessageText(chatHistory));
-      if (fallbackSearchQuery) {
-        intentResponse.is_product_search = true;
-        intentResponse.ask_about_us = false;
-        intentResponse.telling_other_question = false;
-        intentResponse.search_query = fallbackSearchQuery;
-      }
-    }
 
     const filterProductForResponse = (p) => ({
       _id: p._id,
@@ -222,18 +198,20 @@ const chatWithAiAssistant = async (req, res, next) => {
         const trimmed = normalizeQuery(q);
         if (!trimmed) continue;
 
-        const tokens = trimmed.split(/\s+/).filter(Boolean);
-        const tokenPattern = tokens.map(escapeRegex).join("|");
         const fullRegex = new RegExp(escapeRegex(trimmed), "i");
-        const tokenRegex = tokenPattern ? new RegExp(tokenPattern, "i") : null;
-
         const or = [
           { name: fullRegex },
           { description: fullRegex },
         ];
 
-        if (tokenRegex) {
-          or.push({ name: tokenRegex }, { description: tokenRegex });
+        // Only tokenize the primaryQuery to avoid matching random stop words from sentences
+        if (q === normalizeQuery(primaryQuery)) {
+          const tokens = trimmed.split(/\s+/).filter(t => t.length > 2);
+          if (tokens.length > 0) {
+            const tokenPattern = tokens.map(escapeRegex).join("|");
+            const tokenRegex = new RegExp(tokenPattern, "i");
+            or.push({ name: tokenRegex }, { description: tokenRegex });
+          }
         }
 
         const regexFound = await Product.find({ $or: or }).limit(limit);
@@ -245,34 +223,39 @@ const chatWithAiAssistant = async (req, res, next) => {
 
     // ၀။ Recommend ပေးတဲ့အပိုင်း
     if (intentResponse.is_recommend_request === true) {
-      let products = [];
+      const searchQuery = (intentResponse.search_query || "").trim();
 
-      if ((intentResponse.search_query || "").trim()) {
-        products = await searchProductsSmart({
-          primaryQuery: intentResponse.search_query,
-          secondaryQuery: message,
-          limit: 5
+      if (searchQuery) {
+        // User asked for a specific recommendation (like a laptop for gta v).
+        // Provide a general text recommendation directly instead of searching products.
+        const recommendationMessage = await ai_helper.generateGeneralRecommendation({
+          userPrompt: message,
+          chatHistory: chatHistory
+        });
+        
+        await updateChatHistory(message, recommendationMessage, 'text');
+        
+        return res.json({
+          type: "chat",
+          response: recommendationMessage
+        });
+      } else {
+        // User just asked for general recommendations without a specific query (e.g. "what's popular?")
+        let products = await Product.find({}).sort({ rating: -1 }).limit(5);
+        const filteredProducts = products.map(filterProductForResponse);
+        const introMessage = intentResponse.response_text ||
+          (isMyanmarText(message)
+            ? "ကျွန်တော်တို့ဆိုင်ရဲ့ လူကြိုက်အများဆုံး ပစ္စည်းတွေကို အကြံပြုပေးလိုက်ပါတယ်။"
+            : "Here are some of our most popular products!");
+
+        await updateChatHistory(message, introMessage, 'recommend', filteredProducts);
+
+        return res.json({
+          type: "recommend",
+          message: introMessage,
+          data: filteredProducts,
         });
       }
-
-      if (!products.length) {
-        products = await Product.find({}).sort({ rating: -1 }).limit(5);
-      }
-
-      const filteredProducts = products.map(filterProductForResponse);
-
-      const introMessage = intentResponse.response_text ||
-        (isMyanmarText(message)
-          ? "သင့်အတွက် အကြိုက်ဆုံး ပစ္စည်းတွေကို အောက်မှာ အကြံပြုထားပါတယ်။"
-          : "Here are some products I recommend for you.");
-
-      await updateChatHistory(message, introMessage);
-
-      return res.json({
-        type: "recommend",
-        message: introMessage,
-        data: filteredProducts,
-      });
     }
 
     // ၁။ FAQ ရှာပြီး AI နဲ့ ပြန်ဖြေတဲ့အပိုင်း
@@ -331,7 +314,7 @@ const chatWithAiAssistant = async (req, res, next) => {
         const safeAnswer = finalAiAnswer || (isMyanmarText(message)
           ? "ဒီမေးခွန်းအတွက် အဖြေကို ပြန်စစ်ပြီးပေးပါမယ်။ ဆိုင်အကြောင်းအရာ/ဆက်သွယ်ရေး/ပို့ဆောင်မှုအကြောင်း အသေးစိတ်နည်းနည်း ထပ်ပြောပေးပါ။"
           : "I can help with that—please share a bit more detail (location/contact/delivery) and I’ll answer accurately.");
-        await updateChatHistory(message, safeAnswer);
+        await updateChatHistory(message, safeAnswer, 'faq');
         return res.json({
           type: "faq",
           message: safeAnswer
@@ -347,7 +330,7 @@ const chatWithAiAssistant = async (req, res, next) => {
       const safeFallbackAnswer = fallbackAnswer || (isMyanmarText(message)
         ? "ဤမေးခွန်းအတွက် အချက်အလက်မလုံလောက်သေးပါ။ ဆိုင်တည်နေရာ/ဆက်သွယ်ရေးအချက်အလက်လိုတာလား၊ ဒါမှမဟုတ် ပို့ဆောင်မှုအကြောင်း သိချင်တာလား ပြောပေးပါ။"
         : "I don’t have enough stored info for that yet. Do you mean store location, contact details, or delivery information?");
-      await updateChatHistory(message, safeFallbackAnswer);
+      await updateChatHistory(message, safeFallbackAnswer, 'faq');
       try {
         await UnansweredQuestion.create({
           question: message,
@@ -365,11 +348,16 @@ const chatWithAiAssistant = async (req, res, next) => {
     // ၂။ Product ရှာတဲ့အပိုင်း (အနီးစပ်ဆုံး ၅ ခု)
     if (intentResponse.is_product_search === true) {
       const searchTerm = normalizeQuery(intentResponse.search_query || message);
-      const products = await searchProductsSmart({
+      let products = await searchProductsSmart({
         primaryQuery: searchTerm,
         secondaryQuery: message,
         limit: 5
       });
+
+      if (products.length > 0) {
+        // Use Gemini to filter out irrelevant products
+        products = await ai_helper.filterIrrelevantProducts(searchTerm, products);
+      }
 
       if (products.length > 0) {
         console.log("Product Search Scores:", products.map(p => ({ name: p.name, score: p.score })));
@@ -383,7 +371,7 @@ const chatWithAiAssistant = async (req, res, next) => {
           chatHistory: chatHistory
         });
 
-        await updateChatHistory(message, aiMessage);
+        await updateChatHistory(message, aiMessage, 'products', filteredProducts);
 
         return res.json({ 
           type: "products", 
@@ -396,7 +384,7 @@ const chatWithAiAssistant = async (req, res, next) => {
         type: "products",
         chatHistory: chatHistory
       });
-      await updateChatHistory(message, notFoundMessage);
+      await updateChatHistory(message, notFoundMessage, 'products');
       // Store unanswered question for admin
       try {
         await UnansweredQuestion.create({

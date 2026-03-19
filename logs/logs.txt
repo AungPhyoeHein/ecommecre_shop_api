@@ -878,3 +878,51 @@ Time: 2026-03-12T05:35:49.921Z
     at next (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\router\index.js:291:5)
     at router.handle (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\router\index.js:186:3)
 
+Time: 2026-03-19T06:59:01.063Z
+        Message: Cast to ObjectId failed for value "<Buffer 69 9b d6 d6 5f 04 f6 04 f3 7c 37 a3>" (type Buffer) at path "userId" for model "ChatHistory"
+        URL Path: /api/v1/assistant?message=hi
+        Method: GET
+        Stack: CastError: Cast to ObjectId failed for value "<Buffer 69 9b d6 d6 5f 04 f6 04 f3 7c 37 a3>" (type Buffer) at path "userId" for model "ChatHistory"
+    at SchemaObjectId.cast (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\schema\objectId.js:251:11)
+    at SchemaType.applySetters (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\schemaType.js:1258:12)
+    at SchemaType.castForQuery (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\schemaType.js:1694:17)
+    at cast (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\query.js:5060:12)
+    at Query._castConditions (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\query.js:2374:10)
+    at model.Query._findOne (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\query.js:2697:8)
+    at model.Query.exec (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\query.js:4627:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async chatWithAiAssistant (C:\Users\User\Desktop\My Project\ecommecre_shop_api\controllers\aiAssistantController.js:13:24)
+
+Time: 2026-03-19T06:59:31.303Z
+        Message: Cast to ObjectId failed for value "<Buffer 69 9b d6 d6 5f 04 f6 04 f3 7c 37 a3>" (type Buffer) at path "userId" for model "ChatHistory"
+        URL Path: /api/v1/assistant?message=hi
+        Method: GET
+        Stack: CastError: Cast to ObjectId failed for value "<Buffer 69 9b d6 d6 5f 04 f6 04 f3 7c 37 a3>" (type Buffer) at path "userId" for model "ChatHistory"
+    at SchemaObjectId.cast (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\schema\objectId.js:251:11)
+    at SchemaType.applySetters (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\schemaType.js:1258:12)
+    at SchemaType.castForQuery (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\schemaType.js:1694:17)
+    at cast (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\query.js:5060:12)
+    at Query._castConditions (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\query.js:2374:10)
+    at model.Query._findOne (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\query.js:2697:8)
+    at model.Query.exec (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\query.js:4627:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async chatWithAiAssistant (C:\Users\User\Desktop\My Project\ecommecre_shop_api\controllers\aiAssistantController.js:13:24)
+
+Time: 2026-03-19T06:59:45.639Z
+        Message: Cast to ObjectId failed for value "<Buffer 69 9b d6 d6 5f 04 f6 04 f3 7c 37 a3>" (type Buffer) at path "userId" for model "ChatHistory"
+        URL Path: /api/v1/assistant?message=hello
+        Method: GET
+        Stack: CastError: Cast to ObjectId failed for value "<Buffer 69 9b d6 d6 5f 04 f6 04 f3 7c 37 a3>" (type Buffer) at path "userId" for model "ChatHistory"
+    at SchemaObjectId.cast (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\schema\objectId.js:251:11)
+    at SchemaType.applySetters (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\schemaType.js:1258:12)
+    at SchemaType.castForQuery (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\schemaType.js:1694:17)
+    at cast (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\query.js:5060:12)
+    at Query._castConditions (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\query.js:2374:10)
+    at model.Query._findOne (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\query.js:2697:8)
+    at model.Query.exec (C:\Users\User\Desktop\My Project\ecommecre_shop_api\node_modules\mongoose\lib\query.js:4627:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async chatWithAiAssistant (C:\Users\User\Desktop\My Project\ecommecre_shop_api\controllers\aiAssistantController.js:13:24)
+

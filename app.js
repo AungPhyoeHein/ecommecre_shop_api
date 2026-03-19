@@ -31,9 +31,9 @@ mongoose.connect(process.env.DB_URL).then(()=>{
    console.log(err);
 });
 
-const hostname = process.env.HOST;
-const port = process.env.PORT;
-const baseUrl = process.env.API_URL;
+const hostname = process.env.HOST || '127.0.0.1';
+const port = process.env.PORT || 8080;
+const baseUrl = process.env.API_URL || '/api/v1';
 
 
 app.use(`${baseUrl}/auth`,authRouter);
@@ -56,6 +56,10 @@ app.use(notFoundController);
 app.use(errorHandler);
 
 
- app.listen(port,hostname,()=> {
-    console.log(`Server running at http://${hostname}:${port}`)
- })
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(port, hostname, () => {
+        console.log(`Server running at http://${hostname}:${port}`);
+    });
+}
+
+module.exports = app;

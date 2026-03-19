@@ -2,6 +2,53 @@ const { ChatHistory, AuditLog } = require("../models");
 const mongoose = require("mongoose");
 
 /**
+ * Retrieve the authenticated user's chat history.
+ */
+const getChatHistory = async (req, res, next) => {
+  try {
+    const userId = req.user?.id || req.user;
+
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized access." });
+    }
+
+    const chatHistory = await ChatHistory.findOne({ userId, isDeleted: false });
+
+    if (!chatHistory || !chatHistory.messages) {
+      return res.status(200).json({ messages: [] });
+    }
+
+    // Format messages for the frontend
+    const formattedMessages = chatHistory.messages.map(msg => {
+      const type = msg.responseType || 'text';
+      const text = msg.parts?.[0]?.text || '';
+      
+      const formattedMsg = {
+        _id: msg._id,
+        role: msg.role === 'model' ? 'ai' : 'user',
+        type: type,
+        message: text,
+        timestamp: msg.timestamp
+      };
+
+      if (msg.data) {
+        formattedMsg.data = msg.data;
+      }
+
+      return formattedMsg;
+    });
+
+    res.status(200).json({ messages: formattedMessages });
+  } catch (error) {
+    console.error("Get Chat History Error:", error);
+    res.status(500).json({ 
+      message: "An error occurred while retrieving chat history.",
+      success: false 
+    });
+  }
+};
+
+/**
  * Permanently delete (soft delete) the authenticated user's chat history.
  */
 const deleteChatHistory = async (req, res, next) => {
@@ -58,5 +105,6 @@ const deleteChatHistory = async (req, res, next) => {
 };
 
 module.exports = {
+  getChatHistory,
   deleteChatHistory
 };

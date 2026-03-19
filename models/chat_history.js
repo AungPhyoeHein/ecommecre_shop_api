@@ -20,6 +20,13 @@ const chatHistorySchema = new mongoose.Schema({
                     required: true
                 }
             }],
+            responseType: {
+                type: String,
+                default: 'text'
+            },
+            data: {
+                type: mongoose.Schema.Types.Mixed
+            },
             timestamp: {
                 type: Date,
                 default: Date.now
@@ -37,7 +44,7 @@ const chatHistorySchema = new mongoose.Schema({
 
 // Limit the history to keep only the last N messages to save space
 chatHistorySchema.pre('save', function (next) {
-    const maxMessages = 10;
+    const maxMessages = 50; // Increased limit to 50 for better history
     if (this.messages.length > maxMessages) {
         this.messages = this.messages.slice(-maxMessages);
     }

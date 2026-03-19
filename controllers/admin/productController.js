@@ -71,14 +71,23 @@ const addProduct = async (req, res, next) => {
       throw new Error("Image file is required.");
     }
     const image = imageArray[0];
-    req.body["image"] = `${req.protocol}://${req.get("host")}/${image.path}`;
+    
+    if (image.path && image.path.startsWith('http')) {
+      req.body["image"] = image.path;
+    } else {
+      req.body["image"] = `${req.protocol}://${req.get("host")}/${image.path}`;
+    }
 
     const gallery = req.files["images"];
     const imagePaths = [];
     if (gallery) {
-      for (const image of gallery) {
-        const imagePath = `${req.protocol}://${req.get("host")}/${image.path}`;
-        imagePaths.push(imagePath);
+      for (const img of gallery) {
+        if (img.path && img.path.startsWith('http')) {
+          imagePaths.push(img.path);
+        } else {
+          const imagePath = `${req.protocol}://${req.get("host")}/${img.path}`;
+          imagePaths.push(imagePath);
+        }
       }
     }
 
@@ -166,11 +175,13 @@ const editProduct = async (req, res, next) => {
         const updateGallery = imageFiles && imageFiles.length > 0;
         if (updateGallery) {
           const imagePaths = [];
-          for (const image of gallery) {
-            const imagePath = `${req.protocol}:://${req.get("host")}/${
-              image.path
-            }`;
-            imagePaths.push(imagePath);
+          for (const img of imageFiles) {
+            if (img.path && img.path.startsWith('http')) {
+              imagePaths.push(img.path);
+            } else {
+              const imagePath = `${req.protocol}://${req.get("host")}/${img.path}`;
+              imagePaths.push(imagePath);
+            }
           }
           req.body["images"] = [...product.images, ...imagePaths];
         }
@@ -196,9 +207,12 @@ const editProduct = async (req, res, next) => {
           res.code = 404;
           throw new Error("No file found!");
         }
-        req.body["image"] = `${req.protocol}:://${req.get("host")}/${
-          image.path
-        }`;
+        
+        if (image.path && image.path.startsWith('http')) {
+          req.body["image"] = image.path;
+        } else {
+          req.body["image"] = `${req.protocol}://${req.get("host")}/${image.path}`;
+        }
       }
     }
 

@@ -39,7 +39,13 @@ const addCategory = async (req,res,next) =>{
         
         const image = imageArray[0];
 
-        req.body['image'] = `${req.protocol}://${req.get('host')}/${image.path}`;
+        // Check if image.path is already a full URL (like from Cloudinary)
+        if (image.path && image.path.startsWith('http')) {
+            req.body['image'] = image.path;
+        } else {
+            req.body['image'] = `${req.protocol}://${req.get('host')}/${image.path}`;
+        }
+        
         let category = new Category(req.body);
 
         category = await category.save();

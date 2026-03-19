@@ -3,6 +3,10 @@ const request = require('supertest');
 
 const buildApp = () => {
   const app = express();
+  app.use((req, _res, next) => {
+    req.user = { id: 'u1' };
+    next();
+  });
   app.use('/assistant', require('../routers/assistantRouter'));
   app.use((err, _req, res, _next) => {
     res.status(500).json({ message: err.message });
