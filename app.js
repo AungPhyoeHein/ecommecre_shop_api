@@ -22,14 +22,34 @@ app.use(autJwt());
 app.use(authorizePostRequests);
 app.use(tokenRefreshHandler);
 
-require('./helpers/cron_job.js');
+// Database connection caching for serverless environments (like Vercel)
+let isConnected = false;
 
+const connectToDatabase = async () => {
+    if (isConnected) {
+        console.log('[+] Using existing database connection.');
+        return;
+    }
 
-mongoose.connect(process.env.DB_URL).then(()=>{
-   console.log('[+] Database Connected.')
-}).catch((err)=> {
-   console.log(err);
+    try {
+        const db = await mongoose.connect(process.env.DB_URL, {
+            serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+            socketTimeoutMS: 45000, // Close sockets after 45s of inactivity
+        });
+        isConnected = db.connections[0].readyState;
+        console.log('[+] Database Connected.');
+    } catch (err) {
+        console.error('[-] Database Connection Error:', err);
+    }
+};
+
+// Middleware to ensure DB is connected before processing requests
+app.use(async (req, res, next) => {
+    await connectToDatabase();
+    next();
 });
+
+// require('./helpers/cron_job.js'); // Optional: Cron jobs might not work as expected in serverless environment
 
 const hostname = process.env.HOST || '127.0.0.1';
 const port = process.env.PORT || 8080;
