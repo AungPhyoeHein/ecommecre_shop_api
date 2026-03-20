@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const cors = require('cors')
 const mongoose = require('mongoose');
 const app = express();
-require('dotenv/config.js')
+require('dotenv').config()
 
 
 const {errorHandler,tokenRefreshHandler} = require('./middleware');
@@ -14,6 +14,60 @@ const { notFoundController } = require('./controllers');
 const autJwt = require('./middleware/jwt');
 const { authorizePostRequests } = require('./middleware/authorization.js');
 
+// Global mongoose configuration
+mongoose.set('bufferCommands', false); // Disable buffering globally
+
+// Database connection management
+let connectionPromise = null;
+
+const connectToDatabase = async () => {
+    // 1 = connected, 2 = connecting
+    if (mongoose.connection.readyState === 1) {
+        return;
+    }
+
+    if (mongoose.connection.readyState === 2) {
+        if (connectionPromise) {
+            await connectionPromise;
+        }
+        return;
+    }
+
+    if (!process.env.DB_URL) {
+        console.error('[-] DB_URL is not defined in environment variables.');
+        return;
+    }
+
+    try {
+        console.log('[*] Connecting to Database...');
+        connectionPromise = mongoose.connect(process.env.DB_URL, {
+            serverSelectionTimeoutMS: 10000,
+            socketTimeoutMS: 45000,
+        });
+        await connectionPromise;
+        console.log('[+] Database Connected.');
+    } catch (err) {
+        console.error('[-] Database Connection Error:', err.message);
+        connectionPromise = null; // Reset promise on failure
+    }
+};
+
+// Middleware to ensure DB is connected before processing requests
+app.use(async (req, res, next) => {
+    try {
+        await connectToDatabase();
+        if (mongoose.connection.readyState !== 1) {
+            return res.status(503).json({
+                success: false,
+                message: 'Database connection is not established. Please try again later.'
+            });
+        }
+        next();
+    } catch (error) {
+        next(error);
+    }
+});
+
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(morgan('tiny'));
@@ -21,33 +75,6 @@ app.use(cors());
 app.use(autJwt());
 app.use(authorizePostRequests);
 app.use(tokenRefreshHandler);
-
-// Database connection caching for serverless environments (like Vercel)
-let isConnected = false;
-
-const connectToDatabase = async () => {
-    if (isConnected) {
-        console.log('[+] Using existing database connection.');
-        return;
-    }
-
-    try {
-        const db = await mongoose.connect(process.env.DB_URL, {
-            serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
-            socketTimeoutMS: 45000, // Close sockets after 45s of inactivity
-        });
-        isConnected = db.connections[0].readyState;
-        console.log('[+] Database Connected.');
-    } catch (err) {
-        console.error('[-] Database Connection Error:', err);
-    }
-};
-
-// Middleware to ensure DB is connected before processing requests
-app.use(async (req, res, next) => {
-    await connectToDatabase();
-    next();
-});
 
 // require('./helpers/cron_job.js'); // Optional: Cron jobs might not work as expected in serverless environment
 
