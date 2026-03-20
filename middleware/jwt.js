@@ -25,7 +25,7 @@ async function isRevoked(req,jwt) {
     const adminRouteRegex = /^\/api\/v1\/admin\//i;
     const adminFault = !jwt.payload.isAdmin && adminRouteRegex.test(req.originalUrl);
     if(!adminFault && token){
-        req.user = token.userId;
+        req.user = token.userId.toString();
     }
     return adminFault || !token;
 }

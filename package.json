@@ -6,7 +6,44 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node node_modules/jest/bin/jest.js --runInBand",
+    "test:watch": "node node_modules/jest/bin/jest.js --watch",
+    "test:coverage": "node node_modules/jest/bin/jest.js --coverage --coverageReporters=text --coverageReporters=lcov --runInBand"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "helpers/ai_helper.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      }
+    },
+    "projects": [
+      {
+        "displayName": "node",
+        "testEnvironment": "node",
+        "setupFilesAfterEnv": [
+          "<rootDir>/tests/setup.js"
+        ],
+        "testMatch": [
+          "<rootDir>/tests/**/*.test.js"
+        ],
+        "testPathIgnorePatterns": [
+          "\\.browser\\.test\\.js$"
+        ]
+      },
+      {
+        "displayName": "browser",
+        "testEnvironment": "jsdom",
+        "testMatch": [
+          "<rootDir>/tests/**/*.browser.test.js"
+        ]
+      }
+    ]
   },
   "keywords": [],
   "author": "",
@@ -14,6 +51,7 @@
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "body-parser": "^2.2.0",
+    "cloudinary": "^1.41.3",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
@@ -23,9 +61,17 @@
     "mongoose": "^8.18.1",
     "morgan": "^1.10.1",
     "multer": "^2.0.2",
+    "multer-storage-cloudinary": "^4.0.0",
     "node-cron": "^4.2.1",
     "nodemailer": "^7.0.6",
     "nodemon": "^3.1.10",
     "stripe": "^19.3.1"
+  },
+  "devDependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0",
+    "mongodb-memory-server": "^11.0.1",
+    "supertest": "^7.2.2"
   }
 }

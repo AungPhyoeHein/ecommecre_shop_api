@@ -5,6 +5,8 @@ const categoryRouter = require('./categoryRouter.js');
 const productRouter = require('./productRouter.js');
 const checkoutRouter = require('./checkoutRouter.js');
 const orderRouter = require('./orderRouter.js')
+const assistantRouter = require('./assistantRouter.js');
 
 
-module.exports = {authRouter,adminRouter,userRouter,categoryRouter,productRouter,checkoutRouter,orderRouter}
+
+module.exports = {authRouter,adminRouter,userRouter,categoryRouter,productRouter,checkoutRouter,orderRouter,assistantRouter}

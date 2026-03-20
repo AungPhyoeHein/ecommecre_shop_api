@@ -1,6 +1,7 @@
 const media_helper = require("../../helpers/media_helper");
 const util = require("util");
 const { validationResult } = require("express-validator");
+const ai_helper = require("../../helpers/ai_helper.js");
 
 const { Category, Product, Review } = require("../../models");
 const { default: mongoose } = require("mongoose");
@@ -37,7 +38,7 @@ const addProduct = async (req, res, next) => {
           name: "images",
           maxCount: 10,
         },
-      ])
+      ]),
     );
 
     try {
@@ -60,7 +61,7 @@ const addProduct = async (req, res, next) => {
     if (category.markedForDeletion) {
       res.code = 404;
       throw new Error(
-        "Category marked for deletion, you cann't add products to this category."
+        "Category marked for deletion, you cannot add products to this category.",
       );
     }
 
@@ -70,14 +71,23 @@ const addProduct = async (req, res, next) => {
       throw new Error("Image file is required.");
     }
     const image = imageArray[0];
-    req.body["image"] = `${req.protocol}://${req.get("host")}/${image.path}`;
+    
+    if (image.path && image.path.startsWith('http')) {
+      req.body["image"] = image.path;
+    } else {
+      req.body["image"] = `${req.protocol}://${req.get("host")}/${image.path}`;
+    }
 
     const gallery = req.files["images"];
     const imagePaths = [];
     if (gallery) {
-      for (const image of gallery) {
-        const imagePath = `${req.protocol}://${req.get("host")}/${image.path}`;
-        imagePaths.push(imagePath);
+      for (const img of gallery) {
+        if (img.path && img.path.startsWith('http')) {
+          imagePaths.push(img.path);
+        } else {
+          const imagePath = `${req.protocol}://${req.get("host")}/${img.path}`;
+          imagePaths.push(imagePath);
+        }
       }
     }
 
@@ -89,7 +99,31 @@ const addProduct = async (req, res, next) => {
       throw new Error("The product could not be created");
     }
 
-    return res.status(201).json(product);
+    res.status(201).json(product);
+    
+    // Run AI analysis in the background
+    (async () => {
+      try {
+        const aiResult = await ai_helper.generateVectorDataForAddProduct({
+          ...product.toObject(),
+          categoryName: category.name,
+        });
+
+        if (!aiResult) {
+          throw new Error("AI analysis returned no result.");
+        }
+
+        await Product.findByIdAndUpdate(product._id, {
+          vector_data: aiResult.vector_data,
+          aiStatus: "completed",
+        });
+      } catch (aiError) {
+        console.error("AI Analysis Background Error:", aiError.message);
+        await Product.findByIdAndUpdate(product._id, {
+          aiStatus: "error",
+        });
+      }
+    })();
   } catch (err) {
     next(err);
   }
@@ -100,7 +134,7 @@ const editProduct = async (req, res, next) => {
     if (
       !mongoose.isValidObjectId(req.params.id) ||
       !(await Product.findById(req.params.id))
-    ){
+    ) {
       res.code = 404;
       throw new Error("Invalid Product!");
     }
@@ -115,7 +149,7 @@ const editProduct = async (req, res, next) => {
       if (category.markedForDeletion) {
         res.code = 404;
         throw new Error(
-          "Category marked for deletion, you cannot add products o this category."
+          "Category marked for deletion, you cannot add products o this category.",
         );
       }
 
@@ -123,7 +157,7 @@ const editProduct = async (req, res, next) => {
       if (req.body.images) {
         const limit = 10 - product.images.length;
         const galleryUpload = util.promisify(
-          media_helper.upload.fields([{ name: "images", maxCount: limit }])
+          media_helper.upload.fields([{ name: "images", maxCount: limit }]),
         );
 
         try {
@@ -141,11 +175,13 @@ const editProduct = async (req, res, next) => {
         const updateGallery = imageFiles && imageFiles.length > 0;
         if (updateGallery) {
           const imagePaths = [];
-          for (const image of gallery) {
-            const imagePath = `${req.protocol}:://${req.get("host")}/${
-              image.path
-            }`;
-            imagePaths.push(imagePath);
+          for (const img of imageFiles) {
+            if (img.path && img.path.startsWith('http')) {
+              imagePaths.push(img.path);
+            } else {
+              const imagePath = `${req.protocol}://${req.get("host")}/${img.path}`;
+              imagePaths.push(imagePath);
+            }
           }
           req.body["images"] = [...product.images, ...imagePaths];
         }
@@ -153,7 +189,7 @@ const editProduct = async (req, res, next) => {
 
       if (req.body.image) {
         const uploadImage = util.promisify(
-          media_helper.upload.fields([{ name: "image", maxCount: 1 }])
+          media_helper.upload.fields([{ name: "image", maxCount: 1 }]),
         );
         try {
           await uploadImage(req, res);
@@ -171,22 +207,55 @@ const editProduct = async (req, res, next) => {
           res.code = 404;
           throw new Error("No file found!");
         }
-        req.body["image"] = `${req.protocol}:://${req.get("host")}/${
-          image.path
-        }`;
+        
+        if (image.path && image.path.startsWith('http')) {
+          req.body["image"] = image.path;
+        } else {
+          req.body["image"] = `${req.protocol}://${req.get("host")}/${image.path}`;
+        }
       }
     }
 
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
       req.body,
-      { new: true }
+      { new: true },
     );
     if (!updatedProduct) {
       res.code = 404;
       throw new Error("Product not found");
     }
-    return res.json(updatedProduct);
+    res.json(updatedProduct);
+
+    // Run AI analysis in the background
+    (async () => {
+      try {
+        let categoryName = "";
+        if (updatedProduct.category) {
+          const category = await Category.findById(updatedProduct.category);
+          if (category) categoryName = category.name;
+        }
+
+        const aiResult = await ai_helper.generateVectorDataForAddProduct({
+          ...updatedProduct.toObject(),
+          categoryName,
+        });
+
+        if (!aiResult) {
+          throw new Error("AI analysis returned no result.");
+        }
+
+        await Product.findByIdAndUpdate(req.params.id, {
+          vector_data: aiResult.vector_data,
+          aiStatus: "completed",
+        });
+      } catch (aiError) {
+        console.error("AI Analysis Background Error:", aiError.message);
+        await Product.findByIdAndUpdate(req.params.id, {
+          aiStatus: "error",
+        });
+      }
+    })();
   } catch (err) {
     next(err);
   }
@@ -212,7 +281,7 @@ const deleteProductImages = async (req, res, next) => {
     }
 
     product.images = product.images.filter(
-      (image) => !deletedImageUrls.includes(image)
+      (image) => !deletedImageUrls.includes(image),
     );
     await product.save();
 
@@ -241,7 +310,7 @@ const deleteProduct = async (req, res, next) => {
 
     await media_helper.deleteImages(
       [...product.images, product.image],
-      "ENOENT"
+      "ENOENT",
     );
 
     await Review.deleteMany({ _id: { $in: product.reviews } });
