@@ -3,7 +3,10 @@ const { Product, Faq } = require("../models");
 const getProducts = async (req, res, next) => {
   try {
     let products;
-    const page = req.query.page || 1;
+    const page =
+      req.query.page && parseInt(req.query.page) > 0
+        ? parseInt(req.query.page)
+        : 1;
     const pageSize = 10;
     let query = {};
 
@@ -90,11 +93,10 @@ const searchProducts = async (req, res, next) => {
     if (searchKey) {
       query = {
         ...query,
-        $text: {
-          $search: searchKey,
-          $language: "none",
-          $caseSensitive: false,
-        },
+        $or: [
+          { name: { $regex: searchKey, $options: "i" } },
+          { description: { $regex: searchKey, $options: "i" } },
+        ],
       };
     }
     const products = await Product.find(query)
@@ -106,7 +108,7 @@ const searchProducts = async (req, res, next) => {
       res.code = 404;
       throw new Error("Products not found");
     }
-
+    console.log(products);
     return res.json(products);
   } catch (err) {
     next(err);

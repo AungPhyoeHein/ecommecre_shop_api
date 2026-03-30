@@ -1,17 +1,22 @@
-const { GoogleGenerativeAI, TaskType } = require('@google/generative-ai');
-require('dotenv').config();
+const { GoogleGenerativeAI, TaskType } = require("@google/generative-ai");
+require("dotenv").config();
 
 // API Key from environment variables
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const classifyIntent = async (prompt, chatHistory = []) => {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite-preview" });
-    
+    const model = genAI.getGenerativeModel({
+      model: "gemini-3.1-flash-lite-preview",
+      systemInstruction:
+        "You are an expert Ecommerce Customer Service Assistant. Your primary goal is to categorize user intent and provide helpful responses. You handle queries about products, recommendations, and store information (FAQ). When users ask in Myanmar (Burmese) or English about the store name, contact details, or other general policies, you must accurately classify the intent as 'ask_about_us' so the system can retrieve the correct info from the FAQ database. Be friendly and professional.",
+    });
+
     // Prepare history context for intent classification
-    const historyContext = chatHistory.length > 0 
-      ? `Recent Conversation History:\n${chatHistory.map(m => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.parts[0].text}`).join('\n')}\n\n`
-      : '';
+    const historyContext =
+      chatHistory.length > 0
+        ? `Recent Conversation History:\n${chatHistory.map((m) => `${m.role === "user" ? "User" : "Assistant"}: ${m.parts[0].text}`).join("\n")}\n\n`
+        : "";
 
     const classificationPrompt = `
       ${historyContext}
@@ -44,8 +49,11 @@ const classifyIntent = async (prompt, chatHistory = []) => {
 
     const result = await model.generateContent(classificationPrompt);
     let aiText = result.response.text().trim();
-    aiText = aiText.replace(/```json/g, "").replace(/```/g, "").trim();
-    
+    aiText = aiText
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
+
     let intent;
     try {
       intent = JSON.parse(aiText);
@@ -56,21 +64,24 @@ const classifyIntent = async (prompt, chatHistory = []) => {
         is_product_search: false,
         ask_about_us: false,
         telling_other_question: true,
-        search_query: ""
+        search_query: "",
       };
     }
 
     // Get response text
     let responseText = "";
-    const chatModel = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite-preview" });
-    
+    const chatModel = genAI.getGenerativeModel({
+      model: "gemini-3.1-flash-lite-preview",
+    });
+
     // Prepare history context for general chat
-    const historyContextChat = chatHistory.length > 0 
-      ? `Recent Conversation History:\n${chatHistory.map(m => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.parts[0].text}`).join('\n')}\n\n`
-      : '';
+    const historyContextChat =
+      chatHistory.length > 0
+        ? `Recent Conversation History:\n${chatHistory.map((m) => `${m.role === "user" ? "User" : "Assistant"}: ${m.parts[0].text}`).join("\n")}\n\n`
+        : "";
 
     let chatPrompt = "";
-    
+
     if (intent.telling_other_question) {
       chatPrompt = `
         ${historyContextChat}
@@ -107,7 +118,10 @@ const classifyIntent = async (prompt, chatHistory = []) => {
     if (chatPrompt) {
       const chatResult = await chatModel.generateContent(chatPrompt);
       let chatResponse = chatResult.response.text();
-      chatResponse = chatResponse.replace(/```json/g, "").replace(/```/g, "").trim();
+      chatResponse = chatResponse
+        .replace(/```json/g, "")
+        .replace(/```/g, "")
+        .trim();
       try {
         const parsedChat = JSON.parse(chatResponse);
         responseText = parsedChat.response || chatResponse;
@@ -125,7 +139,8 @@ const classifyIntent = async (prompt, chatHistory = []) => {
       ask_about_us: false,
       telling_other_question: true,
       search_query: "",
-      response_text: "I'm sorry, I'm having trouble processing your request right now."
+      response_text:
+        "I'm sorry, I'm having trouble processing your request right now.",
     };
   }
 };
@@ -137,7 +152,9 @@ const generateVectorDataForSearch = async ({ prompt }) => {
   }
 
   try {
-    const embeddingModel = genAI.getGenerativeModel({ model: "gemini-embedding-001" });
+    const embeddingModel = genAI.getGenerativeModel({
+      model: "gemini-embedding-001",
+    });
     const embeddingResult = await embeddingModel.embedContent({
       content: { parts: [{ text: prompt }] },
       taskType: TaskType.RETRIEVAL_QUERY,
@@ -145,7 +162,7 @@ const generateVectorDataForSearch = async ({ prompt }) => {
     });
 
     return {
-      vector_data: embeddingResult.embedding.values
+      vector_data: embeddingResult.embedding.values,
     };
   } catch (error) {
     console.error("Vector Search Error:", error);
@@ -153,14 +170,23 @@ const generateVectorDataForSearch = async ({ prompt }) => {
   }
 };
 
-const generateFinalResponse = async ({ userPrompt, context, chatHistory = [] }) => {
+const generateFinalResponse = async ({
+  userPrompt,
+  context,
+  chatHistory = [],
+}) => {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite-preview" });
-    
+    const model = genAI.getGenerativeModel({
+      model: "gemini-3.1-flash-lite-preview",
+      systemInstruction:
+        "You are an expert Ecommerce Customer Service Assistant. You provide answers based on the provided store FAQ and context. You handle both English and Myanmar (Burmese) text. If a user asks about the store name, contact info, or policies in either language, you MUST use the provided context to answer accurately. If the context doesn't contain the answer, politely tell them to contact support. Always be helpful and friendly.",
+    });
+
     // Prepare history context for conversation
-    const historyContext = chatHistory.length > 0 
-      ? `Recent Conversation History:\n${chatHistory.map(m => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.parts[0].text}`).join('\n')}\n\n`
-      : '';
+    const historyContext =
+      chatHistory.length > 0
+        ? `Recent Conversation History:\n${chatHistory.map((m) => `${m.role === "user" ? "User" : "Assistant"}: ${m.parts[0].text}`).join("\n")}\n\n`
+        : "";
 
     const prompt = `
       ${historyContext}
@@ -189,14 +215,21 @@ const generateFinalResponse = async ({ userPrompt, context, chatHistory = [] }) 
   }
 };
 
-const generateNotFoundResponse = async ({ userPrompt, type, chatHistory = [] }) => {
+const generateNotFoundResponse = async ({
+  userPrompt,
+  type,
+  chatHistory = [],
+}) => {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite-preview" });
-    
+    const model = genAI.getGenerativeModel({
+      model: "gemini-3.1-flash-lite-preview",
+    });
+
     // Prepare history context for conversation
-    const historyContext = chatHistory.length > 0 
-      ? `Recent Conversation History:\n${chatHistory.map(m => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.parts[0].text}`).join('\n')}\n\n`
-      : '';
+    const historyContext =
+      chatHistory.length > 0
+        ? `Recent Conversation History:\n${chatHistory.map((m) => `${m.role === "user" ? "User" : "Assistant"}: ${m.parts[0].text}`).join("\n")}\n\n`
+        : "";
 
     const prompt = `
       ${historyContext}
@@ -225,18 +258,28 @@ const generateNotFoundResponse = async ({ userPrompt, type, chatHistory = [] }) 
   }
 };
 
-const generateProductFoundResponse = async ({ userPrompt, products, chatHistory = [] }) => {
+const generateProductFoundResponse = async ({
+  userPrompt,
+  products,
+  chatHistory = [],
+}) => {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite-preview" });
-    
-    // Prepare history context for conversation
-    const historyContext = chatHistory.length > 0 
-      ? `Recent Conversation History:\n${chatHistory.map(m => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.parts[0].text}`).join('\n')}\n\n`
-      : '';
+    const model = genAI.getGenerativeModel({
+      model: "gemini-3.1-flash-lite-preview",
+    });
 
-    const productContext = products.map(p => 
-      `Name: ${p.name}, Price: ${p.price}, Description: ${p.description}, Sizes: ${p.sizes ? p.sizes.join(", ") : 'N/A'}`
-    ).join("\n\n");
+    // Prepare history context for conversation
+    const historyContext =
+      chatHistory.length > 0
+        ? `Recent Conversation History:\n${chatHistory.map((m) => `${m.role === "user" ? "User" : "Assistant"}: ${m.parts[0].text}`).join("\n")}\n\n`
+        : "";
+
+    const productContext = products
+      .map(
+        (p) =>
+          `Name: ${p.name}, Price: ${p.price}, Description: ${p.description}, Sizes: ${p.sizes ? p.sizes.join(", ") : "N/A"}`,
+      )
+      .join("\n\n");
 
     const prompt = `
       ${historyContext}
@@ -272,21 +315,28 @@ const generateVectorDataForAddProduct = async (productInfo) => {
     console.error("Error: productInfo is missing!");
     return null;
   }
-  
+
   try {
-    const embeddingModel = genAI.getGenerativeModel({ model: "gemini-embedding-001" });
-    
+    const embeddingModel = genAI.getGenerativeModel({
+      model: "gemini-embedding-001",
+    });
+
     const attributes = [];
     if (productInfo.name) attributes.push(`Name: ${productInfo.name}`);
-    if (productInfo.description) attributes.push(`Description: ${productInfo.description}`);
-    if (productInfo.categoryName) attributes.push(`Category: ${productInfo.categoryName}`);
+    if (productInfo.description)
+      attributes.push(`Description: ${productInfo.description}`);
+    if (productInfo.categoryName)
+      attributes.push(`Category: ${productInfo.categoryName}`);
     if (productInfo.price) attributes.push(`Price: ${productInfo.price}`);
-    if (productInfo.genderAgeCategory) attributes.push(`Target Audience: ${productInfo.genderAgeCategory}`);
-    if (productInfo.colors && productInfo.colors.length > 0) attributes.push(`Colors: ${productInfo.colors.join(", ")}`);
-    if (productInfo.sizes && productInfo.sizes.length > 0) attributes.push(`Sizes: ${productInfo.sizes.join(", ")}`);
+    if (productInfo.genderAgeCategory)
+      attributes.push(`Target Audience: ${productInfo.genderAgeCategory}`);
+    if (productInfo.colors && productInfo.colors.length > 0)
+      attributes.push(`Colors: ${productInfo.colors.join(", ")}`);
+    if (productInfo.sizes && productInfo.sizes.length > 0)
+      attributes.push(`Sizes: ${productInfo.sizes.join(", ")}`);
 
     const textToEmbed = attributes.join(". ");
-    
+
     if (!textToEmbed) {
       console.warn("Warning: No product attributes to embed.");
       return { vector_data: [] };
@@ -297,9 +347,9 @@ const generateVectorDataForAddProduct = async (productInfo) => {
       taskType: TaskType.RETRIEVAL_DOCUMENT,
       outputDimensionality: 768,
     });
-    
+
     return {
-      vector_data: embeddingResult.embedding.values
+      vector_data: embeddingResult.embedding.values,
     };
   } catch (error) {
     console.error("Add Product Vector Error:", error);
@@ -310,11 +360,16 @@ const generateVectorDataForAddProduct = async (productInfo) => {
 const filterIrrelevantProducts = async (userPrompt, products) => {
   if (!products || products.length === 0) return [];
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite-preview" });
-    
-    const productContext = products.map(p => 
-      `ID: "${p._id.toString()}", Name: "${p.name}", Description: "${p.description}"`
-    ).join("\n");
+    const model = genAI.getGenerativeModel({
+      model: "gemini-3.1-flash-lite-preview",
+    });
+
+    const productContext = products
+      .map(
+        (p) =>
+          `ID: "${p._id.toString()}", Name: "${p.name}", Description: "${p.description}"`,
+      )
+      .join("\n");
 
     const prompt = `
       The user is searching for: "${userPrompt}".
@@ -333,28 +388,37 @@ const filterIrrelevantProducts = async (userPrompt, products) => {
 
     const result = await model.generateContent(prompt);
     let aiText = result.response.text().trim();
-    aiText = aiText.replace(/```json/g, "").replace(/```/g, "").trim();
-    
+    aiText = aiText
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
+
     const relevantIds = JSON.parse(aiText);
     if (!Array.isArray(relevantIds)) {
       console.error("Filter returned non-array:", relevantIds);
       return products; // fallback
     }
-    
-    return products.filter(p => relevantIds.includes(p._id.toString()));
+
+    return products.filter((p) => relevantIds.includes(p._id.toString()));
   } catch (error) {
     console.error("Filter Irrelevant Products Error:", error);
     return products; // On error, return original products
   }
 };
 
-const generateGeneralRecommendation = async ({ userPrompt, chatHistory = [] }) => {
+const generateGeneralRecommendation = async ({
+  userPrompt,
+  chatHistory = [],
+}) => {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite-preview" });
-    
-    const historyContext = chatHistory.length > 0 
-      ? `Recent Conversation History:\n${chatHistory.map(m => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.parts[0].text}`).join('\n')}\n\n`
-      : '';
+    const model = genAI.getGenerativeModel({
+      model: "gemini-3.1-flash-lite-preview",
+    });
+
+    const historyContext =
+      chatHistory.length > 0
+        ? `Recent Conversation History:\n${chatHistory.map((m) => `${m.role === "user" ? "User" : "Assistant"}: ${m.parts[0].text}`).join("\n")}\n\n`
+        : "";
 
     const prompt = `
       ${historyContext}

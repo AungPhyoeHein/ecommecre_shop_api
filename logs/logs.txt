@@ -926,3 +926,115 @@ Time: 2026-03-19T06:59:45.639Z
     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
     at async chatWithAiAssistant (C:\Users\User\Desktop\My Project\ecommecre_shop_api\controllers\aiAssistantController.js:13:24)
 
+Time: 2026-03-26T08:15:22.188Z
+        Message: BSON field 'skip' value must be >= 0, actual value '-10'
+        URL Path: /api/v1/products?page=0
+        Method: GET
+        Stack: MongoServerError: BSON field 'skip' value must be >= 0, actual value '-10'
+    at Connection.sendCommand (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cmap/connection.js:306:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Connection.command (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cmap/connection.js:334:26)
+    at async Server.command (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/sdam/server.js:194:29)
+    at async tryOperation (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/operations/execute_operation.js:213:32)
+    at async executeOperation (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/operations/execute_operation.js:78:16)
+    at async FindCursor._initialize (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/find_cursor.js:62:26)
+    at async FindCursor.cursorInit (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/abstract_cursor.js:632:27)
+    at async FindCursor.fetchBatch (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/abstract_cursor.js:666:13)
+    at async FindCursor.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/abstract_cursor.js:342:17)
+
+Time: 2026-03-26T08:15:32.221Z
+        Message: BSON field 'skip' value must be >= 0, actual value '-10'
+        URL Path: /api/v1/products?page=0
+        Method: GET
+        Stack: MongoServerError: BSON field 'skip' value must be >= 0, actual value '-10'
+    at Connection.sendCommand (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cmap/connection.js:306:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Connection.command (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cmap/connection.js:334:26)
+    at async Server.command (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/sdam/server.js:194:29)
+    at async tryOperation (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/operations/execute_operation.js:213:32)
+    at async executeOperation (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/operations/execute_operation.js:78:16)
+    at async FindCursor._initialize (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/find_cursor.js:62:26)
+    at async FindCursor.cursorInit (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/abstract_cursor.js:632:27)
+    at async FindCursor.fetchBatch (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/abstract_cursor.js:666:13)
+    at async FindCursor.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/abstract_cursor.js:342:17)
+
+Time: 2026-03-26T08:15:32.338Z
+        Message: BSON field 'skip' value must be >= 0, actual value '-10'
+        URL Path: /api/v1/products?page=0
+        Method: GET
+        Stack: MongoServerError: BSON field 'skip' value must be >= 0, actual value '-10'
+    at Connection.sendCommand (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cmap/connection.js:306:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Connection.command (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cmap/connection.js:334:26)
+    at async Server.command (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/sdam/server.js:194:29)
+    at async tryOperation (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/operations/execute_operation.js:213:32)
+    at async executeOperation (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/operations/execute_operation.js:78:16)
+    at async FindCursor._initialize (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/find_cursor.js:62:26)
+    at async FindCursor.cursorInit (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/abstract_cursor.js:632:27)
+    at async FindCursor.fetchBatch (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/abstract_cursor.js:666:13)
+    at async FindCursor.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/abstract_cursor.js:342:17)
+
+Time: 2026-03-26T08:15:35.702Z
+        Message: BSON field 'skip' value must be >= 0, actual value '-10'
+        URL Path: /api/v1/products?page=0
+        Method: GET
+        Stack: MongoServerError: BSON field 'skip' value must be >= 0, actual value '-10'
+    at Connection.sendCommand (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cmap/connection.js:306:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Connection.command (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cmap/connection.js:334:26)
+    at async Server.command (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/sdam/server.js:194:29)
+    at async tryOperation (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/operations/execute_operation.js:213:32)
+    at async executeOperation (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/operations/execute_operation.js:78:16)
+    at async FindCursor._initialize (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/find_cursor.js:62:26)
+    at async FindCursor.cursorInit (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/abstract_cursor.js:632:27)
+    at async FindCursor.fetchBatch (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/abstract_cursor.js:666:13)
+    at async FindCursor.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/abstract_cursor.js:342:17)
+
+Time: 2026-03-26T08:15:35.829Z
+        Message: BSON field 'skip' value must be >= 0, actual value '-10'
+        URL Path: /api/v1/products?page=0
+        Method: GET
+        Stack: MongoServerError: BSON field 'skip' value must be >= 0, actual value '-10'
+    at Connection.sendCommand (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cmap/connection.js:306:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Connection.command (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cmap/connection.js:334:26)
+    at async Server.command (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/sdam/server.js:194:29)
+    at async tryOperation (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/operations/execute_operation.js:213:32)
+    at async executeOperation (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/operations/execute_operation.js:78:16)
+    at async FindCursor._initialize (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/find_cursor.js:62:26)
+    at async FindCursor.cursorInit (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/abstract_cursor.js:632:27)
+    at async FindCursor.fetchBatch (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/abstract_cursor.js:666:13)
+    at async FindCursor.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/abstract_cursor.js:342:17)
+
+Time: 2026-03-26T08:17:31.809Z
+        Message: BSON field 'skip' value must be >= 0, actual value '-10'
+        URL Path: /api/v1/products?page=0
+        Method: GET
+        Stack: MongoServerError: BSON field 'skip' value must be >= 0, actual value '-10'
+    at Connection.sendCommand (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cmap/connection.js:306:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Connection.command (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cmap/connection.js:334:26)
+    at async Server.command (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/sdam/server.js:194:29)
+    at async tryOperation (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/operations/execute_operation.js:213:32)
+    at async executeOperation (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/operations/execute_operation.js:78:16)
+    at async FindCursor._initialize (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/find_cursor.js:62:26)
+    at async FindCursor.cursorInit (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/abstract_cursor.js:632:27)
+    at async FindCursor.fetchBatch (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/abstract_cursor.js:666:13)
+    at async FindCursor.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/abstract_cursor.js:342:17)
+
+Time: 2026-03-26T08:17:37.729Z
+        Message: BSON field 'skip' value must be >= 0, actual value '-10'
+        URL Path: /api/v1/products?page=0
+        Method: GET
+        Stack: MongoServerError: BSON field 'skip' value must be >= 0, actual value '-10'
+    at Connection.sendCommand (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cmap/connection.js:306:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Connection.command (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cmap/connection.js:334:26)
+    at async Server.command (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/sdam/server.js:194:29)
+    at async tryOperation (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/operations/execute_operation.js:213:32)
+    at async executeOperation (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/operations/execute_operation.js:78:16)
+    at async FindCursor._initialize (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/find_cursor.js:62:26)
+    at async FindCursor.cursorInit (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/abstract_cursor.js:632:27)
+    at async FindCursor.fetchBatch (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/abstract_cursor.js:666:13)
+    at async FindCursor.next (/home/jerry/Desktop/FullStack Project/ECOMMERCE SHOP APP/ecommerce_server/node_modules/mongoose/node_modules/mongodb/lib/cursor/abstract_cursor.js:342:17)
+
