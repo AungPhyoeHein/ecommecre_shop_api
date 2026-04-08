@@ -69,7 +69,7 @@ const getUserCartCount = async (req, res, next) => {
 const getCartProductById = async (req, res, next) => {
   try {
     let cartProduct = await CartProduct.findById(req.cartProductId).populate(
-      "product"
+      "product",
     );
 
     if (!cartProduct) {
@@ -134,19 +134,15 @@ const addToCart = async (req, res, next) => {
       },
     });
 
-    const existingCartItem = userCartProducts.some((item) =>
-      item.product.equals(
-        new mongoose.Types.ObjectId(productId) &&
-          item.selectedSize === selectedSize &&
-          item.selectedColor === selectedColor
-      )
+    const existingCartItem = userCartProducts.find(
+      (item) =>
+        item.product.equals(new mongoose.Types.ObjectId(productId)) &&
+        item.selectedSize === selectedSize &&
+        item.selectedColor === selectedColor,
     );
 
     if (existingCartItem) {
-      let condition = product.countInStock >= existingCartItem.quantity + 1;
-      if (existingCartItem.reserved) {
-        condition = product.countInStock >= 1;
-      }
+      let condition = product.countInStock >= 1;
       if (condition) {
         existingCartItem.quantity += 1;
         await existingCartItem.save({ session });
@@ -158,15 +154,13 @@ const addToCart = async (req, res, next) => {
         return res.status(200).end();
       }
       res.code = 404;
-      throw new Error("Out of stoke");
+      throw new Error("Out of stock");
     }
 
     if (product.countInStock < quantity) {
-      return res
-        .status(400)
-        .json({
-          message: `Insufficient stock. Only ${product.countInStock} left.`,
-        });
+      return res.status(400).json({
+        message: `Insufficient stock. Only ${product.countInStock} left.`,
+      });
     }
 
     const cartProduct = await new CartProduct({
@@ -187,7 +181,7 @@ const addToCart = async (req, res, next) => {
     const updatedProduct = await Product.findOneAndUpdate(
       { _id: productId, countInStock: { $gte: cartProduct.quantity } },
       { $inc: { countInStock: -cartProduct.quantity } },
-      { new: true, session }
+      { new: true, session },
     );
     if (!updatedProduct) {
       res.code = 400;
@@ -205,6 +199,8 @@ const addToCart = async (req, res, next) => {
 };
 
 const modifyProductQuantity = async (req, res, next) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
   try {
     const user = await User.findById(req.params.id);
     if (!mongoose.isValidObjectId(req.params.cartProductId)) {
@@ -217,10 +213,14 @@ const modifyProductQuantity = async (req, res, next) => {
     }
 
     const { quantity } = req.body;
+    if (quantity < 1) {
+      res.code = 400;
+      throw new Error("Quantity must be at least 1");
+    }
 
-    let cartProduct = await CartProduct.findById(
-      req.params.cartProductId
-    ).populate("product");
+    let cartProduct = await CartProduct.findById(req.params.cartProductId)
+      .populate("product")
+      .session(session);
     if (!cartProduct) {
       res.code = 404;
       throw new Error("Cart Product not found.");
@@ -228,27 +228,34 @@ const modifyProductQuantity = async (req, res, next) => {
     const actualProduct = cartProduct.product;
     if (!actualProduct) {
       res.code = 404;
-      throw new Error("Product does not exit.");
+      throw new Error("Product does not exist.");
     }
 
-    if (quantity > actualProduct.countInStock) {
+    const diff = quantity - cartProduct.quantity;
+
+    if (diff > actualProduct.countInStock) {
       res.code = 400;
       throw new Error("Insufficient stock for the requested quantity");
     }
-    cartProduct = await CartProduct.findByIdAndUpdate(
-      req.params.cartProductId,
-      quantity,
-      { new: true }
-    );
 
-    if (!cartProduct) {
-      res.code = 404;
-      throw new Error("Product not found");
+    if (cartProduct.reserved) {
+      await Product.findByIdAndUpdate(
+        actualProduct._id,
+        { $inc: { countInStock: -diff } },
+        { session },
+      );
     }
 
+    cartProduct.quantity = quantity;
+    await cartProduct.save({ session });
+
+    await session.commitTransaction();
     return res.json(cartProduct);
   } catch (err) {
+    await session.abortTransaction();
     next(err);
+  } finally {
+    await session.endSession();
   }
 };
 
@@ -257,7 +264,6 @@ const removeFromCart = async (req, res, next) => {
   session.startTransaction();
   try {
     const user = await User.findById(req.params.id);
-    const { productId } = req.body;
     if (!mongoose.isValidObjectId(req.params.cartProductId)) {
       res.code = 400;
       throw new Error("Invalid request data");
@@ -267,13 +273,13 @@ const removeFromCart = async (req, res, next) => {
       throw new Error("User not found");
     }
 
-    if (!user.cart.includes(req.params.cartProductId)) {
+    if (!user.cart.some((id) => id.toString() === req.params.cartProductId)) {
       res.code = 404;
       throw new Error("Product not in your cart");
     }
 
     const cartItemToRemove = await CartProduct.findById(
-      req.params.cartProductId
+      req.params.cartProductId,
     );
     if (!cartItemToRemove) {
       res.code = 404;
@@ -282,29 +288,31 @@ const removeFromCart = async (req, res, next) => {
 
     if (cartItemToRemove.reserved) {
       const updatedProduct = await Product.findOneAndUpdate(
-        { _id: productId, countInStock: { $gte: cartProduct.quantity } },
-        { $inc: { countInStock: -cartProduct.quantity } },
-        { new: true, session }
+        { _id: cartItemToRemove.product },
+        { $inc: { countInStock: cartItemToRemove.quantity } },
+        { new: true, session },
       );
 
       if (!updatedProduct) {
         throw new Error("Internal Server Error");
       }
-
-      user.cart.pull(cartItemToRemove._id);
-      await user.save({ session });
-      const cartProduct = await CartProduct.findByIdAndDelete(
-        cartItemToRemove.id
-      ).session(session);
-      if (!cartProduct) {
-        throw new Error("Internal Server Error");
-      }
-      await session.commitTransaction();
-      return res.status(204).end();
     }
+
+    user.cart.pull(cartItemToRemove._id);
+    await user.save({ session });
+    const deletedCartProduct = await CartProduct.findByIdAndDelete(
+      cartItemToRemove.id,
+    ).session(session);
+
+    if (!deletedCartProduct) {
+      throw new Error("Internal Server Error");
+    }
+
+    await session.commitTransaction();
+    return res.status(204).end();
   } catch (err) {
     await session.abortTransaction();
-    next();
+    next(err);
   } finally {
     await session.endSession();
   }

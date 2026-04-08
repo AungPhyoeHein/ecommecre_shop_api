@@ -1,6 +1,7 @@
 const media_helper = require("../../helpers/media_helper");
 const util = require("util");
 const { validationResult } = require("express-validator");
+const ai_helper = require("../../helpers/ai_helper.js");
 
 const { Category, Product, Review } = require("../../models");
 const { default: mongoose } = require("mongoose");
@@ -37,7 +38,7 @@ const addProduct = async (req, res, next) => {
           name: "images",
           maxCount: 10,
         },
-      ])
+      ]),
     );
 
     try {
@@ -60,7 +61,7 @@ const addProduct = async (req, res, next) => {
     if (category.markedForDeletion) {
       res.code = 404;
       throw new Error(
-        "Category marked for deletion, you cann't add products to this category."
+        "Category marked for deletion, you cannot add products to this category.",
       );
     }
 
@@ -70,26 +71,61 @@ const addProduct = async (req, res, next) => {
       throw new Error("Image file is required.");
     }
     const image = imageArray[0];
-    req.body["image"] = `${req.protocol}://${req.get("host")}/${image.path}`;
+
+    if (image.path && image.path.startsWith("http")) {
+      req.body["image"] = image.path;
+    } else {
+      req.body["image"] =
+        `${req.protocol}://${req.get("host")}/${image.path.replace(/\\/g, "/")}`;
+    }
 
     const gallery = req.files["images"];
     const imagePaths = [];
     if (gallery) {
-      for (const image of gallery) {
-        const imagePath = `${req.protocol}://${req.get("host")}/${image.path}`;
-        imagePaths.push(imagePath);
+      for (const img of gallery) {
+        if (img.path && img.path.startsWith("http")) {
+          imagePaths.push(img.path);
+        } else {
+          const imagePath = `${req.protocol}://${req.get("host")}/${img.path.replace(/\\/g, "/")}`;
+          imagePaths.push(imagePath);
+        }
       }
     }
 
     if (imagePaths.length > 0) {
       req.body["images"] = imagePaths;
     }
+    req.body["createdBy"] = req.user;
     const product = await new Product(req.body).save();
     if (!product) {
       throw new Error("The product could not be created");
     }
 
-    return res.status(201).json(product);
+    res.status(201).json(product);
+
+    // Run AI analysis in the background
+    (async () => {
+      try {
+        const aiResult = await ai_helper.generateVectorDataForAddProduct({
+          ...product.toObject(),
+          categoryName: category.name,
+        });
+
+        if (!aiResult) {
+          throw new Error("AI analysis returned no result.");
+        }
+
+        await Product.findByIdAndUpdate(product._id, {
+          vector_data: aiResult.vector_data,
+          aiStatus: "completed",
+        });
+      } catch (aiError) {
+        console.error("AI Analysis Background Error:", aiError.message);
+        await Product.findByIdAndUpdate(product._id, {
+          aiStatus: "error",
+        });
+      }
+    })();
   } catch (err) {
     next(err);
   }
@@ -97,12 +133,33 @@ const addProduct = async (req, res, next) => {
 
 const editProduct = async (req, res, next) => {
   try {
-    if (
-      !mongoose.isValidObjectId(req.params.id) ||
-      !(await Product.findById(req.params.id))
-    ){
+    if (!mongoose.isValidObjectId(req.params.id)) {
+      res.code = 400;
+      throw new Error("Invalid Product ID!");
+    }
+
+    const upload = util.promisify(
+      media_helper.upload.fields([
+        { name: "image", maxCount: 1 },
+        { name: "images", maxCount: 10 },
+      ]),
+    );
+
+    try {
+      await upload(req, res);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+        type: error.code,
+        message: `${error.message}{${error.fields}}`,
+        storageErrors: error.storageErrors,
+      });
+    }
+
+    const product = await Product.findById(req.params.id);
+    if (!product) {
       res.code = 404;
-      throw new Error("Invalid Product!");
+      throw new Error("Product not found!");
     }
 
     if (req.body.category) {
@@ -115,78 +172,99 @@ const editProduct = async (req, res, next) => {
       if (category.markedForDeletion) {
         res.code = 404;
         throw new Error(
-          "Category marked for deletion, you cannot add products o this category."
+          "Category marked for deletion, you cannot add products to this category.",
         );
       }
+    }
 
-      const product = await Product.findById(req.params.id);
-      if (req.body.images) {
-        const limit = 10 - product.images.length;
-        const galleryUpload = util.promisify(
-          media_helper.upload.fields([{ name: "images", maxCount: limit }])
-        );
+    // Handle main image
+    if (req.files && req.files["image"]) {
+      const image = req.files["image"][0];
+      if (image.path && image.path.startsWith("http")) {
+        req.body["image"] = image.path;
+      } else {
+        req.body["image"] =
+          `${req.protocol}://${req.get("host")}/${image.path.replace(/\\/g, "/")}`;
+      }
+    }
 
-        try {
-          await galleryUpload(req, res);
-        } catch (error) {
-          console.error(error);
-          return res.status(500).json({
-            type: error.code,
-            message: `${error.message}{${error.fields}}`,
-            storageErrors: error.storageErrors,
-          });
-        }
+    // Handle gallery images
+    if (req.files && req.files["images"]) {
+      const gallery = req.files["images"];
 
-        const imageFiles = req.files["images"];
-        const updateGallery = imageFiles && imageFiles.length > 0;
-        if (updateGallery) {
-          const imagePaths = [];
-          for (const image of gallery) {
-            const imagePath = `${req.protocol}:://${req.get("host")}/${
-              image.path
-            }`;
-            imagePaths.push(imagePath);
-          }
-          req.body["images"] = [...product.images, ...imagePaths];
+      const bodyImages = req.body.images
+        ? Array.isArray(req.body.images)
+          ? req.body.images
+          : [req.body.images]
+        : null;
+
+      const existingImagesCount = bodyImages
+        ? bodyImages.length
+        : product.images
+          ? product.images.length
+          : 0;
+
+      if (existingImagesCount + gallery.length > 10) {
+        res.code = 400;
+        throw new Error("Total gallery images cannot exceed 10.");
+      }
+      const imagePaths = [];
+      for (const img of gallery) {
+        if (img.path && img.path.startsWith("http")) {
+          imagePaths.push(img.path);
+        } else {
+          const imagePath = `${req.protocol}://${req.get("host")}/${img.path.replace(/\\/g, "/")}`;
+          imagePaths.push(imagePath);
         }
       }
 
-      if (req.body.image) {
-        const uploadImage = util.promisify(
-          media_helper.upload.fields([{ name: "image", maxCount: 1 }])
-        );
-        try {
-          await uploadImage(req, res);
-        } catch (error) {
-          console.error(error);
-          return res.status(500).json({
-            type: error.code,
-            message: `${error.message}{${error.field}}`,
-            storageErrors: error.storageErrors,
-          });
-        }
+      // Use the provided order of existing images if available
+      const existingImages = bodyImages || product.images || [];
 
-        const image = req.files["image"][0];
-        if (!image) {
-          res.code = 404;
-          throw new Error("No file found!");
-        }
-        req.body["image"] = `${req.protocol}:://${req.get("host")}/${
-          image.path
-        }`;
-      }
+      req.body["images"] = [...existingImages, ...imagePaths];
+    } else if (req.body.images) {
+      // If only reordering existing images (no new files)
+      req.body["images"] = Array.isArray(req.body.images)
+        ? req.body.images
+        : [req.body.images];
     }
 
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
       req.body,
-      { new: true }
+      { new: true },
     );
+
     if (!updatedProduct) {
       res.code = 404;
       throw new Error("Product not found");
     }
-    return res.json(updatedProduct);
+
+    res.json(updatedProduct);
+
+    // Run AI analysis in the background
+    (async () => {
+      try {
+        const aiResult = await ai_helper.generateVectorDataForAddProduct({
+          ...updatedProduct.toObject(),
+          categoryName: (await Category.findById(updatedProduct.category)).name,
+        });
+
+        if (!aiResult) {
+          throw new Error("AI analysis returned no result.");
+        }
+
+        await Product.findByIdAndUpdate(updatedProduct._id, {
+          vector_data: aiResult.vector_data,
+          aiStatus: "completed",
+        });
+      } catch (aiError) {
+        console.error("AI Analysis Background Error:", aiError.message);
+        await Product.findByIdAndUpdate(updatedProduct._id, {
+          aiStatus: "error",
+        });
+      }
+    })();
   } catch (err) {
     next(err);
   }
@@ -212,7 +290,7 @@ const deleteProductImages = async (req, res, next) => {
     }
 
     product.images = product.images.filter(
-      (image) => !deletedImageUrls.includes(image)
+      (image) => !deletedImageUrls.includes(image),
     );
     await product.save();
 
@@ -241,7 +319,7 @@ const deleteProduct = async (req, res, next) => {
 
     await media_helper.deleteImages(
       [...product.images, product.image],
-      "ENOENT"
+      "ENOENT",
     );
 
     await Review.deleteMany({ _id: { $in: product.reviews } });
@@ -256,11 +334,25 @@ const deleteProduct = async (req, res, next) => {
 
 const getProducts = async function (req, res, next) {
   try {
-    const page = req.query.page || 1;
-    const pageSize = 10;
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = parseInt(req.query.pageSize) || 10;
+    const search = req.query.search || "";
+    const sort = req.query.sort || "-createdAt";
 
-    const products = await Product.find()
+    const query = {};
+    if (search) {
+      query.$or = [
+        { name: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    const total = await Product.countDocuments(query);
+    const products = await Product.find(query)
+      .populate("category", "name")
+      .populate("createdBy", "name email")
       .select("-reviews -ratings")
+      .sort(sort)
       .skip((page - 1) * pageSize)
       .limit(pageSize);
 
@@ -268,7 +360,31 @@ const getProducts = async function (req, res, next) {
       res.code = 404;
       throw new Error("Products not found");
     }
-    return res.json(products);
+    return res.json({
+      success: true,
+      data: products,
+      pagination: {
+        total,
+        page,
+        pageSize,
+        totalPages: Math.ceil(total / pageSize),
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getProductById = async (req, res, next) => {
+  try {
+    const product = await Product.findById(req.params.id)
+      .populate("category", "name")
+      .populate("createdBy", "name email");
+    if (!product) {
+      res.code = 404;
+      throw new Error("Product not found");
+    }
+    res.json(product);
   } catch (err) {
     next(err);
   }
@@ -281,4 +397,5 @@ module.exports = {
   deleteProductImages,
   deleteProduct,
   getProducts,
+  getProductById,
 };
